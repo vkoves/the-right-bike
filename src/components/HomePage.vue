@@ -94,6 +94,8 @@
       </div>
     </div>
 
+    <stories-section />
+
     <!-- Bike Gallery Section -->
     <section id="bike-gallery" class="bike-gallery-section">
       <h2>Already Know Your Type?</h2>
@@ -125,6 +127,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { BikeTypes } from '../constants/bikeTypes';
+import StoriesSection from './StoriesSection.vue';
 
 const router = useRouter();
 const currentRotation = ref(0);
@@ -186,15 +189,11 @@ onUnmounted(() => {
 }
 
 .hero-container {
-  min-height: calc(100vh - 4.5rem);
+  padding: 8rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: vars.$bg-hero;
-
-  @media (max-width: #{vars.$breakpoint-mobile}) {
-    min-height: calc(100vh - 3.5rem);
-  }
 }
 
 .hero-content {
@@ -465,7 +464,7 @@ h1 {
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .hero-container {
-    flex: 1;
+    padding: 1rem 0;
   }
 
   h1 {
