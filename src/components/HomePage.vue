@@ -223,25 +223,7 @@ h1 {
 }
 
 .benefits-summary {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
   margin-bottom: 2rem;
-}
-
-.benefit-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: vars.$bg-benefit;
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  font-size: 0.8125rem;
-}
-
-.benefit-icon {
-  font-size: 1.2rem;
 }
 
 .cta-button {
