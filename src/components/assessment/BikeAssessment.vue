@@ -76,6 +76,7 @@ import BikeRecommendation from './BikeRecommendation.vue';
 import SavingsComparison from './SavingsComparison.vue';
 import ResultsFooter from './ResultsFooter.vue';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
+import { BikeTypes } from '../../constants/bikeTypes';
 
 // Router setup
 const router = useRouter();
@@ -122,81 +123,8 @@ const costs = reactive({
   }
 });
 
-// All bike type details
-const bikeTypeDetails = reactive({
-  'regular-bike': {
-    title: 'Classic Bicycle',
-    image: '/images/bikes/dutch-bike.jpg',
-    description: 'A traditional bicycle is perfect for your needs. With your fitness level and local conditions, you\'ll be able to navigate comfortably without electric assistance.',
-    features: [
-      'Lightweight and maneuverable',
-      'Lower cost than electric alternatives',
-      'Simple maintenance',
-      'No charging required'
-    ],
-    priceRange: '$300 - $1,000'
-  },
-  'commuter-ebike': {
-    title: 'Commuter eBike',
-    image: '/images/bikes/gazelle-ebike.jpg',
-    description: 'An commuter ebike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
-    features: [
-      'Electric motor assists up to 20-28 mph',
-      'Helps overcome hills and wind resistance',
-      'Reduces sweat during commutes',
-      '20-50 mile range per charge'
-    ],
-    priceRange: '$1,500 - $4,000'
-  },
-  'cargo-bike': {
-    title: 'Classic Cargo Bike',
-    image: '/images/bikes/bakfiets-classic-long.jpg',
-    description: 'A non-electric cargo bike will address your carrying needs. These bikes are designed to handle loads while maintaining stability and ease of use without requiring battery power.',
-    features: [
-      'Front cargo box for groceries and goods',
-      'Stable frame design for carrying heavy loads',
-      'Can transport goods, groceries, or equipment',
-      'No battery to charge or maintain'
-    ],
-    priceRange: '$1,000 - $2,500'
-  },
-  'cargo-ebike': {
-    title: 'Front-Loader Cargo eBike',
-    image: '/images/bikes/urban-arrow.jpg',
-    description: 'An cargo ebike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
-    features: [
-      'Large front cargo area for groceries or goods',
-      'Electric assist makes carrying loads easier',
-      'Stable even when fully loaded',
-      'Can replace a car for most errands'
-    ],
-    priceRange: '$3,000 - $6,000'
-  },
-  'longtail-bike': {
-    title: 'Longtail Cargo Bike',
-    image: '/images/bikes/yuba-mundo.jpg',
-    description: 'A non-electric longtail cargo bike is perfect for transporting people and heavy loads. With your fitness level, you can handle this sturdy bike without electric assistance while still carrying passengers or cargo.',
-    features: [
-      'Extended rear deck for passengers or cargo',
-      'High weight capacity (up to 550 lbs)',
-      'Can carry up to 3-4 children or 2 adults',
-      'No battery charging required'
-    ],
-    priceRange: '$1,800 - $2,200'
-  },
-  'longtail-ebike': {
-    title: 'Longtail Cargo eBike',
-    image: '/images/bikes/tern-gsd-500.jpg',
-    description: 'A longtail cargo ebike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
-    features: [
-      'Extended rear deck for passengers',
-      'Electric assist makes carrying passengers easier',
-      'Can accommodate child seats or passenger seating',
-      'High weight capacity'
-    ],
-    priceRange: '$3,500 - $8,000'
-  }
-});
+// All bike type details — sourced from the single constant, not duplicated here
+const bikeTypeDetails = BikeTypes;
 
 // Computed properties
 const progressPercent = computed(() => {

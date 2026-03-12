@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper" :class="{ '-fit-viewport': route.path === '/' }">
+  <div class="app-wrapper">
     <Header />
     <main class="main-content">
       <router-view />
@@ -15,9 +15,7 @@
 
 <script setup>
 import Header from './components/Header.vue';
-import { useRoute } from 'vue-router';
 
-const route = useRoute();
 const currentYear = new Date().getFullYear();
 </script>
 

@@ -30,6 +30,7 @@
         </div>
 
         <button class="cta-button" @click="startAssessment">Find Your Perfect Bike</button>
+        <a class="scroll-hint" href="#bike-gallery" aria-label="Scroll to bike gallery">&#8595; Already know your type?</a>
       </div>
 
       <div class="bike-showcase">
@@ -92,20 +93,52 @@
         </div>
       </div>
     </div>
+
+    <!-- Bike Gallery Section -->
+    <section id="bike-gallery" class="bike-gallery-section">
+      <h2>Already Know Your Type?</h2>
+      <p class="gallery-intro">Skip the quiz and jump straight to the savings!</p>
+      <div class="gallery-grid">
+        <a
+          v-for="bike in bikeOptions"
+          :key="bike.key"
+          class="gallery-card"
+          :href="'/assessment?bike=' + bike.key"
+          @click.prevent="viewBikeSavings(bike.key)"
+        >
+          <div class="gallery-card-image">
+            <img :src="bike.image" :alt="bike.title">
+            <div v-if="bike.electric" class="electric-badge">⚡ Electric</div>
+          </div>
+          <div class="gallery-card-body">
+            <h3>{{ bike.title }}</h3>
+            <div class="gallery-price">{{ bike.priceRange }}</div>
+            <span class="gallery-cta">View Savings &#8594;</span>
+          </div>
+        </a>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { BikeTypes } from '../constants/bikeTypes';
 
 const router = useRouter();
 const currentRotation = ref(0);
 const carouselIndex = ref(0);
 const autoRotateInterval = ref(null);
 
+const bikeOptions = Object.entries(BikeTypes).map(([key, bike]) => ({ key, ...bike }));
+
 function startAssessment() {
   router.push('/assessment');
+}
+
+function viewBikeSavings(bikeKey) {
+  router.push({ path: '/assessment', query: { bike: bikeKey } });
 }
 
 function rotateCarousel(direction) {
@@ -148,25 +181,20 @@ onUnmounted(() => {
 @use '../assets/scss/variables' as vars;
 
 .home-page {
-  height: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
-
-  @media (max-width: #{vars.$breakpoint-mobile}) {
-    overflow: visible;
-    min-height: calc(100vh - 60px);
-    display: flex;
-    flex-direction: column;
-  }
 }
 
 .hero-container {
-  flex: 1;
+  min-height: calc(100vh - 4.5rem);
   display: flex;
   align-items: center;
   justify-content: center;
   background: vars.$bg-hero;
+
+  @media (max-width: #{vars.$breakpoint-mobile}) {
+    min-height: calc(100vh - 3.5rem);
+  }
 }
 
 .hero-content {
@@ -480,6 +508,164 @@ h1 {
 
   .carousel-controls {
     padding: 0 1rem;
+  }
+}
+
+/* Scroll hint link */
+.scroll-hint {
+  display: inline-block;
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+  color: vars.$text-secondary;
+  font-size: 0.9rem;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  animation: bounce-down 2s infinite;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* Bike Gallery Section */
+.bike-gallery-section {
+  padding: 4rem 2rem;
+  background-color: vars.$white;
+  text-align: center;
+
+  h2 {
+    color: vars.$dark;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.gallery-intro {
+  color: vars.$gray;
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.gallery-card {
+  display: flex;
+  flex-direction: column;
+  background-color: vars.$lightest-gray;
+  border-radius: vars.$border-radius;
+  overflow: hidden;
+  box-shadow: vars.$shadow-md;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: vars.$shadow-lg;
+
+    .gallery-cta {
+      color: vars.$primary-dark;
+    }
+  }
+}
+
+.gallery-card-image {
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    background-color: vars.$white;
+    padding: 0.75rem;
+    display: block;
+  }
+
+  .electric-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: vars.$secondary;
+    color: vars.$white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
+  }
+}
+
+.gallery-card-body {
+  padding: 1rem 1.25rem 1.25rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+
+  h3 {
+    color: vars.$dark;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+.gallery-price {
+  color: vars.$gray;
+  font-size: 0.9rem;
+}
+
+.gallery-cta {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  color: vars.$primary;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .bike-gallery-section {
+    padding: 2.5rem 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .gallery-intro {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .gallery-card-image img {
+    height: 130px;
+  }
+
+  .scroll-hint {
+    display: none;
   }
 }
 </style>
