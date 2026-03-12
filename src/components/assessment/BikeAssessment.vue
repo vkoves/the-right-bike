@@ -5,7 +5,11 @@
 
     <div class="assessment-container">
       <div class="progress-bar">
-        <div class="progress" :style="{ width: progressPercent + '%' }"></div>
+        <div class="progress-track">
+          <div class="progress-fill" :style="{ width: progressPercent + '%' }"></div>
+        </div>
+        <div class="progress-dot" :class="{ '-done': currentStep > 2, '-active': currentStep === 2 }" style="left: 33.33%"></div>
+        <div class="progress-dot" :class="{ '-done': currentStep > 3, '-active': currentStep === 3 }" style="left: 66.66%"></div>
       </div>
 
       <transition name="fade" mode="out-in">
@@ -64,7 +68,7 @@
 
 <script setup>
 import { ref, computed, reactive, watch, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router';
 import TransportationNeedsStep from './TransportationNeedsStep.vue';
 import GeographyStep from './GeographyStep.vue';
 import FitnessStep from './FitnessStep.vue';
@@ -198,6 +202,7 @@ const bikeTypeDetails = reactive({
 const progressPercent = computed(() => {
   return ((currentStep.value - 1) / 3) * 100;
 });
+
 
 // Determine if the user needs electric assistance - this basically means they are pulling a lot
 // (e.g. kids, adults, cargo) and are medium or below fitness, or it's windy or hilly
@@ -346,6 +351,11 @@ function restartAssessment() {
   });
 }
 
+// Reset when navigating to the assessment (e.g. clicking "Bike Finder" in the header)
+onBeforeRouteUpdate((to) => {
+  if (to.query._r) restartAssessment();
+});
+
 // Initialize based on URL parameter (need to be after all functions are defined)
 onMounted(() => {
   if (route.query.bike && Object.keys(bikeTypeDetails).includes(route.query.bike)) {
@@ -404,17 +414,45 @@ h1 {
 }
 
 .progress-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.progress-track {
+  width: 100%;
   height: 8px;
   background-color: vars.$lighter-gray;
   border-radius: 4px;
-  margin-bottom: 2rem;
   overflow: hidden;
 }
 
-.progress {
+.progress-fill {
   height: 100%;
   background-color: vars.$primary;
   transition: width 0.3s ease;
+}
+
+.progress-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: vars.$lighter-gray;
+  border: 2px solid vars.$white;
+  transform: translateX(-50%);
+  transition: background-color 0.3s ease;
+
+  &.-active {
+    background-color: vars.$primary-lighter;
+    border-color: vars.$primary;
+  }
+
+  &.-done {
+    background-color: vars.$primary;
+    border-color: vars.$white;
+  }
 }
 
 .step-container {

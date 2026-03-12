@@ -7,13 +7,23 @@
       <nav>
         <ul>
           <li class="hide-mobile"><router-link to="/">Home</router-link></li>
-          <li class="hide-mobile"><router-link to="/assessment">Bike Finder</router-link></li>
+          <li class="hide-mobile"><a href="#" @click.prevent="goToAssessment">Bike Finder</a></li>
           <li><router-link to="/about">About</router-link></li>
         </ul>
       </nav>
     </div>
   </header>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function goToAssessment() {
+  router.push({ path: '/assessment', query: { _r: Date.now() } });
+}
+</script>
 
 <style lang="scss" scoped>
 @use 'sass:color';
