@@ -37,7 +37,7 @@ body {
 footer {
   text-align: center;
   padding: vars.$spacing-lg;
-  color: vars.$text-muted;
+  color: vars.$text-dark;
   font-size: 0.9rem;
   background-color: vars.$bg-footer;
   border-top: 1px solid vars.$border-light;
@@ -47,11 +47,40 @@ footer {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    vertical-align: middle;
 
     &:hover {
       color: vars.$primary-dark;
       text-decoration: underline;
     }
+
+    &.author-link {
+      font-weight: 700;
+      color: #A30000;
+    }
+  }
+
+  .github-pill {
+    background-color: vars.$lighter-gray;
+    border-radius: 1rem;
+    padding: 0.25rem 0.75rem;
+    color: vars.$text-secondary;
+    margin-left: 1rem;
+    font-size: 0.8125rem;
+
+    &:hover {
+      background-color: vars.$border-gray;
+      text-decoration: none;
+      color: vars.$text-body;
+    }
+  }
+
+  .github-icon {
+    width: 1rem;
+    height: 1rem;
   }
 }
 

@@ -6,8 +6,12 @@
     </main>
     <footer>
       <p>
-        ©{{ currentYear }} -<a href="https://viktorkoves.com">Viktor Köves</a>
-        | <a href="https://github.com/vkoves/the-right-bike" target="_blank" rel="noopener noreferrer">View On GitHub</a>
+        ©{{ currentYear }} <a href="https://viktorkoves.com" class="author-link">Viktor Köves</a>
+
+        <a href="https://github.com/vkoves/the-right-bike" target="_blank" rel="noopener noreferrer" class="github-pill">
+          <img src="/images/icons/github.svg" alt="" class="github-icon">
+          Contribute On GitHub
+        </a>
       </p>
     </footer>
   </div>
