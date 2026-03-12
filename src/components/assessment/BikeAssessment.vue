@@ -125,7 +125,7 @@ const costs = reactive({
 // All bike type details
 const bikeTypeDetails = reactive({
   'regular-bike': {
-    title: 'Regular Bicycle',
+    title: 'Classic Bicycle',
     image: '/images/bikes/dutch-bike.jpg',
     description: 'A traditional bicycle is perfect for your needs. With your fitness level and local conditions, you\'ll be able to navigate comfortably without electric assistance.',
     features: [
@@ -137,9 +137,9 @@ const bikeTypeDetails = reactive({
     priceRange: '$300 - $1,000'
   },
   'commuter-ebike': {
-    title: 'Commuter Electric Bicycle',
+    title: 'Commuter eBike',
     image: '/images/bikes/gazelle-ebike.jpg',
-    description: 'An electric commuter bike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
+    description: 'An commuter ebike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
     features: [
       'Electric motor assists up to 20-28 mph',
       'Helps overcome hills and wind resistance',
@@ -163,7 +163,7 @@ const bikeTypeDetails = reactive({
   'cargo-ebike': {
     title: 'Front-Loader Cargo eBike',
     image: '/images/bikes/urban-arrow.jpg',
-    description: 'An electric cargo bike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
+    description: 'An cargo ebike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
     features: [
       'Large front cargo area for groceries or goods',
       'Electric assist makes carrying loads easier',
@@ -185,9 +185,9 @@ const bikeTypeDetails = reactive({
     priceRange: '$1,800 - $2,200'
   },
   'longtail-ebike': {
-    title: 'Electric Longtail Cargo Bike',
+    title: 'Longtail Cargo eBike',
     image: '/images/bikes/tern-gsd-500.jpg',
-    description: 'A longtail electric cargo bike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
+    description: 'A longtail cargo ebike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [
       'Extended rear deck for passengers',
       'Electric assist makes carrying passengers easier',
