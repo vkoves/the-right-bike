@@ -40,6 +40,19 @@
   </div>
 </template>
 
+<style>
+/* Non-scoped: override global body/wrapper styles for screenshot environment */
+body {
+  overflow: hidden;
+}
+
+.app-wrapper {
+  min-height: unset !important;
+  height: 100vh;
+  overflow: hidden;
+}
+</style>
+
 <style lang="scss" scoped>
 @use '../assets/scss/variables' as vars;
 
@@ -65,25 +78,26 @@ $bg-mid: #2c8a57;
 }
 
 .eyebrow {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: vars.$white;
   margin-bottom: 1rem;
 }
 
 h1 {
   font-size: 3.5rem;
   font-weight: 700;
-  color: #fff;
+  color: vars.$white;
   line-height: 1.1;
   margin: 0 0 1.5rem;
 }
 
 .benefit-item {
   background-color: rgba(255, 255, 255, 0.18);
-  color: #fff;
+  color: vars.$white;
+  font-weight: 700;
   box-shadow: none;
 }
 
@@ -136,10 +150,10 @@ h1 {
 .url {
   position: absolute;
   bottom: 1.25rem;
-  left: 3.5rem;
-  font-size: 0.85rem;
+  left: 2rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.6);
+  color: vars.$white;
   letter-spacing: 0.05em;
   z-index: 2;
 }
