@@ -127,6 +127,8 @@ $chicago-blue: #41B6E6;
     padding: 0 1rem;
   }
 
+  .stories-img-row { padding-bottom: 2rem; }
+
   .stories-imgs img {
     height: 9rem;
     border-radius: 0.5rem;

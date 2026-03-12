@@ -8,24 +8,26 @@
             With Just 3 Questions!
           </span>
         </h1>
-        <p class="subtitle">Find out if cycling could replace some of your car trips, improve your health, and save you money.</p>
+        <p class="subtitle">Find the right bike to help cycling replace some of your car trips!</p>
+
+        <h2>Why Bike?</h2>
 
         <div class="benefits-summary">
           <div class="benefit-item">
             <div class="benefit-icon">💰</div>
-            <div>Save money</div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">🌍</div>
-            <div>Reduce emissions</div>
+            <div>Save Thousands</div>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">❤️</div>
-            <div>Improve health</div>
+            <div>Improve Your Health</div>
           </div>
           <div class="benefit-item">
             <div class="benefit-icon">⏱️</div>
-            <div>Save time</div>
+            <div>Get Back Time</div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🌍</div>
+            <div>Reduce Emissions</div>
           </div>
         </div>
 
@@ -198,7 +200,7 @@ onUnmounted(() => {
 
 .hero-content {
   flex: 1;
-  padding: 2rem 4rem;
+  padding: 1rem 4rem;
   max-width: 700px;
 }
 
@@ -223,7 +225,7 @@ h1 {
 .benefits-summary {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.5rem;
   margin-bottom: 2rem;
 }
 
@@ -235,7 +237,7 @@ h1 {
   padding: 0.5rem 1rem;
   border-radius: 50px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  font-size: 0.9rem;
+  font-size: 0.8125rem;
 }
 
 .benefit-icon {
