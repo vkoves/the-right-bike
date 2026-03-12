@@ -81,7 +81,15 @@ nav {
       font-weight: 700;
       border-bottom: 2px solid vars.$white;
     }
+
+    &:focus-visible {
+      outline-color: vars.$white;
+    }
   }
+}
+
+.logo a:focus-visible {
+  outline-color: vars.$white;
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {

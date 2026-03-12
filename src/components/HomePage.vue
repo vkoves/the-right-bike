@@ -85,10 +85,10 @@
 
         <div class="carousel-controls">
           <button class="control-btn prev" @click="rotateCarousel('prev')" aria-label="Previous bike">
-            &#10094;
+            <img src="/images/icons/chevron-left.svg" alt="" class="chevron-icon">
           </button>
           <button class="control-btn next" @click="rotateCarousel('next')" aria-label="Next bike">
-            &#10095;
+            <img src="/images/icons/chevron-left.svg" alt="" class="chevron-icon chevron-right">
           </button>
         </div>
       </div>
@@ -408,30 +408,30 @@ h1 {
 
 .control-btn {
   background-color: vars.$bg-control;
-  color: vars.$text-body;
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.8rem;
+  padding: 0.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  font-weight: bold;
 
   &:hover {
     background-color: vars.$bg-control-hover;
-    color: vars.$text-body;
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
 
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(200, 200, 200, 0.5), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.chevron-icon {
+  width: 40px;
+  height: 40px;
+
+  &.chevron-right {
+    transform: rotate(180deg);
   }
 }
 
@@ -500,10 +500,9 @@ h1 {
     height: 250px;
   }
 
-  .control-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1.2rem;
+  .chevron-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .carousel-controls {
