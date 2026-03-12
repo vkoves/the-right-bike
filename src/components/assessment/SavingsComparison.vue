@@ -40,62 +40,32 @@
       </div>
     </div>
 
-    <!-- FAQ Section -->
-    <div class="faq-section">
-      <h3>What if I need a car sometimes? 🤔</h3>
-      <div class="faq-content">
-        <p>Even with a bike as your primary transportation, you'll occasionally need a car for certain trips. Here are cost-effective alternatives to car ownership:</p>
+    <savings-faq-section :savings-amount="savingsAmount" />
 
-        <div class="alternatives-grid">
-          <div class="alternative-card">
-            <div class="alternative-icon">🚗</div>
-            <h4>Car Sharing</h4>
-            <p>Services like Zipcar or Getaround offer hourly rentals (~$10-15/hour) for quick errands.</p>
-            <div class="alternative-savings">
-              <strong>10 rentals/year:</strong> <br>
-              $300 - $450
-            </div>
-          </div>
+    <bike-buying-options :bike-type="displayedBikeType" />
 
-          <div class="alternative-card">
-            <div class="alternative-icon">🚕</div>
-            <h4>Ride Share</h4>
-            <p>Uber, Lyft or taxis are perfect for evenings out or airport trips.</p>
-            <div class="alternative-savings">
-              <strong>20 rides/year:</strong> <br>
-              $400 - $600
-            </div>
-          </div>
-
-          <div class="alternative-card">
-            <div class="alternative-icon">🛻</div>
-            <h4>Truck/Van Rental</h4>
-            <p>Home Depot, U-Haul or similar for large purchases and moves.</p>
-            <div class="alternative-savings">
-              <strong>3 rentals/year:</strong> <br>
-              $150 - $300
-            </div>
-          </div>
-        </div>
-
-        <div class="total-comparison">
-          <p v-if="adjustedSavings > 0">
-            Even if you spend <strong>$1,000/year</strong> on occasional rentals and ride-shares, that's still
-            <span class="highlight-amount"><strong>{{ formatCurrency(adjustedSavings) }}</strong></span>
-            less than the 5-year cost of car ownership!
-          </p>
-          <p v-else>
-            When you factor in <strong>$1,000/year</strong> for occasional rentals and ride-shares, you're still
-            <span class="highlight-amount"><strong>coming out ahead</strong></span>
-            compared to full car ownership, while gaining health benefits and reducing environmental impact!
-          </p>
-        </div>
+    <div class="local-shops">
+      <div class="local-shops-icon">🏪</div>
+      <div class="local-shops-content">
+        <h4>Find a Local Bike Shop</h4>
+        <p>Test ride before you buy — a good local shop can also help with fit, accessories, and ongoing maintenance.</p>
+        <a
+          href="https://www.google.com/maps/search/bike+shop+near+me"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="find-shops-btn"
+        >
+          Search Bike Shops Near You &#8594;
+        </a>
       </div>
     </div>
 
     <!-- Bike comparison grid -->
     <div class="bike-comparison-grid">
-      <h3>Compare with other bikes</h3>
+      <h3>
+        <p>Want to check out something else?</p>
+        Compare With Other Bikes
+      </h3>
       <div class="bike-options-scroll-wrapper">
         <div class="bike-options-scroll-container">
         <div class="bike-options">
@@ -136,6 +106,8 @@
 import { computed, ref, watch } from 'vue';
 import { BIKE_COSTS } from '../../constants/bikeCosts';
 import CostComparisonTable from './CostComparisonTable.vue';
+import SavingsFaqSection from './SavingsFaqSection.vue';
+import BikeBuyingOptions from './BikeBuyingOptions.vue';
 
 const props = defineProps({
   bikeTitle: {
@@ -222,18 +194,6 @@ const savingsAmount = computed(() => {
   return carTotalCost.value - bikeTotalCost.value;
 });
 
-// Calculate savings after accounting for alternative transportation costs
-const adjustedSavings = computed(() => {
-  // Assume $1000/year for alternative transportation (5 years total)
-  const alternativeTransportCost = 5000;
-  // Calculate savings after alternative costs
-  const netSavings = savingsAmount.value - alternativeTransportCost;
-  // Make sure the value is never negative
-  const positiveNetSavings = Math.max(0, netSavings);
-  // Round to nearest thousand for cleaner number
-  return Math.floor(positiveNetSavings / 1000) * 1000;
-});
-
 // Get the current recommendation type
 const recommendationType = computed(() => {
   // If we have a selected bike type from the parent, use that
@@ -262,6 +222,9 @@ const availableBikeTypes = computed(() => {
       label: value.label || value.title
     }));
 });
+
+// The bike type currently shown — comparison selection takes priority over the recommendation
+const displayedBikeType = computed(() => comparisonBike.value || recommendationType.value);
 
 // Handle bike type change from buttons
 function handleComparisonChange(bikeType) {
@@ -316,6 +279,12 @@ function formatCurrency(value) {
   color: vars.$primary;
   margin-bottom: 1.5rem;
   font-size: 1.6rem;
+
+  p {
+    color: vars.$text-secondary;
+    font-weight: normal;
+    font-size: 1rem;
+  }
 }
 
 @keyframes bounce-horizontal {
@@ -628,141 +597,57 @@ function formatCurrency(value) {
   margin-bottom: 1rem;
 }
 
-/* FAQ Section Styles */
-.faq-section {
-  background-color: vars.$white;
-  border-radius: 12px;
-  padding: 2rem;
-  margin: 2rem 0;
-  box-shadow: vars.$shadow-sm;
+.local-shops {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: vars.$primary-lighter;
+  border-radius: vars.$border-radius;
+  border-left: 4px solid vars.$primary;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
 
-  h3 {
-    color: vars.$primary;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+.local-shops-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.local-shops-content {
+  h4 {
+    color: vars.$primary-dark;
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  p {
+    color: vars.$dark;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    text-align: left;
   }
 }
 
-.faq-content p {
-  text-align: center;
-  color: vars.$dark;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.alternatives-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.alternative-card {
-  background-color: vars.$white;
-  border-radius: vars.$border-radius;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: vars.$shadow-md;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
+.find-shops-btn {
+  display: inline-block;
+  background-color: vars.$primary;
+  color: vars.$white;
+  text-decoration: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: vars.$border-radius-lg;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.2s;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: vars.$shadow-lg;
-  }
-
-  h4 {
-    color: vars.$dark;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-  }
-
-  p {
-    color: vars.$gray;
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-    flex-grow: 1;
-  }
-}
-
-.alternative-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.alternative-savings {
-  background-color: vars.$primary-lighter;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: vars.$primary-light;
-}
-
-.total-comparison {
-  background-color: vars.$primary;
-  padding: 1.75rem;
-  border-radius: vars.$border-radius;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-  box-shadow: vars.$shadow-primary;
-  position: relative;
-  overflow: hidden;
-  animation: pulse 2s infinite;
-
-  p {
-    margin-bottom: 0;
-    font-size: 1.2rem;
-    color: vars.$white;
-    line-height: 1.6;
-  }
-
-  strong {
-    color: vars.$white;
-    font-weight: 700;
-    background-color: rgba(255, 255, 255, vars.$opacity-light);
-    padding: 0.15rem 0.4rem;
-    border-radius: vars.$border-radius-sm;
-  }
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: vars.$shadow-primary;
-  }
-  50% {
-    box-shadow: vars.$shadow-primary-active;
-  }
-  100% {
-    box-shadow: vars.$shadow-primary;
-  }
-}
-
-.highlight-amount {
-  display: block;
-  margin: 0.5rem 0;
-  font-size: 1.4rem;
-
-  strong {
-    background-color: rgba(255, 255, 255, vars.$opacity-medium);
-    padding: 0.3rem 0.7rem;
-    border-radius: 6px;
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    display: inline-block;
-    margin: 0.25rem 0;
-    box-shadow: vars.$shadow-card;
+    background-color: vars.$primary-dark;
+    transform: translateY(-1px);
   }
 }
 
 @media (max-width: 900px) {
-  .benefits-grid, .alternatives-grid {
+  .benefits-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -795,14 +680,14 @@ function formatCurrency(value) {
     font-size: 0.85rem;
   }
 
-  .benefits-grid, .alternatives-grid {
+  .benefits-grid {
     grid-template-columns: 1fr;
     max-width: 300px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  .benefit-emoji, .alternative-icon {
+  .benefit-emoji {
     font-size: 2rem;
     margin-bottom: 0.75rem;
   }
@@ -815,23 +700,14 @@ function formatCurrency(value) {
     padding: 1.5rem;
   }
 
-  .faq-section h3 {
-    font-size: 1.5rem;
+  .local-shops {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
-  .total-comparison {
-    padding: 1.5rem 1rem;
-    margin-top: 1rem;
-
-    p {
-      font-size: 1.05rem;
-    }
-
-    strong {
-      display: inline-block;
-      margin: 0.25rem 0;
-    }
+  .local-shops-icon {
+    font-size: 2rem;
   }
-
 }
 </style>

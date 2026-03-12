@@ -131,7 +131,6 @@ const progressPercent = computed(() => {
   return ((currentStep.value - 1) / 3) * 100;
 });
 
-
 // Determine if the user needs electric assistance - this basically means they are pulling a lot
 // (e.g. kids, adults, cargo) and are medium or below fitness, or it's windy or hilly
 const needsAssistance = computed(() => {
