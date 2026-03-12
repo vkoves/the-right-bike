@@ -149,7 +149,7 @@ const bikeTypeDetails = reactive({
     priceRange: '$1,500 - $4,000'
   },
   'cargo-bike': {
-    title: 'Non-Electric Cargo Bicycle',
+    title: 'Classic Cargo Bike',
     image: '/images/bikes/bakfiets-classic-long.jpg',
     description: 'A non-electric cargo bike will address your carrying needs. These bikes are designed to handle loads while maintaining stability and ease of use without requiring battery power.',
     features: [
@@ -161,7 +161,7 @@ const bikeTypeDetails = reactive({
     priceRange: '$1,000 - $2,500'
   },
   'cargo-ebike': {
-    title: 'Electric Cargo Bicycle (Bucket Style)',
+    title: 'Front-Loader Cargo eBike',
     image: '/images/bikes/urban-arrow.jpg',
     description: 'An electric cargo bike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
     features: [
@@ -173,7 +173,7 @@ const bikeTypeDetails = reactive({
     priceRange: '$3,000 - $6,000'
   },
   'longtail-bike': {
-    title: 'Non-Electric Longtail Cargo Bicycle',
+    title: 'Longtail Cargo Bike',
     image: '/images/bikes/yuba-mundo.jpg',
     description: 'A non-electric longtail cargo bike is perfect for transporting people and heavy loads. With your fitness level, you can handle this sturdy bike without electric assistance while still carrying passengers or cargo.',
     features: [
@@ -185,7 +185,7 @@ const bikeTypeDetails = reactive({
     priceRange: '$1,800 - $2,200'
   },
   'longtail-ebike': {
-    title: 'Electric Longtail Cargo Bicycle',
+    title: 'Electric Longtail Cargo Bike',
     image: '/images/bikes/tern-gsd-500.jpg',
     description: 'A longtail electric cargo bike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [

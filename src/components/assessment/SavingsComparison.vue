@@ -41,7 +41,7 @@
       <div class="comparison-item car">
         <div class="comparison-header">
           <img src="/images/honda-crv.jpg" alt="New Honda CR-V">
-          <h4>New Honda CR-V</h4>
+          <h4>Average New Car</h4>
         </div>
         <div class="cost-breakdown">
           <div class="cost-item">
@@ -166,15 +166,14 @@
       <div class="bike-options-scroll-wrapper">
         <div class="bike-options-scroll-container">
         <div class="bike-options">
-          <div class="bike-option original-option"
-               @click="handleComparisonChange('')"
-               :class="{ 'active': comparisonBike === '' }">
+          <div class="bike-option original-option active">
             <div class="bike-option-image">
               <img :src="bikeImage" :alt="bikeTitle">
               <div v-if="selectedBikeType && selectedBikeType.includes('ebike')" class="electric-badge">⚡ Electric</div>
             </div>
             <div class="bike-option-details">
-              <h4>Your Recommendation</h4>
+              <div class="recommendation-pill">Your Recommendation</div>
+              <h4>{{ bikeTitle }}</h4>
               <div class="bike-price">~ {{ formatCurrency(costs.bike.purchase) }}</div>
             </div>
           </div>
@@ -529,16 +528,18 @@ function formatCurrency(value) {
 }
 
 .bike-option {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
   width: 250px;
   flex-shrink: 0;
   background-color: vars.$white;
   border-radius: vars.$border-radius;
-  overflow: hidden;
   box-shadow: vars.$shadow-md;
   transition: all 0.3s ease;
-  cursor: pointer;
   position: relative;
   border: 2px solid transparent;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-5px);
@@ -552,10 +553,11 @@ function formatCurrency(value) {
 
   &.original-option {
     border-color: vars.$secondary;
+    cursor: default;
+    box-shadow: 0 0 0 4px vars.$secondary-light;
 
-    &.active {
-      border-color: vars.$secondary;
-      box-shadow: 0 0 0 4px rgba(255, 149, 0, 0.2);
+    &:hover {
+      transform: none;
     }
   }
 }
@@ -584,6 +586,23 @@ function formatCurrency(value) {
     border-radius: 12px;
     z-index: 1;
   }
+}
+
+.recommendation-pill {
+  position: absolute;
+  top: -5px;
+  width: 150px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  display: inline-block;
+  background-color: vars.$secondary;
+  color: vars.$white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-bottom: 0.35rem;
 }
 
 .bike-option-details {
