@@ -1,7 +1,10 @@
 <template>
   <div class="buying-options" v-if="options">
-    <h3>Where to Buy</h3>
-    <p class="buying-subtitle">Specific models to consider at different price points.</p>
+    <h3>Some Potential Options</h3>
+    <p class="buying-subtitle">
+      Here's some specific models to consider at different price points! Use this as a starting
+      point, we're not recommending any specific model.
+    </p>
 
     <div class="tiers">
       <a

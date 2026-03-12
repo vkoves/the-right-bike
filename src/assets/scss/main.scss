@@ -11,6 +11,10 @@ html {
   padding: 0;
 }
 
+[id] {
+  scroll-margin-top: 5rem;
+}
+
 :focus-visible {
   outline: 2px solid vars.$primary-dark;
   outline-offset: 3px;

@@ -1,6 +1,6 @@
 <template>
   <div class="savings-section">
-    <h2 class="savings-heading">Potential Savings vs. Car Ownership</h2>
+    <h2 class="savings-heading" id="savings">Potential Savings vs. Car Ownership</h2>
     <p class="savings-intro">See how much you could save by choosing a bike instead of a new car</p>
 
 
@@ -42,7 +42,7 @@
 
     <savings-faq-section :savings-amount="savingsAmount" />
 
-    <bike-buying-options :bike-type="displayedBikeType" />
+    <bike-buying-options id="buying-options" :bike-type="displayedBikeType" />
 
     <div class="local-shops">
       <div class="local-shops-icon">🏪</div>
@@ -60,8 +60,10 @@
       </div>
     </div>
 
+    <hr class="section-divider">
+
     <!-- Bike comparison grid -->
-    <div class="bike-comparison-grid">
+    <div class="bike-comparison-grid" id="compare">
       <h3>
         <p>Want to check out something else?</p>
         Compare With Other Bikes
@@ -245,6 +247,12 @@ function formatCurrency(value) {
 <style lang="scss" scoped>
 @use 'sass:color';
 @use '../../assets/scss/variables' as vars;
+
+.section-divider {
+  border: none;
+  border-top: 1px solid vars.$border-light;
+  margin: 2rem 0;
+}
 
 .savings-section {
   background-color: vars.$lightest-gray;

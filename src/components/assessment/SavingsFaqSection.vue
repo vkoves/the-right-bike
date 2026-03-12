@@ -1,5 +1,5 @@
 <template>
-  <div class="faq-section">
+  <div class="faq-section" id="car-faq">
     <h3>What if I need a car sometimes? 🤔</h3>
     <div class="faq-content">
       <p>Even with a bike as your primary transportation, you'll occasionally need a car for certain trips. Here are cost-effective alternatives to car ownership:</p>

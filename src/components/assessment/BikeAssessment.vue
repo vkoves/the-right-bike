@@ -49,6 +49,13 @@
             @bike-change="handleBikeChange"
           />
 
+          <nav class="results-jump-links" aria-label="Jump to section">
+            <div class="jump-label">Jump To</div>
+            <a href="#savings">💰 Savings</a>
+            <a href="#car-faq">🚗 Car FAQ</a>
+            <a href="#buying-options">🛒 Options</a>
+          </nav>
+
           <savings-comparison
             :bike-title="recommendationDetails.title"
             :bike-image="recommendationDetails.image"
@@ -390,6 +397,39 @@ h1 {
   text-align: center;
 }
 
+.results-jump-links {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.5rem 0 2rem;
+
+  .jump-label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: vars.$text-muted;
+    letter-spacing: 0.05em;
+    width: 100%;
+  }
+
+  a {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background-color: vars.$primary-lighter;
+    color: vars.$primary;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+      background-color: vars.$primary;
+      color: vars.$white;
+    }
+  }
+}
+
 h2 {
   text-align: center;
   margin-bottom: 0.5rem;
@@ -409,6 +449,10 @@ h2 {
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
+  .page-container {
+    padding: 1.5rem;
+  }
+
   .assessment-container {
     padding: 1rem 0;
     background-color: transparent;
