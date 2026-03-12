@@ -188,7 +188,7 @@ li {
     flex-direction: column;
   }
 
-  .viktor-bio {
+  .about-section .viktor-bio {
     flex-direction: column;
     flex-basis: auto;
   }

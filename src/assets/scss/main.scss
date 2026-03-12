@@ -18,6 +18,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  &.-fit-viewport {
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 
 .main-content {
@@ -31,13 +36,13 @@ footer {
   font-size: 0.9rem;
   background-color: vars.$bg-footer;
   border-top: 1px solid vars.$border-light;
-  
+
   a {
     color: vars.$primary;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s;
-    
+
     &:hover {
       color: vars.$primary-dark;
       text-decoration: underline;
@@ -69,7 +74,7 @@ button {
   border-radius: vars.$border-radius-sm;
   cursor: pointer;
   transition: background-color 0.3s;
-  
+
   &:hover {
     background-color: vars.$primary-dark;
   }

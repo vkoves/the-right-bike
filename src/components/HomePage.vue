@@ -2,7 +2,12 @@
   <div class="home-page">
     <div class="hero-container">
       <div class="hero-content">
-        <h1>Discover Your Perfect Ride</h1>
+        <h1>
+          Discover Your Perfect Bike <br>
+          <span class="smaller">
+            With Just 3 Questions!
+          </span>
+        </h1>
         <p class="subtitle">Find out if cycling could replace some of your car trips, improve your health, and save you money.</p>
 
         <div class="benefits-summary">
@@ -143,11 +148,12 @@ onUnmounted(() => {
 @use '../assets/scss/variables' as vars;
 
 .home-page {
-  height: calc(100vh - 60px); /* Adjust based on header height */
+  height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: #{vars.$breakpoint-mobile}) {
-    height: auto;
     overflow: visible;
     min-height: calc(100vh - 60px);
     display: flex;
@@ -156,16 +162,17 @@ onUnmounted(() => {
 }
 
 .hero-container {
-  height: 100%;
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   background: vars.$bg-hero;
 }
 
 .hero-content {
   flex: 1;
   padding: 2rem 4rem;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 h1 {
@@ -173,6 +180,11 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   line-height: 1.2;
+
+  .smaller {
+    font-size: 0.75em;
+    font-weight: normal;
+  }
 }
 
 .subtitle {
@@ -245,6 +257,7 @@ h1 {
 /* 3D Carousel Styles */
 .bike-showcase {
   flex: 1;
+  max-width: 850px;
   position: relative;
   display: flex;
   align-items: center;
