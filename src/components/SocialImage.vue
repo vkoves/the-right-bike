@@ -41,14 +41,9 @@
 </template>
 
 <style>
-/* Non-scoped: override global body/wrapper styles for screenshot environment */
-body {
-  overflow: hidden;
-}
 
 .app-wrapper {
   min-height: unset !important;
-  height: 100vh;
   overflow: hidden;
 }
 </style>
