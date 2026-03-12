@@ -1,8 +1,7 @@
 <template>
-  <div class="recommendation-section">
-    <div class="result-card">
-      <div class="recommendation-badge">Recommended</div>
-      
+  <div class="recommendation-card">
+    <div class="recommendation-badge">Recommended</div>
+
       <div class="result-image">
         <img :src="recommendationDetails.image" :alt="recommendationDetails.title">
       </div>
@@ -10,22 +9,21 @@
         <div class="title-row">
           <h3>{{ recommendationDetails.title }}</h3>
         </div>
-        
+
         <p class="result-description">{{ recommendationDetails.description }}</p>
-        
+
         <div class="feature-list">
           <div class="feature" v-for="(feature, index) in recommendationDetails.features" :key="index">
             <span class="feature-icon">✓</span>
             <span>{{ feature }}</span>
           </div>
         </div>
-        
+
         <div class="price-range">
-          <span>Typical Price Range:</span>
+          <span>Typical Price Range: </span>
           <strong>{{ recommendationDetails.priceRange }}</strong>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -42,11 +40,7 @@ defineProps({
 @use 'sass:color';
 @use '../../assets/scss/variables' as vars;
 
-.recommendation-section {
-  margin-bottom: 2rem;
-}
-
-.result-card {
+.recommendation-card {
   background-color: vars.$lightest-gray;
   border-radius: 12px;
   padding: 2rem;
@@ -63,7 +57,7 @@ defineProps({
 .result-image {
   margin-bottom: 1.5rem;
   text-align: center;
-  
+
   img {
     max-width: 100%;
     height: auto;
@@ -93,12 +87,12 @@ defineProps({
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
-  
+
   label {
     font-size: 0.9rem;
     color: vars.$text-secondary;
   }
-  
+
   select {
     padding: 0.5rem;
     border-radius: 5px;
@@ -108,13 +102,13 @@ defineProps({
     color: vars.$text-body;
     cursor: pointer;
     min-width: 200px;
-    
+
     &:focus {
       outline: none;
       border-color: vars.$primary;
       box-shadow: 0 0 0 2px rgba(44, 138, 87, 0.2);
     }
-    
+
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
@@ -133,7 +127,7 @@ defineProps({
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  
+
   &:hover {
     background-color: vars.$primary-lighter;
   }
@@ -150,6 +144,7 @@ defineProps({
   font-weight: 600;
   color: vars.$white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: fit-content;
 }
 
 .comparison-badge {
@@ -192,20 +187,27 @@ defineProps({
   border-top: 1px solid vars.$border-gray;
 }
 
-@media (min-width: 768px) {
-  .result-card {
+@media (min-width: #{vars.$breakpoint-mobile-up}) {
+  .recommendation-card {
     flex-direction: row;
     align-items: flex-start;
   }
-  
+
   .result-image {
     flex: 0 0 40%;
     margin-right: 2rem;
     margin-bottom: 0;
   }
-  
+
   .result-content {
     flex: 1;
+  }
+}
+
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .recommendation-card {
+    background-color: vars.$white;
+    padding: 1rem;
   }
 }
 
@@ -214,23 +216,23 @@ defineProps({
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .result-content h3 {
     margin-right: 0;
     margin-bottom: 1rem;
   }
-  
+
   .compare-selector {
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 1.5rem;
-    
+
     select {
       width: 100%;
     }
   }
-  
+
   .comparison-badge,
   .recommendation-badge {
     position: static;

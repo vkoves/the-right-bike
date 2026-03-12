@@ -163,7 +163,8 @@
     <!-- Bike comparison grid -->
     <div class="bike-comparison-grid">
       <h3>Compare with other bikes</h3>
-      <div class="bike-options-scroll-container">
+      <div class="bike-options-scroll-wrapper">
+        <div class="bike-options-scroll-container">
         <div class="bike-options">
           <div class="bike-option original-option"
                @click="handleComparisonChange('')"
@@ -191,6 +192,7 @@
               <div class="bike-price">~ {{ formatCurrency(BIKE_COSTS[type.value].purchase) }}</div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -460,11 +462,18 @@ function formatCurrency(value) {
   50% { transform: translateX(-5px); }
 }
 
+.bike-options-scroll-wrapper {
+  border-radius: vars.$border-radius;
+  border: 0.125rem solid vars.$lighter-gray;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
 .bike-options-scroll-container {
   width: 100%;
   overflow-x: auto;
-  padding: 0.5rem 0 40px 0;
-  margin-bottom: 0.5rem;
+  padding: 1rem 0 40px 0;
+  background-color: vars.$white;
 
   /* Custom scrollbar styling */
   scrollbar-width: auto; /* Firefox */
@@ -555,6 +564,7 @@ function formatCurrency(value) {
   position: relative;
   width: 100%;
   height: auto;
+  padding: 0.5rem;
 
   img {
     width: 100%;
@@ -608,7 +618,7 @@ function formatCurrency(value) {
 
 .comparison-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: stretch;
   gap: 1rem;
@@ -635,7 +645,6 @@ function formatCurrency(value) {
     object-fit: contain;
     margin-bottom: 1rem;
     border-radius: 8px;
-    box-shadow: vars.$shadow-image;
     transition: all 0.3s ease;
   }
 
@@ -660,6 +669,10 @@ function formatCurrency(value) {
   padding-bottom: 0.5rem;
   border-bottom: 1px solid vars.$border-lighter;
 
+  &:has(+ .total) {
+    border-bottom: none;
+  }
+
   &.total {
     font-weight: bold;
     font-size: 1.1rem;
@@ -677,6 +690,7 @@ function formatCurrency(value) {
 .cost-value {
   font-weight: 600;
   color: vars.$dark;
+  white-space: nowrap;
 }
 
 .comparison-divider {
@@ -872,7 +886,7 @@ function formatCurrency(value) {
 
 /* FAQ Section Styles */
 .faq-section {
-  background-color: vars.$lightest-gray;
+  background-color: vars.$white;
   border-radius: 12px;
   padding: 2rem;
   margin: 2rem 0;
@@ -1053,18 +1067,20 @@ function formatCurrency(value) {
   }
 
   .close-footnotes {
-    background-color: vars.$light-gray;
+    background-color: vars.$lighter-gray;
     border: none;
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    font-size: 1.5rem;
-    line-height: 1;
+    min-width: 30px;
+    font-size: 1.2rem;
+    line-height: 30px;
+    padding: 0;
     cursor: pointer;
-    color: vars.$gray;
+    color: vars.$dark;
 
     &:hover {
-      background-color: vars.$lighter-gray;
+      background-color: vars.$border-gray;
       color: vars.$dark;
     }
   }
@@ -1111,7 +1127,17 @@ function formatCurrency(value) {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .comparison-container {
+    flex-direction: column;
+  }
+
+  .savings-section {
+    padding: 0;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
   .savings-heading {
     font-size: 1.8rem;
   }

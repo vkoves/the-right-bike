@@ -70,7 +70,9 @@ function updateFitnessLevel(level) {
 @use '../../assets/scss/variables' as vars;
 @use "../../assets/scss/assessment";
 
-.fitness-card {
-  padding: 2rem 1.5rem;
+@media (min-width: #{vars.$breakpoint-mobile-up}) {
+  .fitness-card {
+    padding: 2rem 1.5rem;
+  }
 }
 </style>

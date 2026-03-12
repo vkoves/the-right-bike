@@ -30,8 +30,8 @@
       <div class="bike-showcase">
         <div class="carousel-3d-container">
           <div class="carousel-3d" :style="{ transform: 'rotateY(' + currentRotation + 'deg)' }">
-            <div 
-              class="carousel-item" 
+            <div
+              class="carousel-item"
               :class="{ 'active': carouselIndex === 0 }"
               :style="{ transform: 'rotateY(0deg) translateZ(250px)' }"
             >
@@ -41,8 +41,8 @@
               </div>
               <div class="caption">City Commuter</div>
             </div>
-            <div 
-              class="carousel-item" 
+            <div
+              class="carousel-item"
               :class="{ 'active': carouselIndex === 1 }"
               :style="{ transform: 'rotateY(90deg) translateZ(250px)' }"
             >
@@ -52,8 +52,8 @@
               </div>
               <div class="caption">Electric Power</div>
             </div>
-            <div 
-              class="carousel-item" 
+            <div
+              class="carousel-item"
               :class="{ 'active': carouselIndex === 2 }"
               :style="{ transform: 'rotateY(180deg) translateZ(250px)' }"
             >
@@ -63,8 +63,8 @@
               </div>
               <div class="caption">Cargo Carrier</div>
             </div>
-            <div 
-              class="carousel-item" 
+            <div
+              class="carousel-item"
               :class="{ 'active': carouselIndex === 3 }"
               :style="{ transform: 'rotateY(270deg) translateZ(250px)' }"
             >
@@ -146,7 +146,7 @@ onUnmounted(() => {
   height: calc(100vh - 60px); /* Adjust based on header height */
   overflow: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: #{vars.$breakpoint-mobile}) {
     height: auto;
     overflow: visible;
     min-height: calc(100vh - 60px);
@@ -218,13 +218,13 @@ h1 {
   overflow: hidden;
   z-index: 1;
   letter-spacing: 0.5px;
-  
+
   &:hover {
     background: vars.$primary-dark;
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(44, 138, 87, 0.5);
   }
-  
+
   &:before {
     content: '';
     position: absolute;
@@ -236,7 +236,7 @@ h1 {
     transition: 0.5s;
     z-index: -1;
   }
-  
+
   &:hover:before {
     left: 100%;
   }
@@ -282,14 +282,14 @@ h1 {
   justify-content: center;
   transition: all 0.5s ease;
   z-index: 1;
-  
+
   .image-container {
     position: relative;
     max-width: 90%;
     max-height: 90%;
     margin-bottom: 1rem;
   }
-  
+
   img {
     width: 100%;
     object-fit: contain;
@@ -301,7 +301,7 @@ h1 {
     filter: blur(2px) brightness(0.7);
     transform: scale(0.95);
   }
-  
+
   .overlay {
     position: absolute;
     top: 0;
@@ -314,19 +314,19 @@ h1 {
     opacity: 1;
     pointer-events: none;
   }
-  
+
   &.active {
     z-index: 5;
-    
+
     img {
       filter: blur(0) brightness(1);
       transform: scale(1);
-      
+
       &:hover {
         transform: scale(1.05);
       }
     }
-    
+
     .overlay {
       opacity: 0;
     }
@@ -346,7 +346,7 @@ h1 {
   transform: translateY(-5px);
   position: relative;
   z-index: 2;
-  
+
   .active & {
     opacity: 1;
     transform: translateY(0);
@@ -380,14 +380,14 @@ h1 {
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   font-weight: bold;
-  
+
   &:hover {
     background-color: vars.$bg-control-hover;
     color: vars.$text-body;
     transform: scale(1.1);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
-  
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(200, 200, 200, 0.5), 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -422,7 +422,7 @@ h1 {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{vars.$breakpoint-mobile}) {
   .hero-container {
     flex: 1;
   }
@@ -436,7 +436,7 @@ h1 {
   }
 
   .cta-button {
-    padding: 1rem 2.5rem;
+    padding: 1rem;
     font-size: 1.1rem;
     width: 80%;
     max-width: 300px;

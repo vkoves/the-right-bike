@@ -1,7 +1,26 @@
 @use 'sass:color';
 @use './variables' as vars;
 
-/* Common Styles for Assessment Components */
+/**
+ * assessment.scss — Shared styles for all assessment step components
+ * (TransportationNeedsStep, GeographyStep, FitnessStep, etc.)
+ *
+ * This file is @use'd directly by each step component's scoped <style> block,
+ * NOT by BikeAssessment.vue. Because Vue scoped styles don't pierce child
+ * components, any styles that need to apply inside step components must live
+ * here rather than in BikeAssessment.vue.
+ *
+ * What belongs here:
+ *   - option-card, options-grid, option-icon/label/description
+ *   - step headings (h2) and subtitles
+ *   - navigation buttons (btn-prev, btn-next, etc.)
+ *   - responsive overrides for all of the above
+ *
+ * What belongs in BikeAssessment.vue's scoped <style>:
+ *   - page-level layout (page-container, assessment-container, progress-bar)
+ *   - the page h1 and page-intro blurb
+ *   - step transition animations
+ */
 
 .step-container {
   margin-bottom: vars.$spacing-xl;
@@ -38,6 +57,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: vars.$spacing-md;
   /* Button reset styles */
   appearance: none;
   font: inherit;
@@ -80,7 +100,6 @@ h2 {
 
 .option-icon {
   font-size: 2rem;
-  margin-bottom: vars.$spacing-md;
 }
 
 .option-label {
@@ -89,7 +108,6 @@ h2 {
 }
 
 .option-description {
-  margin-top: vars.$spacing-sm;
   font-size: 0.9rem;
   color: vars.$gray;
 }
@@ -160,7 +178,27 @@ h2 {
 }
 
 /* Responsive styles */
-@media (max-width: 600px) {
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  h2 {
+    font-size: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.8125rem;
+  }
+
+  .option-card {
+    padding: vars.$spacing-md;
+    flex-direction: row;
+    gap: vars.$spacing-md;
+    text-align: left;
+  }
+
+  .option-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+
   .options-grid {
     grid-template-columns: 1fr;
   }

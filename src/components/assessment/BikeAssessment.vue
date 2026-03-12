@@ -363,6 +363,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+/**
+ * BikeAssessment.vue scoped styles — page-level layout only.
+ *
+ * These styles are scoped to this component and do NOT reach child components
+ * (TransportationNeedsStep, GeographyStep, FitnessStep). Any styles that need
+ * to apply inside those components must go in assets/scss/assessment.scss,
+ * which each step component imports directly.
+ */
 @use "sass:color";
 @use '../../assets/scss/variables' as vars;
 
@@ -435,9 +443,26 @@ h2 {
   transform: translateY(20px);
 }
 
-@media (max-width: 600px) {
+@media (max-width: #{vars.$breakpoint-mobile}) {
   .assessment-container {
-    padding: 1.5rem;
+    padding: 1rem 0;
+    background-color: transparent;
+    box-shadow: none;
   }
+
+  .progress-bar { margin-bottom: 1rem; }
+
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .page-intro {
+    display: none;
+  }
+
 }
 </style>

@@ -183,7 +183,7 @@ li {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{vars.$breakpoint-mobile}) {
   .-two-cols {
     flex-direction: column;
   }

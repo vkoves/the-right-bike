@@ -100,16 +100,14 @@ function toggleNeed(need) {
 @use '../../assets/scss/variables' as vars;
 @use "../../assets/scss/assessment";
 
-/* Component-specific overrides */
-.option-card {
-  padding: 1.5rem 1rem;
-  justify-content: space-between;
-  height: 100%;
-  min-height: 180px;
+@media (min-width: #{vars.$breakpoint-mobile-up}) {
+  .option-card {
+    padding: 1.5rem 1rem;
+    height: 100%;
+  }
 }
 
 .option-icon {
-  margin-bottom: 0.5rem;
   flex-shrink: 0;
 }
 
@@ -118,25 +116,13 @@ function toggleNeed(need) {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
-  justify-content: flex-start;
+  gap: 0.25rem;
   width: 100%;
-}
-
-.option-label {
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-  width: 80%;
 }
 
 .option-description {
   font-size: 0.8rem;
   line-height: 1.3;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
+
 </style>

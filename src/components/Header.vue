@@ -52,21 +52,21 @@ nav {
     margin: 0;
     padding: 0;
   }
-  
+
   li {
     margin-left: 2rem;
   }
-  
+
   a {
     color: vars.$white;
     text-decoration: none;
     font-weight: 500;
     transition: opacity 0.3s;
-    
+
     &:hover {
       opacity: 0.8;
     }
-    
+
     &.router-link-active {
       font-weight: 700;
       border-bottom: 2px solid vars.$white;
@@ -74,9 +74,17 @@ nav {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .site-header {
+    padding: 0.75rem 0.5rem;
+  }
+
   .header-container {
     padding: 0 1rem;
+  }
+
+  .logo a {
+    font-size: 1.1rem;
   }
 
   .hide-mobile {
