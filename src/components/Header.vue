@@ -6,8 +6,8 @@
       </div>
       <nav>
         <ul>
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/assessment">Bike Finder</router-link></li>
+          <li class="hide-mobile"><router-link to="/">Home</router-link></li>
+          <li class="hide-mobile"><router-link to="/assessment">Bike Finder</router-link></li>
           <li><router-link to="/about">About</router-link></li>
         </ul>
       </nav>
@@ -76,19 +76,11 @@ nav {
 
 @media (max-width: 768px) {
   .header-container {
-    flex-direction: column;
-    padding: 1rem;
+    padding: 0 1rem;
   }
-  
-  nav {
-    ul {
-      margin-top: 1rem;
-    }
-    
-    li {
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
+
+  .hide-mobile {
+    display: none;
   }
 }
 </style>

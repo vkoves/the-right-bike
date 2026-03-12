@@ -145,6 +145,14 @@ onUnmounted(() => {
 .home-page {
   height: calc(100vh - 60px); /* Adjust based on header height */
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: auto;
+    overflow: visible;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .hero-container {
@@ -415,6 +423,10 @@ h1 {
 }
 
 @media (max-width: 768px) {
+  .hero-container {
+    flex: 1;
+  }
+
   h1 {
     font-size: 2rem;
   }
@@ -437,7 +449,9 @@ h1 {
   }
 
   .bike-showcase {
+    flex: none;
     height: 300px;
+    margin-top: 1rem;
   }
 
   .carousel-3d {

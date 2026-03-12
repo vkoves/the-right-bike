@@ -49,6 +49,10 @@ h1 {
   color: vars.$primary;
   font-size: 2.5rem;
   margin-bottom: vars.$spacing-md;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 }
 
 h2 {

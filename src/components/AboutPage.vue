@@ -184,8 +184,13 @@ li {
 }
 
 @media (max-width: 768px) {
-  .two-col {
+  .-two-cols {
     flex-direction: column;
+  }
+
+  .viktor-bio {
+    flex-direction: column;
+    flex-basis: auto;
   }
 
   .benefits-grid {
