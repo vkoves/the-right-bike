@@ -54,6 +54,7 @@
             <a href="#savings">💰 Savings</a>
             <a href="#car-faq">🚗 Car FAQ</a>
             <a href="#buying-options">🛒 Options</a>
+            <router-link to="/gear-guide">⛑️ Gear Guide</router-link>
           </nav>
 
           <savings-comparison
@@ -65,6 +66,13 @@
             @bike-change="handleBikeChange"
             key="savings-component"
           />
+
+          <div class="gear-guide-cta">
+            <p>Now that you know your bike, make sure you have the essentials.</p>
+            <router-link to="/gear-guide" class="gear-guide-btn">
+              View Essential Gear Guide &rarr;
+            </router-link>
+          </div>
 
           <results-footer @restart="restartAssessment" />
         </div>
@@ -434,6 +442,34 @@ h2 {
   text-align: center;
   margin-bottom: 0.5rem;
   color: vars.$dark;
+}
+
+.gear-guide-cta {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: vars.$primary-lighter;
+  border-radius: 8px;
+  text-align: center;
+
+  p {
+    margin-bottom: 0.75rem;
+    color: vars.$text-secondary;
+  }
+}
+
+.gear-guide-btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background-color: vars.$primary;
+  color: vars.$white;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: vars.$primary-dark;
+  }
 }
 
 /* Animations */

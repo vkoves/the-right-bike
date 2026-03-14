@@ -8,6 +8,7 @@
         <ul>
           <li class="hide-mobile"><router-link to="/">Home</router-link></li>
           <li class="hide-mobile"><a href="#" @click.prevent="goToAssessment">Bike Finder</a></li>
+          <li class="hide-mobile"><router-link to="/gear-guide">Gear Guide</router-link></li>
           <li><router-link to="/about">About</router-link></li>
         </ul>
       </nav>
