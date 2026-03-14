@@ -54,3 +54,27 @@ export const NICE_TO_HAVE_GEAR = [
     },
   },
 ];
+
+export const WINTER_GEAR = [
+  {
+    id: 'studded-tires',
+    image: '/images/gear/studded-tires.webp',
+    title: 'Studded Tires',
+    description:
+      'The single biggest upgrade for winter riding. Metal studs bite into ice and packed snow, giving you confident traction when regular tires would slip out.',
+  },
+  {
+    id: 'bar-mitts',
+    image: '/images/gear/bar-mitts.webp',
+    title: 'Bar Mitts',
+    description:
+      'Handlebar-mounted pogies keep your hands warm without bulky gloves, so you keep full brake and shift control even in sub-freezing temps.',
+  },
+  {
+    id: 'fenders',
+    image: '/images/gear/fenders.webp',
+    title: 'Fenders',
+    description:
+      'Full-coverage fenders block road slush, salt spray, and puddle splash from soaking you and corroding your drivetrain all winter long.',
+  },
+];

@@ -44,6 +44,25 @@
       </div>
     </div>
 
+    <div class="winter-section">
+      <h2 class="winter-heading">Winter Riding &#10052;&#65039;</h2>
+      <p class="winter-intro">
+        Planning to ride year-round? These upgrades make cold-weather commuting safe and comfortable.
+        See <a href="https://www.nytimes.com/wirecutter/reviews/best-rain-gear-for-biking/" target="_blank" rel="noopener noreferrer" class="winter-link">Wirecutter's Foul-Weather Bike Commuting Guide</a> for full reviews.
+      </p>
+
+      <div class="gear-grid">
+        <div v-for="item in WINTER_GEAR" :key="item.id" class="gear-card -winter">
+          <img v-if="item.image" :src="item.image" :alt="item.title" class="gear-image" :class="item.imageClass">
+          <div class="gear-card-body">
+            <span v-if="item.emoji" class="gear-emoji">{{ item.emoji }}</span>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="page-footer">
       <p>Haven't found your bike yet?</p>
       <router-link to="/assessment" class="assessment-link">Take the Bike Assessment &rarr;</router-link>
@@ -52,7 +71,7 @@
 </template>
 
 <script setup>
-import { ESSENTIAL_GEAR, NICE_TO_HAVE_GEAR } from '../constants/essentialGear';
+import { ESSENTIAL_GEAR, NICE_TO_HAVE_GEAR, WINTER_GEAR } from '../constants/essentialGear';
 </script>
 
 <style lang="scss" scoped>
@@ -143,6 +162,48 @@ h1 {
     text-decoration: underline;
   }
 }
+
+.winter-section {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background-color: vars.$secondary-light;
+  border-radius: 8px;
+}
+
+.winter-heading {
+  color: vars.$secondary-dark;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.winter-intro {
+  color: vars.$text-secondary;
+  margin-bottom: 1.5rem;
+
+  a {
+    color: vars.$secondary-dark;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.gear-card.-winter {
+  background-color: vars.$white;
+
+  h3 {
+    color: vars.$secondary-dark;
+  }
+}
+
+.gear-emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
 
 .page-footer {
   margin-top: 3rem;
