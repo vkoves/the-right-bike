@@ -108,7 +108,7 @@
           :key="bike.key"
           class="gallery-card"
           :href="'/assessment?bike=' + bike.key"
-          @click.prevent="viewBikeSavings(bike.key)"
+          @click="navigateToBike($event, bike.key)"
         >
           <div class="gallery-card-image">
             <img :src="bike.image" :alt="bike.title">
@@ -142,7 +142,9 @@ function startAssessment() {
   router.push('/assessment');
 }
 
-function viewBikeSavings(bikeKey) {
+function navigateToBike(event, bikeKey) {
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.button !== 0) return;
+  event.preventDefault();
   router.push({ path: '/assessment', query: { bike: bikeKey } });
 }
 
@@ -564,12 +566,12 @@ h1 {
 
 .gallery-card-image {
   position: relative;
+  background-color: vars.$white;
 
   img {
     width: 100%;
     height: 180px;
     object-fit: contain;
-    background-color: vars.$white;
     padding: 0.75rem;
     display: block;
   }
