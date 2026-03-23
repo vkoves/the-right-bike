@@ -35,14 +35,26 @@
 
     <div class="comparison-item car">
       <div class="comparison-header">
-        <img src="/images/honda-crv.jpg" alt="New Honda CR-V">
-        <h4>Average New Car</h4>
+        <img src="/images/honda-crv.jpg" alt="Car">
+        <div class="car-type-toggle">
+          <button
+            class="toggle-option"
+            :class="{ active: isNew }"
+            @click="emit('car-type-change', true)"
+          >New</button>
+          <button
+            class="toggle-option"
+            :class="{ active: !isNew }"
+            @click="emit('car-type-change', false)"
+          >Used</button>
+        </div>
+        <h4>Average {{ isNew ? 'New' : 'Used' }} Car</h4>
       </div>
       <div class="cost-breakdown">
         <div class="cost-item">
           <span class="cost-label">Initial Purchase</span>
           <span class="cost-value">
-            {{ formatCurrency(costs.car.purchase) }}
+            {{ formatCurrency(isNew ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase) }}
             <sup class="footnote-link" @click="showFootnote('purchase')">¹</sup>
           </span>
         </div>
@@ -83,10 +95,11 @@
     </div>
     <div class="footnote-content">
       <div class="footnote" v-if="activeFootnote === 'purchase' || activeFootnote === 'all'">
-        <p><strong>¹ Car purchase price:</strong> $48,500 (Average between $48,401 - $48,641)</p>
+        <p v-if="!isNew"><strong>¹ Used car purchase price:</strong> {{ formatCurrency(CAR_COSTS.usedPurchase) }} average (Cox Automotive, {{ CAR_COSTS.usedPurchaseUpdatedAt }})</p>
+        <p v-else><strong>¹ New car purchase price:</strong> {{ formatCurrency(CAR_COSTS.purchase) }} average (Cox Automotive, {{ CAR_COSTS.purchaseUpdatedAt }})</p>
         <p class="source-link">
-          <a :href="carCostSources.purchaseSource" target="_blank">
-            Source: Spectrum Local News (September 2024)
+          <a :href="isNew ? carCostSources.purchaseSource : carCostSources.usedPurchaseSource" target="_blank">
+            Source: Cox Automotive ({{ isNew ? CAR_COSTS.purchaseUpdatedAt : CAR_COSTS.usedPurchaseUpdatedAt }})
           </a>
         </p>
       </div>
@@ -134,10 +147,14 @@ defineProps({
   bikeTotalCost: { type: Number, required: true },
   carTotalCost: { type: Number, required: true },
   isComparing: { type: Boolean, default: false },
+  isNew: { type: Boolean, default: true },
 });
+
+const emit = defineEmits(['car-type-change']);
 
 const carCostSources = {
   purchaseSource: CAR_COSTS.purchaseSource,
+  usedPurchaseSource: CAR_COSTS.usedPurchaseSource,
   maintenanceSource: CAR_COSTS.maintenanceSource,
   fuelSource: CAR_COSTS.fuelSource,
   insuranceSource: CAR_COSTS.insuranceSource,
@@ -187,6 +204,9 @@ function formatCurrency(value) {
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid vars.$border-lighter;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   img {
     width: 150px;
@@ -258,6 +278,36 @@ function formatCurrency(value) {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+}
+
+.car-type-toggle {
+  display: inline-flex;
+  background-color: vars.$lighter-gray;
+  border-radius: 20px;
+  padding: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.toggle-option {
+  border: none;
+  background: none;
+  padding: 0.25rem 0.85rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: vars.$gray;
+  transition: background-color 0.2s, color 0.2s;
+
+  &.active {
+    background-color: vars.$white;
+    color: vars.$dark;
+    box-shadow: vars.$shadow-sm;
+  }
+
+  &:not(.active):hover {
+    color: vars.$dark;
+  }
 }
 
 .comparing-badge {

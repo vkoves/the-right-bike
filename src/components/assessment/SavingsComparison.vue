@@ -1,7 +1,7 @@
 <template>
   <div class="savings-section">
-    <h2 class="savings-heading" id="savings">Potential Savings vs. Car Ownership</h2>
-    <p class="savings-intro">See how much you could save by choosing a bike instead of a new car</p>
+    <h2 class="savings-heading" id="savings">Potential Savings vs Buying A <span class="car-type-label">{{ isNew ? 'New' : 'Used' }}</span> Car</h2>
+    <p class="savings-intro">See how much you could save by choosing a bike instead of a car</p>
 
 
     <cost-comparison-table
@@ -11,6 +11,8 @@
       :bike-total-cost="bikeTotalCost"
       :car-total-cost="carTotalCost"
       :is-comparing="isComparing"
+      :is-new="isNew"
+      @car-type-change="isNew = $event"
     />
 
     <div class="savings-highlight">
@@ -24,17 +26,23 @@
           <div class="benefit-card">
             <div class="benefit-emoji">✈️</div>
             <h5>Travel</h5>
-            <p>Take {{ Math.round(savingsAmount / 2000) }} international vacations</p>
+            <p>Take {{ Math.round(savingsAmount / IntlVacationCost) }} international vacations</p>
+            <p class="vacation-cost-note">at ~{{ formatCurrency(IntlVacationCost) }} per trip</p>
           </div>
           <div class="benefit-card">
             <div class="benefit-emoji">🏠</div>
             <h5>Housing</h5>
-            <p>Save for a down payment on your dream home</p>
+            <p>Put this towards a down payment on your dream home</p>
           </div>
           <div class="benefit-card">
             <div class="benefit-emoji">📈</div>
             <h5>Invest</h5>
-            <p>Worth {{ formatCurrency(savingsAmount * 1.5) }} in 10 years at 7% growth</p>
+            <p>
+              Worth <strong>{{ formatRounded(savings10Year) }} in 10 years</strong> at 7% growth
+            </p>
+            <p class="long-term-growth">
+              Or <strong>{{ formatRounded(savings40Year) }} over 40 years</strong>, like in your 401k!
+            </p>
           </div>
         </div>
       </div>
@@ -106,10 +114,17 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
-import { BIKE_COSTS } from '../../constants/bikeCosts';
+import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
+
 import CostComparisonTable from './CostComparisonTable.vue';
 import SavingsFaqSection from './SavingsFaqSection.vue';
 import BikeBuyingOptions from './BikeBuyingOptions.vue';
+
+const EstGrowthRate = 0.07;
+const InvestmentYearsShort = 10;
+const InvestmentYearsLong = 40;
+// a pretty rough guestimate, but you can definitely take an international vacation for this much
+const IntlVacationCost = 2_500;
 
 const props = defineProps({
   bikeTitle: {
@@ -163,6 +178,9 @@ const props = defineProps({
 
 const emit = defineEmits(['bike-change']);
 
+// State for new vs used car toggle
+const isNew = ref(true);
+
 // State for comparison dropdown
 const comparisonBike = ref('');
 
@@ -186,7 +204,8 @@ const bikeTotalCost = computed(() => {
 });
 
 const carTotalCost = computed(() => {
-  return props.costs.car.purchase +
+  const purchase = isNew.value ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase;
+  return purchase +
          (props.costs.car.maintenance * 5) +
          (props.costs.car.fuel * 5) +
          (props.costs.car.insurance * 5);
@@ -195,6 +214,9 @@ const carTotalCost = computed(() => {
 const savingsAmount = computed(() => {
   return carTotalCost.value - bikeTotalCost.value;
 });
+
+const savings10Year = computed(() => savingsAmount.value * Math.pow(1 + EstGrowthRate, InvestmentYearsShort));
+const savings40Year = computed(() => savingsAmount.value * Math.pow(1 + EstGrowthRate, InvestmentYearsLong));
 
 // Get the current recommendation type
 const recommendationType = computed(() => {
@@ -242,6 +264,20 @@ function formatCurrency(value) {
     maximumFractionDigits: 0
   }).format(value);
 }
+
+// Rounds to nearest $1k below $1M, or "$X.XM" above
+function formatRounded(value) {
+  if (value >= 1_000_000) {
+    const millions = Math.round(value / 100_000) / 10;
+    const formatted = millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1);
+    return '$' + formatted + ' million';
+  }
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+  }).format(Math.round(value / 1000) * 1000);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -260,6 +296,10 @@ function formatCurrency(value) {
   padding: 2rem;
   margin: 2rem 0;
   box-shadow: vars.$shadow-sm;
+}
+
+.car-type-label {
+  text-decoration: underline;
 }
 
 .savings-heading {
@@ -603,6 +643,17 @@ function formatCurrency(value) {
 .benefit-emoji {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+}
+
+.long-term-growth {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.vacation-cost-note {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
 }
 
 .local-shops {

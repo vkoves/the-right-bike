@@ -6,8 +6,14 @@
 // Base costs for different vehicle types with source URLs
 export const CAR_COSTS = {
   // Initial purchase price average for a new car
-  purchase: 48500, // Average between $48,401 - $48,641
-  purchaseSource: "https://spectrumlocalnews.com/us/national/transportation/2024/09/06/average-annual-cost-to-own-and-operate-a-car-grows-to--12-297",
+  purchase: 49000,
+  purchaseSource: "https://www.coxautoinc.com/insights/feb-2026-atp-report/",
+  purchaseUpdatedAt: "Mar 2026",
+
+  // Initial purchase price average for a used car
+  usedPurchase: 25250,
+  usedPurchaseSource: "https://www.coxautoinc.com/insights/used-vehicle-inventory-february-2026",
+  usedPurchaseUpdatedAt: "Mar 2026",
 
   // Annual maintenance including oil changes, tires, and regular service
   maintenance: 900, // Range from $583 - $1,623 per year, average at $900
