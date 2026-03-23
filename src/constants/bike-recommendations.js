@@ -29,7 +29,7 @@ export const BIKE_RECOMMENDATIONS = {
     midrange: {
       model: 'Ride1Up Roadster V3',
       price: '$1,395',
-      image: null,
+      image: '/images/bike-models/ride1up-roadster-v3.webp',
       review: 'https://electricbikereview.com/ride1up/roadster-v3-st-review/'
     },
     premium: {
@@ -44,13 +44,13 @@ export const BIKE_RECOMMENDATIONS = {
     budget: {
       model: 'Mongoose Envoy',
       price: '$1,000',
-      image: null,
+      image: '/images/bike-models/mongoose-envoy.webp',
       review: 'https://www.walmart.com/ip/Mongoose-Envoy-Adult-Cargo-Bike-Large-Frame-Ages-14-and-up-Grey/2621147224'
     },
     midrange: {
       model: 'Yuba Kombi',
       price: '$1,200',
-      image: null,
+      image: '/images/bike-models/yuba-kombi.webp',
       review: 'https://www.bicycling.com/bikes-gear/a25054215/best-cargo-bikes/'
     },
     premium: {
@@ -97,7 +97,7 @@ export const BIKE_RECOMMENDATIONS = {
     premium: {
       model: 'Xtracycle Edgerunner (Classic)',
       price: '$2,500',
-      image: null,
+      image: '/images/bike-models/xtracycle-edgerunner.webp',
       review: 'https://electricbikereview.com/best-electric-cargo-bikes/'
     }
   },

@@ -119,7 +119,7 @@ $tier-premium-bg: #fef9ec;
 }
 
 .tier-image {
-  background-color: vars.$lightest-gray;
+  background-color: vars.$white;
   height: 160px;
   display: flex;
   align-items: center;
