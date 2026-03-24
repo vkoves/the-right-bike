@@ -1,5 +1,7 @@
 # Find The Right Bike
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7da8135b-611a-4c73-84ef-82ecc92810a6/deploy-status)](https://app.netlify.com/projects/therightbike/deploys)
+
 A web app that helps people figure out if a bike could replace some of their car trips — and how much they could save if it did.
 
 ## Features
