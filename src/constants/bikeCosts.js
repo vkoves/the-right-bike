@@ -31,6 +31,9 @@ export const CAR_COSTS = {
   insuranceSource2: "https://www.bankrate.com/insurance/car/average-cost-of-car-insurance/"
 };
 
+// Annual electricity cost for e-bikes: $0.20/kWh × 500 Wh battery × ~180 charges/year ≈ $35
+const EbikeElectricityCost = 35;
+
 // Costs for different bike types
 export const BIKE_COSTS = {
   // Regular non-electric bicycle
@@ -44,7 +47,7 @@ export const BIKE_COSTS = {
   'commuter-ebike': {
     purchase: 2500,
     maintenance: 250,
-    fuel: 50, // Electricity cost
+    fuel: EbikeElectricityCost,
     insurance: 100
   },
   // Traditional cargo bicycle (non-electric)
@@ -58,7 +61,7 @@ export const BIKE_COSTS = {
   'cargo-ebike': {
     purchase: 4500,
     maintenance: 350,
-    fuel: 75, // Electricity cost
+    fuel: EbikeElectricityCost,
     insurance: 150
   },
   // Non-electric longtail cargo bicycle
@@ -72,7 +75,7 @@ export const BIKE_COSTS = {
   'longtail-ebike': {
     purchase: 5000,
     maintenance: 400,
-    fuel: 100, // Electricity cost
+    fuel: EbikeElectricityCost,
     insurance: 200
   },
   // Default fallback values
