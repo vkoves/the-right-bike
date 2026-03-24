@@ -31,7 +31,8 @@ const router = useRouter();
 const route = useRoute();
 
 function goToAssessment() {
-  // If already on the assessment, force a reset via query param
+  // If already on /assessment, force a reset via query param since the path
+  // doesn't change. For /bike/:type the path change triggers a remount.
   if (route.name === 'Assessment') {
     router.push({ name: 'Assessment', query: { _r: '1' } });
   } else {

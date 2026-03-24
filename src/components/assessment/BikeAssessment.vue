@@ -350,6 +350,9 @@ onBeforeRouteUpdate((to) => {
     fitnessLevel.value = '';
     recommendation.value = '';
     idealBikeType.value = null;
+    showStickyHeader.value = false;
+    stickysavings.value = 0;
+    stickyCarLabel.value = '';
 
     const { _r, ...rest } = to.query;
     router.replace({ name: 'Assessment', query: rest });

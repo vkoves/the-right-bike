@@ -3,7 +3,7 @@
     <template v-if="!route.meta.bare">
       <Header />
       <main class="main-content">
-        <router-view />
+        <router-view :key="route.path" />
       </main>
       <footer>
         <p>
