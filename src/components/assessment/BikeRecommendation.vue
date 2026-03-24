@@ -1,26 +1,33 @@
 <template>
-  <div class="recommendation-card">
-    <div class="recommendation-badge">Recommended</div>
-
+  <div>
     <div v-if="idealBikeType && allBikeTypes[idealBikeType]" class="ideal-note">
+      <h4 class="ideal-note-heading">Your Ideal Bike Might Be Too Hard To Store</h4>
       <img :src="allBikeTypes[idealBikeType].image" :alt="allBikeTypes[idealBikeType].title" class="ideal-note-image">
-      <div>
+      <div class="ideal-note-body">
         <p>
-          {{ idealArticle }} <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link"><strong>{{ allBikeTypes[idealBikeType].title }}</strong></a>
-          would be the ideal fit for your needs, but based on your storage situation we've
-          recommended a more practical option below. Keep it in mind if your storage changes down the road!
+          {{ idealArticle }}
+          <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link">
+            <strong>{{ allBikeTypes[idealBikeType].title }}</strong>
+          </a>
+          would be the ideal fit for your needs, but based on your storage situation
+          <strong>we've recommended a more practical option below.</strong>
+          Keep it in mind if your storage changes down the road!
         </p>
         <p class="ideal-note-tip">
-          Some people do store cargo bikes outside under motorcycle covers.
-          <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440" target="_blank" rel="noopener noreferrer" class="ideal-link">See how one cargo bike family in NYC does it.</a>
+          However, some people do store cargo bikes outside under motorcycle covers!
+          <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440" target="_blank" rel="noopener noreferrer" class="ideal-link">
+            See how one cargo bike family in NYC does it.
+          </a>
         </p>
       </div>
     </div>
 
-    <div class="result-image">
-      <img :src="recommendationDetails.image" :alt="recommendationDetails.title">
-      <div v-if="recommendationDetails.electric" class="electric-badge">⚡ Electric</div>
-    </div>
+    <div class="recommendation-card">
+      <div class="recommendation-badge">Recommended</div>
+      <div class="result-image">
+        <img :src="recommendationDetails.image" :alt="recommendationDetails.title">
+        <div v-if="recommendationDetails.electric" class="electric-badge">⚡ Electric</div>
+      </div>
     <div class="result-content">
       <div class="title-row">
         <h3>{{ recommendationDetails.title }}</h3>
@@ -51,6 +58,7 @@
           bikeshare program you get the benefits of biking without needing to store anything at home.
         </p>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -251,9 +259,8 @@ const idealArticle = computed(() => {
   border-radius: 8px;
   padding: 1rem 1.5rem;
   margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  overflow: hidden;
+  text-align: left;
 
   p {
     margin: 0;
@@ -261,6 +268,17 @@ const idealArticle = computed(() => {
     line-height: 1.5;
     font-size: 0.9rem;
   }
+}
+
+.ideal-note-heading {
+  color: vars.$secondary-dark;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.ideal-note-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .ideal-note-tip {
@@ -290,10 +308,12 @@ const idealArticle = computed(() => {
 }
 
 .ideal-note-image {
+  float: left;
   width: auto;
   height: 80px;
   border-radius: 8px;
-  flex-shrink: 0;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
@@ -304,7 +324,20 @@ const idealArticle = computed(() => {
   }
 
   .ideal-note {
-    flex-basis: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 0 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ideal-note-heading {
+    width: 100%;
+  }
+
+  .ideal-note-image {
+    float: none;
+    margin: auto;
   }
 
   .result-image {
