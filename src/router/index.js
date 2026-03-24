@@ -64,8 +64,13 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from) {
+    if (to.hash) {
+      return { el: to.hash, behavior: 'smooth' }
+    }
     if (to.path !== from.path) {
-      return { top: 0 }
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({ top: 0 }), 100)
+      })
     }
   }
 })

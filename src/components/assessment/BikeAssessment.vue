@@ -71,11 +71,12 @@
           />
 
           <nav class="results-jump-links" aria-label="Jump to section">
-            <div class="jump-label">Jump To</div>
+            <div class="jump-label">Quick Links</div>
             <a href="#savings">💰 Savings</a>
             <a v-if="!('own' in route.query)" href="#car-faq">🚗 Car FAQ</a>
             <a href="#buying-options">🛒 Options</a>
             <router-link to="/gear-guide">⛑️ Gear Guide</router-link>
+            <a href="#" class="restart-link" @click.prevent="restartAssessment">🔄 Restart</a>
           </nav>
 
           <savings-comparison
@@ -94,7 +95,7 @@
           <div class="gear-guide-cta">
             <p>Now that you know your bike, make sure you have the essentials.</p>
             <router-link to="/gear-guide" class="gear-guide-btn">
-              View Essential Gear Guide &rarr;
+              View Essential Gear Guide
             </router-link>
           </div>
 
@@ -601,6 +602,7 @@ h1 {
     color: vars.$text-body;
     letter-spacing: 0.05em;
     width: 100%;
+    text-align: left;
   }
 
   a {
@@ -617,6 +619,16 @@ h1 {
     &:hover {
       background-color: vars.$primary;
       color: vars.$white;
+    }
+
+    &.restart-link {
+      background-color: vars.$lighter-gray;
+      color: vars.$light-gray;
+
+      &:hover {
+        background-color: vars.$border-gray;
+        color: vars.$dark;
+      }
     }
   }
 }
