@@ -4,6 +4,7 @@ import AboutPage from '../components/AboutPage.vue'
 import BikeAssessment from '../components/assessment/BikeAssessment.vue'
 import GearGuidePage from '../components/GearGuidePage.vue'
 import SocialImage from '../components/SocialImage.vue'
+import NotFoundPage from '../components/NotFoundPage.vue'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     name: 'SocialImage',
     component: SocialImage,
     meta: { bare: true }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFoundPage
   }
 ]
 
