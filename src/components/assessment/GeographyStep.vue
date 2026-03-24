@@ -19,7 +19,7 @@
         type="button"
         class="option-card"
         :class="{ selected: modelValue.hilly }"
-        @click="toggleGeography('hilly')"
+        @click="toggleHilly"
         :aria-pressed="modelValue.hilly.toString()"
       >
         <div class="option-icon">⛰️</div>
@@ -29,9 +29,9 @@
       <button
         type="button"
         class="option-card"
-        :class="{ selected: !modelValue.hilly }"
+        :class="{ selected: modelValue.flat }"
         @click="setFlatGeography"
-        :aria-pressed="(!modelValue.hilly).toString()"
+        :aria-pressed="modelValue.flat.toString()"
       >
         <div class="option-icon">📏</div>
         <div class="option-label">Mostly Flat</div>
@@ -40,12 +40,14 @@
 
     <div class="navigation-buttons">
       <button class="btn-prev" @click="$emit('prev')">Back</button>
-      <button class="btn-next" @click="$emit('next')">Continue</button>
+      <button class="btn-next" @click="$emit('next')" :disabled="!hasSelected">Continue</button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -55,18 +57,27 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'prev', 'next']);
 
-function toggleGeography(type) {
-  // Create a new object to maintain reactivity
-  const updatedGeography = { ...props.modelValue };
-  // Toggle the value of the specified geography type
-  updatedGeography[type] = !updatedGeography[type];
-  // Emit the update event with the new object
-  emit('update:modelValue', updatedGeography);
+const hasSelected = computed(() => {
+  return props.modelValue.windy || props.modelValue.hilly || props.modelValue.flat;
+});
 
+function toggleGeography(type) {
+  const updatedGeography = { ...props.modelValue };
+  updatedGeography[type] = !updatedGeography[type];
+  emit('update:modelValue', updatedGeography);
+}
+
+function toggleHilly() {
+  const newHilly = !props.modelValue.hilly;
+  const updatedGeography = { ...props.modelValue, hilly: newHilly };
+  if (newHilly) {
+    updatedGeography.flat = false;
+  }
+  emit('update:modelValue', updatedGeography);
 }
 
 function setFlatGeography() {
-  const updatedGeography = { ...props.modelValue, hilly: false };
+  const updatedGeography = { ...props.modelValue, flat: !props.modelValue.flat, hilly: false };
   emit('update:modelValue', updatedGeography);
 }
 </script>

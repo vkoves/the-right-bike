@@ -114,10 +114,11 @@ const transportationNeeds = ref({
 // Use ref with an object inside instead of reactive directly
 const geography = ref({
   windy: false,
-  hilly: false
+  hilly: false,
+  flat: false
 });
 
-const fitnessLevel = ref('medium');
+const fitnessLevel = ref('');
 
 // Watch for reactive state changes
 watch(transportationNeeds, () => {}, { deep: true });
@@ -280,10 +281,11 @@ function restartAssessment() {
   // Reset geography
   geography.value = {
     windy: false,
-    hilly: false
+    hilly: false,
+    flat: false
   };
 
-  fitnessLevel.value = 'medium';
+  fitnessLevel.value = '';
   recommendation.value = '';
 
   // Navigate back to the assessment start
@@ -295,8 +297,8 @@ onBeforeRouteUpdate((to) => {
   if (to.query._r) {
     currentStep.value = 1;
     transportationNeeds.value = { soloCommuting: false, cargo: false, transportingKids: false, transportingAdults: false };
-    geography.value = { windy: false, hilly: false };
-    fitnessLevel.value = 'medium';
+    geography.value = { windy: false, hilly: false, flat: false };
+    fitnessLevel.value = '';
     recommendation.value = '';
 
     const { _r, ...rest } = to.query;
