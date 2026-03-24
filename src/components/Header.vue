@@ -10,33 +10,54 @@
           <span class="logo-byline">By <a href="https://chiwho.bike" target="_blank" rel="noopener noreferrer" class="byline-link">Chicagoans Who Bike</a></span>
         </div>
       </div>
-      <nav>
+      <nav class="desktop-nav">
         <ul>
-          <li class="hide-mobile"><router-link to="/">Home</router-link></li>
-          <li class="hide-mobile">
-            <router-link to="/assessment" @click.prevent="goToAssessment">Bike Finder</router-link>
+          <li v-for="link in NavLinks" :key="link.to">
+            <router-link :to="link.to" @click.prevent="handleNavClick(link)">{{ link.label }}</router-link>
           </li>
-          <li class="hide-mobile"><router-link to="/gear-guide">Gear Guide</router-link></li>
-          <li><router-link to="/about">About</router-link></li>
         </ul>
       </nav>
+      <button class="mobile-menu-toggle" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Toggle menu">
+        <img src="/images/icons/menu.svg" alt="" class="menu-icon">
+      </button>
     </div>
+    <nav class="mobile-nav" :class="{ '-open': mobileMenuOpen }">
+      <ul>
+        <li v-for="link in NavLinks" :key="link.to">
+          <router-link :to="link.to" @click.prevent="handleNavClick(link); mobileMenuOpen = false">{{ link.label }}</router-link>
+        </li>
+      </ul>
+    </nav>
   </header>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
 const route = useRoute();
+const mobileMenuOpen = ref(false);
 
-function goToAssessment() {
-  // If already on /assessment, force a reset via query param since the path
-  // doesn't change. For /bike/:type the path change triggers a remount.
-  if (route.name === 'Assessment') {
-    router.push({ name: 'Assessment', query: { _r: '1' } });
+/** Shared desktop mobile nav links */
+const NavLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/assessment', label: 'Bike Finder' },
+  { to: '/gear-guide', label: 'Gear Guide' },
+  { to: '/about', label: 'About' },
+];
+
+function handleNavClick(link) {
+  if (link.to === '/assessment') {
+    // If already on /assessment, force a reset via query param since the path
+    // doesn't change. For /bike/:type the path change triggers a remount.
+    if (route.name === 'Assessment') {
+      router.push({ name: 'Assessment', query: { _r: '1' } });
+    } else {
+      router.push({ name: 'Assessment' });
+    }
   } else {
-    router.push({ name: 'Assessment' });
+    router.push(link.to);
   }
 }
 </script>
@@ -116,7 +137,7 @@ function goToAssessment() {
   box-shadow: vars.$shadow-md;
 }
 
-nav {
+.desktop-nav {
   ul {
     display: flex;
     list-style: none;
@@ -149,6 +170,24 @@ nav {
   }
 }
 
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.menu-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: brightness(0) invert(1);
+}
+
+.mobile-nav {
+  display: none;
+}
+
 .logo a:focus-visible {
   outline-color: vars.$white;
 }
@@ -167,12 +206,58 @@ nav {
     font-size: 1.1rem;
   }
 
-  .hide-mobile {
+  .logo-byline {
     display: none;
   }
 
-  .logo-byline {
+  .desktop-nav {
     display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .mobile-nav {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    &.-open {
+      max-height: 300px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0.5rem 1rem 0;
+    }
+
+    li {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    a {
+      display: block;
+      padding: 0.75rem 0;
+      color: vars.$lightest-gray;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        color: vars.$white;
+      }
+
+      &.router-link-active {
+        color: vars.$white;
+        font-weight: 700;
+      }
+
+      &:focus-visible {
+        outline-color: vars.$white;
+      }
+    }
   }
 }
 </style>
