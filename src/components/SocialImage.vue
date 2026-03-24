@@ -40,14 +40,6 @@
   </div>
 </template>
 
-<style>
-
-.app-wrapper {
-  min-height: unset !important;
-  overflow: hidden;
-}
-</style>
-
 <style lang="scss" scoped>
 @use '../assets/scss/variables' as vars;
 
