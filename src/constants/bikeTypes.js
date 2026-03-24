@@ -11,6 +11,7 @@ export const BikeTypes = {
     label: 'Regular Bicycle',
     image: '/images/bikes/dutch-bike.jpg',
     electric: false,
+    bulky: false,
     description: 'A traditional bicycle is perfect for your needs. With your fitness level and local conditions, you\'ll be able to navigate comfortably without electric assistance.',
     features: [
       'Lightweight and maneuverable',
@@ -25,6 +26,7 @@ export const BikeTypes = {
     label: 'Electric Commuter Bike',
     image: '/images/bikes/gazelle-ebike.jpg',
     electric: true,
+    bulky: false,
     description: 'An electric commuter bike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
     features: [
       'Electric motor assists up to 20-28 mph',
@@ -39,6 +41,8 @@ export const BikeTypes = {
     label: 'Non-Electric Cargo Bike',
     image: '/images/bikes/bakfiets-classic-long.jpg',
     electric: false,
+    bulky: true,
+    storageDowngrade: 'regular-bike',
     description: 'A non-electric cargo bike will address your carrying needs. These bikes are designed to handle loads while maintaining stability and ease of use without requiring battery power.',
     features: [
       'Front cargo box for groceries and goods',
@@ -53,6 +57,8 @@ export const BikeTypes = {
     label: 'Electric Cargo Bike',
     image: '/images/bikes/urban-arrow.jpg',
     electric: true,
+    bulky: true,
+    storageDowngrade: 'commuter-ebike',
     description: 'An electric cargo bike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
     features: [
       'Large front cargo area for groceries or goods',
@@ -67,6 +73,8 @@ export const BikeTypes = {
     label: 'Non-Electric Longtail Bike',
     image: '/images/bikes/yuba-mundo.jpg',
     electric: false,
+    bulky: true,
+    storageDowngrade: 'regular-bike',
     description: 'A non-electric longtail cargo bike is perfect for transporting people and heavy loads. With your fitness level, you can handle this sturdy bike without electric assistance while still carrying passengers or cargo.',
     features: [
       'Extended rear deck for passengers or cargo',
@@ -81,6 +89,8 @@ export const BikeTypes = {
     label: 'Longtail E-Bike',
     image: '/images/bikes/tern-gsd-500.jpg',
     electric: true,
+    bulky: true,
+    storageDowngrade: 'commuter-ebike',
     description: 'A longtail electric cargo bike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [
       'Extended rear deck for passengers',

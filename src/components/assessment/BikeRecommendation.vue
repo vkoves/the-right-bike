@@ -2,28 +2,37 @@
   <div class="recommendation-card">
     <div class="recommendation-badge">Recommended</div>
 
-      <div class="result-image">
-        <img :src="recommendationDetails.image" :alt="recommendationDetails.title">
+    <div v-if="idealBikeType && allBikeTypes[idealBikeType]" class="ideal-note">
+      <img :src="allBikeTypes[idealBikeType].image" :alt="allBikeTypes[idealBikeType].title" class="ideal-note-image">
+      <p>
+        A <strong>{{ allBikeTypes[idealBikeType].title }}</strong> would be the ideal fit for your
+        needs, but based on your storage situation we've recommended a more practical option below.
+        Keep it in mind if your storage changes down the road!
+      </p>
+    </div>
+
+    <div class="result-image">
+      <img :src="recommendationDetails.image" :alt="recommendationDetails.title">
+    </div>
+    <div class="result-content">
+      <div class="title-row">
+        <h3>{{ recommendationDetails.title }}</h3>
       </div>
-      <div class="result-content">
-        <div class="title-row">
-          <h3>{{ recommendationDetails.title }}</h3>
-        </div>
 
-        <p class="result-description">{{ recommendationDetails.description }}</p>
+      <p class="result-description">{{ recommendationDetails.description }}</p>
 
-        <div class="feature-list">
-          <div class="feature" v-for="(feature, index) in recommendationDetails.features" :key="index">
-            <span class="feature-icon">✓</span>
-            <span>{{ feature }}</span>
-          </div>
-        </div>
-
-        <div class="price-range">
-          <span>Typical Price Range: </span>
-          <strong>{{ recommendationDetails.priceRange }}</strong>
+      <div class="feature-list">
+        <div class="feature" v-for="(feature, index) in recommendationDetails.features" :key="index">
+          <span class="feature-icon">✓</span>
+          <span>{{ feature }}</span>
         </div>
       </div>
+
+      <div class="price-range">
+        <span>Typical Price Range: </span>
+        <strong>{{ recommendationDetails.priceRange }}</strong>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,6 +41,14 @@ defineProps({
   recommendationDetails: {
     type: Object,
     required: true
+  },
+  allBikeTypes: {
+    type: Object,
+    default: null
+  },
+  idealBikeType: {
+    type: String,
+    default: null
   }
 });
 </script>
@@ -187,10 +204,39 @@ defineProps({
   border-top: 1px solid vars.$border-gray;
 }
 
+.ideal-note {
+  background-color: vars.$secondary-light;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  p {
+    margin: 0;
+    color: vars.$secondary-dark;
+    line-height: 1.5;
+    font-size: 0.9rem;
+  }
+}
+
+.ideal-note-image {
+  width: auto;
+  height: 80px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
   .recommendation-card {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: flex-start;
+  }
+
+  .ideal-note {
+    flex-basis: 100%;
   }
 
   .result-image {

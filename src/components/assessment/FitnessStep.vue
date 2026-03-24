@@ -43,7 +43,7 @@
     
     <div class="navigation-buttons">
       <button class="btn-prev" @click="$emit('prev')">Back</button>
-      <button class="btn-next" @click="$emit('calculate')" :disabled="!modelValue">See My Results</button>
+      <button class="btn-next" @click="$emit('next')" :disabled="!modelValue">Continue</button>
     </div>
   </div>
 </template>
@@ -56,7 +56,7 @@ defineProps({
   }
 });
 
-const emit = defineEmits(['update:modelValue', 'prev', 'calculate']);
+const emit = defineEmits(['update:modelValue', 'prev', 'next']);
 
 function updateFitnessLevel(level) {
   // Emit the update event with the new level

@@ -8,8 +8,9 @@
         <div class="progress-track">
           <div class="progress-fill" :style="{ width: progressPercent + '%' }"></div>
         </div>
-        <div class="progress-dot" :class="{ '-done': currentStep > 2, '-active': currentStep === 2 }" style="left: 33.33%"></div>
-        <div class="progress-dot" :class="{ '-done': currentStep > 3, '-active': currentStep === 3 }" style="left: 66.66%"></div>
+        <div class="progress-dot -at-quarter" :class="{ '-done': currentStep > 2, '-active': currentStep === 2 }"></div>
+        <div class="progress-dot -at-half" :class="{ '-done': currentStep > 3, '-active': currentStep === 3 }"></div>
+        <div class="progress-dot -at-three-quarter" :class="{ '-done': currentStep > 4, '-active': currentStep === 4 }"></div>
       </div>
 
       <transition name="fade" mode="out-in">
@@ -36,16 +37,26 @@
           key="step3"
           v-model="fitnessLevel"
           @prev="prevStep"
+          @next="nextStep"
+        />
+
+        <!-- Step 4: Storage -->
+        <storage-step
+          v-else-if="currentStep === 4"
+          key="step4"
+          v-model="storage"
+          @prev="prevStep"
           @calculate="calculateRecommendation"
         />
 
-        <!-- Step 4: Results -->
-        <div v-else-if="currentStep === 4" key="step4" class="step-container results-container">
+        <!-- Step 5: Results -->
+        <div v-else-if="currentStep === 5" key="step5" class="step-container results-container">
           <h2>Your Recommended Bike Type</h2>
 
           <bike-recommendation
             :recommendation-details="recommendationDetails"
             :all-bike-types="bikeTypeDetails"
+            :ideal-bike-type="idealBikeType"
             @bike-change="handleBikeChange"
           />
 
@@ -85,6 +96,7 @@
 import { ref, computed, reactive, watch, onMounted } from 'vue';
 import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router';
 import TransportationNeedsStep from './TransportationNeedsStep.vue';
+import StorageStep from './StorageStep.vue';
 import GeographyStep from './GeographyStep.vue';
 import FitnessStep from './FitnessStep.vue';
 import BikeRecommendation from './BikeRecommendation.vue';
@@ -118,12 +130,14 @@ const geography = ref({
   flat: false
 });
 
+const storage = ref('');
 const fitnessLevel = ref('');
 
 // Watch for reactive state changes
 watch(transportationNeeds, () => {}, { deep: true });
 watch(geography, () => {}, { deep: true });
 const recommendation = ref('');
+const idealBikeType = ref(null);
 const recommendationDetails = ref({});
 
 
@@ -146,9 +160,12 @@ const costs = reactive({
 // All bike type details — sourced from the single constant, not duplicated here
 const bikeTypeDetails = BikeTypes;
 
+// Total number of question steps (excluding results)
+const TOTAL_STEPS = 4;
+
 // Computed properties
 const progressPercent = computed(() => {
-  return ((currentStep.value - 1) / 3) * 100;
+  return ((currentStep.value - 1) / TOTAL_STEPS) * 100;
 });
 
 // Determine if the user needs electric assistance - this basically means they are pulling a lot
@@ -175,7 +192,7 @@ const needsCargo = computed(() => {
 
 // Methods
 function nextStep() {
-  if (currentStep.value < 4) {
+  if (currentStep.value <= TOTAL_STEPS) {
     currentStep.value++;
   }
 }
@@ -207,6 +224,15 @@ function calculateRecommendation() {
     } else {
       recommendation.value = 'regular-bike';
     }
+  }
+
+  // Downgrade for storage constraints if needed
+  const idealType = bikeTypeDetails[recommendation.value];
+  if (storage.value === 'upper-floor' && idealType.bulky && idealType.storageDowngrade) {
+    idealBikeType.value = recommendation.value;
+    recommendation.value = idealType.storageDowngrade;
+  } else {
+    idealBikeType.value = null;
   }
 
   // Set recommendation details
@@ -263,7 +289,8 @@ function handleBikeChange(bikeType) {
 
 // Function to update URL with bike recommendation
 function updateUrlWithRecommendation(bikeType) {
-  router.replace({ name: 'BikeResult', params: { type: bikeType } });
+  const query = idealBikeType.value ? { ideal: idealBikeType.value } : {};
+  router.replace({ name: 'BikeResult', params: { type: bikeType }, query });
 }
 
 function restartAssessment() {
@@ -285,8 +312,10 @@ function restartAssessment() {
     flat: false
   };
 
+  storage.value = '';
   fitnessLevel.value = '';
   recommendation.value = '';
+  idealBikeType.value = null;
 
   // Navigate back to the assessment start
   router.replace({ name: 'Assessment' });
@@ -298,8 +327,10 @@ onBeforeRouteUpdate((to) => {
     currentStep.value = 1;
     transportationNeeds.value = { soloCommuting: false, cargo: false, transportingKids: false, transportingAdults: false };
     geography.value = { windy: false, hilly: false, flat: false };
+    storage.value = '';
     fitnessLevel.value = '';
     recommendation.value = '';
+    idealBikeType.value = null;
 
     const { _r, ...rest } = to.query;
     router.replace({ name: 'Assessment', query: rest });
@@ -310,10 +341,16 @@ onBeforeRouteUpdate((to) => {
 onMounted(() => {
   if (props.type && Object.keys(bikeTypeDetails).includes(props.type)) {
     // Set to the last step (results)
-    currentStep.value = 4;
+    currentStep.value = TOTAL_STEPS + 1;
 
     // Set recommendation from URL
     recommendation.value = props.type;
+
+    // Restore ideal bike type from query param if present
+    const idealParam = route.query.ideal;
+    if (idealParam && Object.keys(bikeTypeDetails).includes(idealParam)) {
+      idealBikeType.value = idealParam;
+    }
 
     // Update the UI
     setRecommendationDetails();
@@ -403,6 +440,10 @@ h1 {
     background-color: vars.$primary;
     border-color: vars.$white;
   }
+
+  &.-at-quarter { left: 25%; }
+  &.-at-half { left: 50%; }
+  &.-at-three-quarter { left: 75%; }
 }
 
 .step-container {
