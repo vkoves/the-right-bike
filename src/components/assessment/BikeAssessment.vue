@@ -270,6 +270,7 @@ function setRecommendationDetails() {
 
 // Handle bike change from the dropdown
 function handleBikeChange(bikeType) {
+  idealBikeType.value = null;
 
   if (!bikeType) {
     // Restore original bike costs and details for the recommended bike

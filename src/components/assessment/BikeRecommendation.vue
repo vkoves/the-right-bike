@@ -6,7 +6,7 @@
       <img :src="allBikeTypes[idealBikeType].image" :alt="allBikeTypes[idealBikeType].title" class="ideal-note-image">
       <div>
         <p>
-          A <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link"><strong>{{ allBikeTypes[idealBikeType].title }}</strong></a>
+          {{ idealArticle }} <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link"><strong>{{ allBikeTypes[idealBikeType].title }}</strong></a>
           would be the ideal fit for your needs, but based on your storage situation we've
           recommended a more practical option below. Keep it in mind if your storage changes down the road!
         </p>
@@ -40,15 +40,23 @@
       </div>
 
       <div v-if="storageConstrained && recommendedBikeType === 'commuter-ebike'" class="storage-tip">
-        <strong>Storage tip:</strong> Look for a lighter e-bike with an integrated battery &mdash;
-        they're easier to carry upstairs and look more like a regular bike, which helps with indoor storage.
+        <p>
+          <strong>Storage tip:</strong> Look for a lighter e-bike with an integrated battery &mdash;
+          they're easier to carry upstairs and look more like a regular bike, which helps with indoor storage.
+        </p>
+        <p>
+          Many e-bikes have a removable battery, so with those you can lock them up and pull the battery,
+          improving battery health, deterring theft, and letting you charge inside!
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue';
+
+const props = defineProps({
   recommendationDetails: {
     type: Object,
     required: true
@@ -69,6 +77,12 @@ defineProps({
     type: String,
     default: ''
   }
+});
+
+const idealArticle = computed(() => {
+  if (!props.idealBikeType || !props.allBikeTypes?.[props.idealBikeType]) return 'A';
+  const title = props.allBikeTypes[props.idealBikeType].title;
+  return /^[aeiou]/i.test(title) ? 'An' : 'A';
 });
 </script>
 
@@ -253,6 +267,8 @@ defineProps({
   font-size: 0.85rem;
   line-height: 1.5;
   color: vars.$primary-dark;
+
+  p + p { margin-top: 1rem; }
 }
 
 .ideal-link {
