@@ -4,8 +4,11 @@
       <div class="logo">
         <router-link to="/">
           <img src="/images/icons/favicon.svg" alt="" class="logo-icon">
-          Find The Right Bike
         </router-link>
+        <div class="logo-text-group">
+          <router-link to="/" class="logo-title">Find The Right Bike</router-link>
+          <span class="logo-byline">By <a href="https://chiwho.bike" target="_blank" rel="noopener noreferrer" class="byline-link">Chicagoans Who Bike</a></span>
+        </div>
       </div>
       <nav>
         <ul>
@@ -60,14 +63,46 @@ function goToAssessment() {
   align-items: center;
 }
 
-.logo a {
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo > a {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo-title {
   color: vars.$white;
   font-size: 1.5rem;
   font-weight: 700;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+}
+
+.logo-byline {
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.byline-link {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: vars.$white;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .logo-icon {
@@ -77,7 +112,6 @@ function goToAssessment() {
   border: 2px solid vars.$white;
   border-radius: 7px;
   box-shadow: vars.$shadow-md;
-  margin-right: 0.5rem;
 }
 
 nav {
@@ -126,11 +160,15 @@ nav {
     padding: 0 1rem;
   }
 
-  .logo a {
+  .logo-title {
     font-size: 1.1rem;
   }
 
   .hide-mobile {
+    display: none;
+  }
+
+  .logo-byline {
     display: none;
   }
 }
