@@ -1,8 +1,50 @@
 <template>
   <div class="savings-section">
-    <h2 class="savings-heading" id="savings">Potential Savings vs Buying A <span class="car-type-label">{{ isNew ? 'New' : 'Used' }}</span> Car</h2>
-    <p class="savings-intro">See how much you could save by choosing a bike instead of a car</p>
+    <h2 class="savings-heading" id="savings">
+      <template v-if="alreadyOwnsCar">
+        Potential Savings by Going Car-Lite
+      </template>
+      <template v-else>
+        Potential Savings vs Buying A <span class="car-type-label">{{ isNew ? 'New' : 'Used' }}</span> Car
+      </template>
+    </h2>
+    <p class="savings-intro">
+      <template v-if="alreadyOwnsCar">
+        See how much you could save on fuel and maintenance by driving less, and biking instead!
+      </template>
+      <template v-else>
+        See how much you could save by choosing a bike instead of a car.
+      </template>
+    </p>
 
+
+    <div class="ownership-toggle">
+      <label class="toggle-label">
+        <input type="checkbox" v-model="alreadyOwnsCar">
+        <span class="toggle-switch"></span>
+        I already own a car
+      </label>
+
+      <div v-if="alreadyOwnsCar" class="replacement-slider">
+        <label for="replacement-slider" class="slider-label">
+          How much of your driving would you replace with biking?
+        </label>
+        <div class="slider-value" :style="{ color: sliderColor }" aria-live="polite">{{ replacementPercent }}%</div>
+        <input
+          id="replacement-slider"
+          type="range"
+          v-model.number="replacementPercent"
+          min="25"
+          max="100"
+          step="5"
+          class="slider-input"
+        >
+        <div class="slider-range">
+          <span>25%</span>
+          <span>100%</span>
+        </div>
+      </div>
+    </div>
 
     <cost-comparison-table
       :bike-title="bikeTitle"
@@ -12,6 +54,9 @@
       :car-total-cost="carTotalCost"
       :is-comparing="isComparing"
       :is-new="isNew"
+      :already-owns-car="alreadyOwnsCar"
+      :replacement-percent="replacementPercent"
+      :mileage-insurance-annual="mileageInsuranceAnnual"
       @car-type-change="isNew = $event"
     />
 
@@ -48,7 +93,7 @@
       </div>
     </div>
 
-    <savings-faq-section :savings-amount="savingsAmount" />
+    <savings-faq-section v-if="!alreadyOwnsCar" :savings-amount="savingsAmount" />
 
     <bike-buying-options id="buying-options" :bike-type="displayedBikeType" />
 
@@ -114,6 +159,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 
 import CostComparisonTable from './CostComparisonTable.vue';
@@ -178,8 +224,39 @@ const props = defineProps({
 
 const emit = defineEmits(['bike-change']);
 
+const router = useRouter();
+const route = useRoute();
+
 // State for new vs used car toggle
 const isNew = ref(true);
+
+// State for "already own a car" mode — initialize from query params
+const alreadyOwnsCar = ref(route.query.own === '1');
+const replacementPercent = ref(
+  route.query.replace ? Math.min(100, Math.max(25, parseInt(route.query.replace, 10) || 50)) : 50
+);
+
+// Interpolate slider color from grey (#727272) at 25% to green (#298653) at 100%
+const sliderColor = computed(() => {
+  const t = (replacementPercent.value - 25) / 75; // 0 at 25%, 1 at 100%
+  const r = Math.round(0x72 + (0x29 - 0x72) * t);
+  const g = Math.round(0x72 + (0x86 - 0x72) * t);
+  const b = Math.round(0x72 + (0x53 - 0x72) * t);
+  return `rgb(${r}, ${g}, ${b})`;
+});
+
+// Sync query params when ownership/replacement changes
+watch([alreadyOwnsCar, replacementPercent], ([owns, percent]) => {
+  const query = { ...route.query };
+  if (owns) {
+    query.own = '1';
+    query.replace = String(percent);
+  } else {
+    delete query.own;
+    delete query.replace;
+  }
+  router.replace({ query });
+});
 
 // State for comparison dropdown
 const comparisonBike = ref('');
@@ -203,7 +280,22 @@ const bikeTotalCost = computed(() => {
          (props.costs.bike.insurance * 5);
 });
 
+// Annual mileage-based insurance: base rate + per-mile charge for remaining driving
+const mileageInsuranceAnnual = computed(() => {
+  const remainingDriving = 1 - replacementPercent.value / 100;
+  const milesKept = CAR_COSTS.averageAnnualMiles * remainingDriving;
+  return CAR_COSTS.mileageInsuranceBase + (milesKept * CAR_COSTS.mileageInsurancePerMile);
+});
+
 const carTotalCost = computed(() => {
+  if (alreadyOwnsCar.value) {
+    // No purchase cost; fuel and maintenance scale with remaining driving
+    // Insurance switches to pay-per-mile
+    const remainingScale = 1 - replacementPercent.value / 100;
+    return (props.costs.car.maintenance * 5 * remainingScale) +
+           (props.costs.car.fuel * 5 * remainingScale) +
+           (mileageInsuranceAnnual.value * 5);
+  }
   const purchase = isNew.value ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase;
   return purchase +
          (props.costs.car.maintenance * 5) +
@@ -211,7 +303,18 @@ const carTotalCost = computed(() => {
          (props.costs.car.insurance * 5);
 });
 
+// Full car running costs (no purchase) over 5 years — baseline before biking
+const fullCarRunningCost = computed(() => {
+  return (props.costs.car.maintenance * 5) +
+         (props.costs.car.fuel * 5) +
+         (props.costs.car.insurance * 5);
+});
+
 const savingsAmount = computed(() => {
+  if (alreadyOwnsCar.value) {
+    // Savings = how much less you spend on car costs, minus the bike cost
+    return (fullCarRunningCost.value - carTotalCost.value) - bikeTotalCost.value;
+  }
   return carTotalCost.value - bikeTotalCost.value;
 });
 
@@ -315,6 +418,149 @@ function formatRounded(value) {
   font-weight: 600;
   margin-bottom: 1.5rem;
   text-align: center;
+}
+
+.ownership-toggle {
+  background-color: vars.$white;
+  border-radius: vars.$border-radius;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: vars.$shadow-md;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: vars.$dark;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}
+
+.toggle-switch {
+  width: 44px;
+  height: 24px;
+  background-color: vars.$lighter-gray;
+  border-radius: 12px;
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: vars.$white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  input:checked + & {
+    background-color: vars.$primary;
+
+    &::after {
+      transform: translateX(20px);
+    }
+  }
+
+  input:focus-visible + & {
+    outline: 0.25rem solid vars.$primary-dark;
+    outline-offset: 0.125rem;
+  }
+}
+
+.replacement-slider {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid vars.$border-lighter;
+}
+
+.slider-label {
+  display: block;
+  font-weight: 600;
+  color: vars.$dark;
+  font-size: 0.95rem;
+}
+
+.slider-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: vars.$primary;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.slider-input {
+  width: 100%;
+  height: 8px;
+  appearance: none;
+  background: vars.$lighter-gray;
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: vars.$primary;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: vars.$shadow-md;
+
+    &:hover {
+      background: vars.$primary-dark;
+    }
+  }
+
+  &:focus-visible::-webkit-slider-thumb {
+    outline: 0.25rem solid vars.$primary-dark;
+    outline-offset: 0.125rem;
+  }
+
+  &::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: vars.$primary;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: vars.$shadow-md;
+
+    &:hover {
+      background: vars.$primary-dark;
+    }
+  }
+
+  &:focus-visible::-moz-range-thumb {
+    outline: 0.25rem solid vars.$primary-dark;
+    outline-offset: 0.125rem;
+  }
+}
+
+.slider-range {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: vars.$text-secondary;
+  font-weight: 600;
+  margin-top: 0.25rem;
 }
 
 /* Bike Comparison Grid */

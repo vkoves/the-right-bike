@@ -30,13 +30,13 @@
     </div>
 
     <div class="comparison-divider">
-      <div class="vs-circle">VS</div>
+      <div class="vs-circle" :class="{ 'plus-mode': alreadyOwnsCar }">{{ alreadyOwnsCar ? '+' : 'VS' }}</div>
     </div>
 
-    <div class="comparison-item car">
+    <div class="comparison-item car" :class="{ 'own-car-mode': alreadyOwnsCar }">
       <div class="comparison-header">
         <img src="/images/honda-crv.jpg" alt="Car">
-        <div class="car-type-toggle">
+        <div v-if="!alreadyOwnsCar" class="car-type-toggle">
           <button
             class="toggle-option"
             :class="{ active: isNew }"
@@ -48,10 +48,11 @@
             @click="emit('car-type-change', false)"
           >Used</button>
         </div>
-        <h4>Average {{ isNew ? 'New' : 'Used' }} Car</h4>
+        <h4 v-if="alreadyOwnsCar">Your Car<br><span class="car-subtitle">With Less Use</span></h4>
+        <h4 v-else>Average {{ isNew ? 'New' : 'Used' }} Car</h4>
       </div>
       <div class="cost-breakdown">
-        <div class="cost-item">
+        <div class="cost-item" v-if="!alreadyOwnsCar">
           <span class="cost-label">Initial Purchase</span>
           <span class="cost-value">
             {{ formatCurrency(isNew ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase) }}
@@ -61,27 +62,42 @@
         <div class="cost-item">
           <span class="cost-label">Annual Maintenance</span>
           <span class="cost-value">
-            {{ formatCurrency(costs.car.maintenance) }}
-            <sup class="footnote-link" @click="showFootnote('maintenance')">²</sup>
+            {{ formatCurrency(costs.car.maintenance * (alreadyOwnsCar ? 1 - replacementPercent / 100 : 1)) }}
+            <sup class="footnote-link" @click="showFootnote('maintenance')">{{ alreadyOwnsCar ? '¹' : '²' }}</sup>
+          </span>
+          <span v-if="alreadyOwnsCar" class="cost-saving">
+            Save {{ formatCurrency(maintenanceSaving) }}/yr
           </span>
         </div>
         <div class="cost-item">
           <span class="cost-label">Annual Fuel Cost</span>
           <span class="cost-value">
-            {{ formatCurrency(costs.car.fuel) }}
-            <sup class="footnote-link" @click="showFootnote('fuel')">³</sup>
+            {{ formatCurrency(costs.car.fuel * (alreadyOwnsCar ? 1 - replacementPercent / 100 : 1)) }}
+            <sup class="footnote-link" @click="showFootnote('fuel')">{{ alreadyOwnsCar ? '²' : '³' }}</sup>
+          </span>
+          <span v-if="alreadyOwnsCar" class="cost-saving">
+            Save {{ formatCurrency(fuelSaving) }}/yr
           </span>
         </div>
         <div class="cost-item">
-          <span class="cost-label">Annual Insurance</span>
+          <span class="cost-label">
+            {{ alreadyOwnsCar ? 'Mileage-Based Insurance' : 'Annual Insurance' }}
+          </span>
           <span class="cost-value">
-            {{ formatCurrency(costs.car.insurance) }}
-            <sup class="footnote-link" @click="showFootnote('insurance')">⁴</sup>
+            {{ formatCurrency(alreadyOwnsCar ? mileageInsuranceAnnual : costs.car.insurance) }}
+            <sup class="footnote-link" @click="showFootnote('insurance')">{{ alreadyOwnsCar ? '³' : '⁴' }}</sup>
+          </span>
+          <span v-if="alreadyOwnsCar" class="cost-saving">
+            Save {{ formatCurrency(insuranceSaving) }}/yr
           </span>
         </div>
         <div class="cost-item total">
           <span class="cost-label">5-Year Total Cost</span>
           <span class="cost-value">{{ formatCurrency(carTotalCost) }}</span>
+        </div>
+        <div v-if="alreadyOwnsCar" class="cost-item total savings-total">
+          <span class="cost-label">5-Year Savings</span>
+          <span class="cost-value">{{ formatCurrency(totalAnnualSaving * 5) }}</span>
         </div>
       </div>
     </div>
@@ -104,7 +120,7 @@
         </p>
       </div>
       <div class="footnote" v-if="activeFootnote === 'maintenance' || activeFootnote === 'all'">
-        <p><strong>² Car maintenance:</strong> $1,200 (Range: $583 - $1,623 per year, varies by brand)</p>
+        <p><strong>² Car maintenance:</strong> $1,200 ($583 - $1,623 per year, varies by brand)</p>
         <p class="source-link">
           <a :href="carCostSources.maintenanceSource" target="_blank">
             Source: Consumer Affairs
@@ -112,7 +128,7 @@
         </p>
       </div>
       <div class="footnote" v-if="activeFootnote === 'fuel' || activeFootnote === 'all'">
-        <p><strong>³ Fuel costs:</strong> $2,500 (Range: $500 - $8,250 per year, varies by vehicle)</p>
+        <p><strong>³ Fuel costs:</strong> $2,500 ($500 - $8,250 per year, varies by vehicle)</p>
         <p class="source-link">
           <a :href="carCostSources.fuelSource" target="_blank">
             Source: U.S. Department of Energy
@@ -120,27 +136,35 @@
         </p>
       </div>
       <div class="footnote" v-if="activeFootnote === 'insurance' || activeFootnote === 'all'">
-        <p><strong>⁴ Insurance costs:</strong> $1,800 (Range: $631 - $2,685 per year, minimum to full coverage)</p>
-        <p class="source-link">
-          <a :href="carCostSources.insuranceSource" target="_blank">
-            Source: Forbes Advisor
-          </a>
-        </p>
-        <p class="source-link">
-          <a :href="carCostSources.insuranceSource2" target="_blank">
-            Additional Source: Bankrate
-          </a>
-        </p>
+        <template v-if="alreadyOwnsCar">
+          <p>
+            <strong>Mileage-based insurance:</strong> $58 - $150/month. Monthly bill combines a fixed
+            base rate ($30 - $60) with a per-mile charge (avg $0.06 - $0.07/mile).
+          </p>
+          <p class="source-link">
+            <a :href="carCostSources.mileageInsuranceSource" target="_blank">
+              Source: MoneyGeek
+            </a>
+          </p>
+        </template>
+        <template v-else>
+          <p><strong>⁴ Insurance costs:</strong> {{ formatCurrency(CAR_COSTS.insurance) }}/year average ({{ CAR_COSTS.insuranceUpdatedAt }})</p>
+          <p class="source-link">
+            <a :href="carCostSources.insuranceSource" target="_blank">
+              Source: NerdWallet ({{ CAR_COSTS.insuranceUpdatedAt }})
+            </a>
+          </p>
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { CAR_COSTS } from '../../constants/bikeCosts';
 
-defineProps({
+const props = defineProps({
   bikeTitle: { type: String, required: true },
   bikeImage: { type: String, required: true },
   costs: { type: Object, required: true },
@@ -148,6 +172,9 @@ defineProps({
   carTotalCost: { type: Number, required: true },
   isComparing: { type: Boolean, default: false },
   isNew: { type: Boolean, default: true },
+  alreadyOwnsCar: { type: Boolean, default: false },
+  replacementPercent: { type: Number, default: 100 },
+  mileageInsuranceAnnual: { type: Number, default: 0 },
 });
 
 const emit = defineEmits(['car-type-change']);
@@ -158,7 +185,7 @@ const carCostSources = {
   maintenanceSource: CAR_COSTS.maintenanceSource,
   fuelSource: CAR_COSTS.fuelSource,
   insuranceSource: CAR_COSTS.insuranceSource,
-  insuranceSource2: CAR_COSTS.insuranceSource2
+  mileageInsuranceSource: CAR_COSTS.mileageInsuranceSource,
 };
 
 const showFootnotes = ref(false);
@@ -176,6 +203,13 @@ function formatCurrency(value) {
     maximumFractionDigits: 0
   }).format(value);
 }
+
+// Per-line annual savings when in "already owns" mode
+const scale = computed(() => props.replacementPercent / 100);
+const maintenanceSaving = computed(() => props.costs.car.maintenance * scale.value);
+const fuelSaving = computed(() => props.costs.car.fuel * scale.value);
+const insuranceSaving = computed(() => props.costs.car.insurance - props.mileageInsuranceAnnual);
+const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.value + insuranceSaving.value);
 </script>
 
 <style lang="scss" scoped>
@@ -249,6 +283,10 @@ function formatCurrency(value) {
     border-top: 2px solid vars.$border-lighter;
     border-bottom: none;
     padding-top: 1rem;
+  }
+
+  &.total + .savings-total {
+    border-top: none;
   }
 }
 
@@ -335,8 +373,59 @@ function formatCurrency(value) {
   color: vars.$danger-dark;
 }
 
+.car.own-car-mode .cost-value {
+  color: vars.$gray;
+}
+
 .car .cost-item.total .cost-value {
   color: vars.$danger-dark;
+}
+
+.car.own-car-mode .cost-item.total .cost-value {
+  color: vars.$primary-dark;
+}
+
+.car-subtitle {
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: vars.$text-secondary;
+}
+
+.plus-mode {
+  background-color: vars.$primary;
+  font-size: 2.5rem;
+}
+
+.savings-total.total {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+
+  .cost-label,
+  .cost-value {
+    color: vars.$primary;
+  }
+}
+
+.car.own-car-mode .cost-item.total:not(.savings-total) .cost-value {
+  color: vars.$gray;
+}
+
+.car.own-car-mode .cost-item.total:not(.savings-total) .cost-label {
+  color: vars.$gray;
+}
+
+.cost-saving {
+  width: 100%;
+  display: block;
+  font-weight: 700;
+  color: vars.$primary;
+  text-align: right;
+  margin-right: 1.5rem;
+}
+
+.cost-item:has(.cost-saving) {
+  flex-wrap: wrap;
 }
 
 .bike .cost-item.total .cost-value {

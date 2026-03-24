@@ -24,11 +24,19 @@ export const CAR_COSTS = {
   fuelSource: "https://www.energy.gov/eere/vehicles/articles/fotw-1245-july-4-2022-epa-estimated-annual-fuel-cost-model-year-2022-light",
 
   // Annual insurance premium
-  insurance: 1800, // Mid-range estimate from $631 - $2,685 per year
-  insuranceSource: "https://www.forbes.com/advisor/car-insurance/average-cost-of-car-insurance/",
+  insurance: 2324,
+  insuranceSource: "https://www.nerdwallet.com/insurance/auto/average-car-insurance-cost",
+  insuranceUpdatedAt: "Mar 2026",
 
-  // Secondary insurance source
-  insuranceSource2: "https://www.bankrate.com/insurance/car/average-cost-of-car-insurance/"
+  // Pay-per-mile insurance for "already own a car" mode
+  // Base rate: ~$45/mo ($540/yr) + per-mile: ~$0.065/mi
+  // Source: MoneyGeek — range $58–$150/mo
+  mileageInsuranceBase: 540,       // annual base rate (mid of $30–$60/mo)
+  mileageInsurancePerMile: 0.065,  // average of $0.06–$0.07
+  mileageInsuranceSource: "https://www.moneygeek.com/insurance/auto/pay-per-mile-car-insurance/",
+
+  // Average annual miles driven (US), used to calculate per-mile savings
+  averageAnnualMiles: 13500
 };
 
 // Annual electricity cost for e-bikes: $0.20/kWh × 500 Wh battery × ~180 charges/year ≈ $35
