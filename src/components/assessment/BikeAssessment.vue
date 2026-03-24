@@ -303,6 +303,10 @@ onBeforeRouteUpdate((to) => {
     geography.value = { windy: false, hilly: false };
     fitnessLevel.value = 'medium';
     recommendation.value = '';
+
+    // Clear the _r param so it doesn't re-trigger on subsequent navigations
+    const { _r, ...rest } = to.query;
+    router.replace({ query: rest });
   }
 });
 
