@@ -38,6 +38,11 @@
         <span>Typical Price Range: </span>
         <strong>{{ recommendationDetails.priceRange }}</strong>
       </div>
+
+      <div v-if="storageConstrained && recommendedBikeType === 'commuter-ebike'" class="storage-tip">
+        <strong>Storage tip:</strong> Look for a lighter e-bike with an integrated battery &mdash;
+        they're easier to carry upstairs and look more like a regular bike, which helps with indoor storage.
+      </div>
     </div>
   </div>
 </template>
@@ -55,6 +60,14 @@ defineProps({
   idealBikeType: {
     type: String,
     default: null
+  },
+  storageConstrained: {
+    type: Boolean,
+    default: false
+  },
+  recommendedBikeType: {
+    type: String,
+    default: ''
   }
 });
 </script>
@@ -230,6 +243,16 @@ defineProps({
 .ideal-note-tip {
   margin-top: 0.5rem !important;
   font-size: 0.85rem !important;
+}
+
+.storage-tip {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: vars.$primary-lighter;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: vars.$primary-dark;
 }
 
 .ideal-link {

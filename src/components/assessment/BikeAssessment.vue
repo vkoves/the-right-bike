@@ -57,6 +57,8 @@
             :recommendation-details="recommendationDetails"
             :all-bike-types="bikeTypeDetails"
             :ideal-bike-type="idealBikeType"
+            :storage-constrained="storage === 'upper-floor' || idealBikeType !== null"
+            :recommended-bike-type="recommendation"
             @bike-change="handleBikeChange"
           />
 
