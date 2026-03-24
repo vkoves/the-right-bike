@@ -58,6 +58,7 @@
           bikeshare program you get the benefits of biking without needing to store anything at home.
         </p>
       </div>
+      <p class="usd-note">Note: All prices are in <strong>USD</strong>.</p>
 
       <share-button :savings-amount="savingsAmount" />
     </div>
@@ -259,6 +260,11 @@ const idealArticle = computed(() => {
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid vars.$border-gray;
+}
+
+.usd-note {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
 }
 
 .ideal-note {
