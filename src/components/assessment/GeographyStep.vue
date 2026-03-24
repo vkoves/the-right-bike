@@ -11,8 +11,8 @@
         @click="toggleGeography('windy')"
         :aria-pressed="modelValue.windy.toString()"
       >
-        <div class="option-icon">🌬️</div>
-        <div class="option-label">Windy</div>
+        <div class="option-icon">{{ GeographyOptions.windy.icon }}</div>
+        <div class="option-label">{{ GeographyOptions.windy.label }}</div>
       </button>
 
       <button
@@ -22,8 +22,8 @@
         @click="toggleHilly"
         :aria-pressed="modelValue.hilly.toString()"
       >
-        <div class="option-icon">⛰️</div>
-        <div class="option-label">Hilly</div>
+        <div class="option-icon">{{ GeographyOptions.hilly.icon }}</div>
+        <div class="option-label">{{ GeographyOptions.hilly.label }}</div>
       </button>
 
       <button
@@ -33,8 +33,8 @@
         @click="setFlatGeography"
         :aria-pressed="modelValue.flat.toString()"
       >
-        <div class="option-icon">📏</div>
-        <div class="option-label">Mostly Flat</div>
+        <div class="option-icon">{{ GeographyOptions.flat.icon }}</div>
+        <div class="option-label">{{ GeographyOptions.flat.label }}</div>
       </button>
     </div>
 
@@ -47,6 +47,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import { GeographyOptions } from '../../constants/assessmentOptions';
 
 const props = defineProps({
   modelValue: {

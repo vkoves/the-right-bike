@@ -59,6 +59,12 @@
             <span class="sticky-savings">{{ formatCurrency(stickysavings) }} savings</span>
           </div>
 
+          <your-choices
+            v-if="savedChoices.length"
+            :choices="savedChoices"
+            @edit="goToStep"
+          />
+
           <h2>Your Recommended Bike Type</h2>
 
           <bike-recommendation
@@ -77,6 +83,7 @@
             <a v-if="!('own' in route.query)" href="#car-faq">🚗 Car FAQ</a>
             <a href="#buying-options">🛒 Options</a>
             <router-link to="/gear-guide">⛑️ Gear Guide</router-link>
+            <a href="#" class="restart-link" @click.prevent="goToStep(TOTAL_STEPS)">⬅️ Back</a>
             <a href="#" class="restart-link" @click.prevent="restartAssessment">🔄 Restart</a>
           </nav>
 
@@ -117,8 +124,10 @@ import FitnessStep from './FitnessStep.vue';
 import BikeRecommendation from './BikeRecommendation.vue';
 import SavingsComparison from './SavingsComparison.vue';
 import ResultsFooter from './ResultsFooter.vue';
+import YourChoices from './YourChoices.vue';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
+import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 
 const props = defineProps({
   type: { type: String, default: '' }
@@ -205,6 +214,52 @@ const needsAssistance = computed(() => {
          fitnessLevel.value === 'low';
 });
 
+const savedChoices = ref([]);
+
+const ChoicesStorageKey = 'bikeAssessmentChoices';
+
+function buildChoicesSummary() {
+  const groups = [];
+
+  const needs = transportationNeeds.value;
+  const needPills = Object.keys(needs).filter(k => needs[k]).map(k => ({ icon: TransportationNeedOptions[k].icon, label: TransportationNeedOptions[k].label }));
+  if (needPills.length) groups.push({ category: 'Needs', step: 1, pills: needPills });
+
+  const geo = geography.value;
+  const geoPills = Object.keys(geo).filter(k => geo[k]).map(k => ({ icon: GeographyOptions[k].icon, label: GeographyOptions[k].label }));
+  if (geoPills.length) groups.push({ category: 'Geography', step: 2, pills: geoPills });
+
+  if (fitnessLevel.value) {
+    const opt = FitnessOptions[fitnessLevel.value];
+    groups.push({ category: 'Fitness', step: 3, pills: [{ icon: opt.icon, label: opt.label }] });
+  }
+
+  if (storage.value) {
+    const opt = StorageOptions[storage.value];
+    groups.push({ category: 'Storage', step: 4, pills: [{ icon: opt.icon, label: opt.label }] });
+  }
+
+  return groups;
+}
+
+function saveChoicesToSession() {
+  const choices = buildChoicesSummary();
+  savedChoices.value = choices;
+  sessionStorage.setItem(ChoicesStorageKey, JSON.stringify(choices));
+}
+
+function loadChoicesFromSession() {
+  try {
+    const stored = sessionStorage.getItem(ChoicesStorageKey);
+    if (stored) savedChoices.value = JSON.parse(stored);
+  } catch { /* ignore */ }
+}
+
+function clearChoicesFromSession() {
+  savedChoices.value = [];
+  sessionStorage.removeItem(ChoicesStorageKey);
+}
+
 const needsCargo = computed(() => {
   return transportationNeeds.value.cargo ||
          transportationNeeds.value.transportingKids ||
@@ -228,6 +283,11 @@ function prevStep() {
     currentStep.value--;
     scrollToTop();
   }
+}
+
+function goToStep(step) {
+  currentStep.value = step;
+  scrollToTop();
 }
 
 function calculateRecommendation() {
@@ -270,6 +330,9 @@ function calculateRecommendation() {
 
   // Update URL with query parameter
   updateUrlWithRecommendation(recommendation.value);
+
+  // Save choices so they survive the route change
+  saveChoicesToSession();
 
   // Move to results page
   nextStep();
@@ -345,6 +408,8 @@ function restartAssessment() {
   recommendation.value = '';
   idealBikeType.value = null;
 
+  clearChoicesFromSession();
+
   // Navigate back to the assessment start
   router.replace({ name: 'Assessment' });
 }
@@ -362,6 +427,7 @@ onBeforeRouteUpdate((to) => {
     showStickyHeader.value = false;
     stickysavings.value = 0;
     stickyCarLabel.value = '';
+    clearChoicesFromSession();
 
     const { _r, ...rest } = to.query;
     router.replace({ name: 'Assessment', query: rest });
@@ -390,6 +456,9 @@ onMounted(() => {
     if (idealParam && Object.keys(bikeTypeDetails).includes(idealParam)) {
       idealBikeType.value = idealParam;
     }
+
+    // Restore choices from session if available
+    loadChoicesFromSession();
 
     // Update the UI
     setRecommendationDetails();
@@ -646,6 +715,7 @@ h2 {
   margin-bottom: 0.5rem;
   color: vars.$dark;
 }
+
 
 .gear-guide-cta {
   margin: 2rem 0;

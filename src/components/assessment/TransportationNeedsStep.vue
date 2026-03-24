@@ -5,61 +5,20 @@
 
     <div class="options-grid">
       <button
+        v-for="(opt, key) in TransportationNeedOptions"
+        :key="key"
         type="button"
         class="option-card"
-        :class="{ selected: modelValue.soloCommuting }"
-        @click="toggleNeed('soloCommuting')"
-        :aria-pressed="modelValue.soloCommuting.toString()"
+        :class="{ selected: modelValue[key] }"
+        @click="toggleNeed(key)"
+        :aria-pressed="modelValue[key].toString()"
       >
-        <div class="option-icon">🚴</div>
+        <div class="option-icon">{{ opt.icon }}</div>
         <div class="option-content">
-          <div class="option-label">Solo Commuting</div>
-          <div class="option-description">Daily commuting, including light cargo</div>
+          <div class="option-label">{{ opt.label }}</div>
+          <div class="option-description">{{ opt.description }}</div>
         </div>
       </button>
-
-      <button
-        type="button"
-        class="option-card"
-        :class="{ selected: modelValue.cargo }"
-        @click="toggleNeed('cargo')"
-        :aria-pressed="modelValue.cargo.toString()"
-      >
-        <div class="option-icon">📦</div>
-        <div class="option-content">
-          <div class="option-label">Big Cargo</div>
-          <div class="option-description">Carrying large amounts of groceries or goods</div>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        class="option-card"
-        :class="{ selected: modelValue.transportingKids }"
-        @click="toggleNeed('transportingKids')"
-        :aria-pressed="modelValue.transportingKids.toString()"
-      >
-        <div class="option-icon">👶</div>
-        <div class="option-content">
-          <div class="option-label">Transporting Kids</div>
-          <div class="option-description">Taking children to school or activities</div>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        class="option-card"
-        :class="{ selected: modelValue.transportingAdults }"
-        @click="toggleNeed('transportingAdults')"
-        :aria-pressed="modelValue.transportingAdults.toString()"
-      >
-        <div class="option-icon">👩</div>
-        <div class="option-content">
-          <div class="option-label">Transporting Adults</div>
-          <div class="option-description">Carrying adult passengers</div>
-        </div>
-      </button>
-
     </div>
 
     <div class="navigation-buttons">
@@ -70,6 +29,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import { TransportationNeedOptions } from '../../constants/assessmentOptions';
 
 const props = defineProps({
   modelValue: {
