@@ -4,11 +4,17 @@
 
     <div v-if="idealBikeType && allBikeTypes[idealBikeType]" class="ideal-note">
       <img :src="allBikeTypes[idealBikeType].image" :alt="allBikeTypes[idealBikeType].title" class="ideal-note-image">
-      <p>
-        A <strong>{{ allBikeTypes[idealBikeType].title }}</strong> would be the ideal fit for your
-        needs, but based on your storage situation we've recommended a more practical option below.
-        Keep it in mind if your storage changes down the road!
-      </p>
+      <div>
+        <p>
+          A <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link"><strong>{{ allBikeTypes[idealBikeType].title }}</strong></a>
+          would be the ideal fit for your needs, but based on your storage situation we've
+          recommended a more practical option below. Keep it in mind if your storage changes down the road!
+        </p>
+        <p class="ideal-note-tip">
+          Some people do store cargo bikes outside under motorcycle covers.
+          <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440" target="_blank" rel="noopener noreferrer" class="ideal-link">See how one cargo bike family in NYC does it.</a>
+        </p>
+      </div>
     </div>
 
     <div class="result-image">
@@ -218,6 +224,20 @@ defineProps({
     color: vars.$secondary-dark;
     line-height: 1.5;
     font-size: 0.9rem;
+  }
+}
+
+.ideal-note-tip {
+  margin-top: 0.5rem !important;
+  font-size: 0.85rem !important;
+}
+
+.ideal-link {
+  color: vars.$secondary-dark;
+  text-decoration: underline;
+
+  &:hover {
+    color: vars.$secondary-accessible;
   }
 }
 
