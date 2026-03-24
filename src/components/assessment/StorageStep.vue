@@ -21,14 +21,14 @@
       <button
         type="button"
         class="option-card"
-        :class="{ selected: modelValue === 'ground-floor' }"
-        @click="updateStorage('ground-floor')"
-        :aria-pressed="(modelValue === 'ground-floor').toString()"
+        :class="{ selected: modelValue === 'basement' }"
+        @click="updateStorage('basement')"
+        :aria-pressed="(modelValue === 'basement').toString()"
       >
         <div class="option-icon">🚪</div>
         <div class="option-content">
-          <div class="option-label">Ground Floor</div>
-          <div class="option-description">Indoor access without stairs</div>
+          <div class="option-label">Basement or a Few Steps</div>
+          <div class="option-description">Some stairs, but manageable</div>
         </div>
       </button>
 
