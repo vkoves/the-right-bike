@@ -2,7 +2,10 @@
   <header class="site-header">
     <div class="header-container">
       <div class="logo">
-        <router-link to="/">The Right Bike</router-link>
+        <router-link to="/">
+          <img src="/images/icons/favicon.svg" alt="" class="logo-icon">
+          The Right Bike
+        </router-link>
       </div>
       <nav>
         <ul>
@@ -54,6 +57,19 @@ function goToAssessment() {
   font-size: 1.5rem;
   font-weight: 700;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: 2px solid vars.$white;
+  border-radius: 7px;
+  box-shadow: vars.$shadow-md;
+  margin-right: 0.5rem;
 }
 
 nav {
