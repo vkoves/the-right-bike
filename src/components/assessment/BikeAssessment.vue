@@ -191,9 +191,10 @@ const progressPercent = computed(() => {
 // Determine if the user needs electric assistance - this basically means they are pulling a lot
 // (e.g. kids, adults, cargo) and are medium or below fitness, or it's windy or hilly
 const needsAssistance = computed(() => {
-  // For high fitness, only return needs assistance if transporting adults
+  // For high fitness, needs assistance if transporting adults or hauling cargo on hills
   if (fitnessLevel.value === 'high') {
-    return transportationNeeds.value.transportingAdults;
+    return transportationNeeds.value.transportingAdults ||
+           (geography.value.hilly && needsCargo.value);
   }
 
   // Any high load is an issue if you're not very strong, suggest e-assist. They can always opt
