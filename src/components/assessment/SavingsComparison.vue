@@ -30,19 +30,25 @@
         <label for="replacement-slider" class="slider-label">
           How much of your driving would you replace with biking?
         </label>
-        <div class="slider-value" :style="{ color: sliderColor }" aria-live="polite">{{ replacementPercent }}%</div>
-        <input
-          id="replacement-slider"
-          type="range"
-          v-model.number="replacementPercent"
-          min="25"
-          max="100"
-          step="5"
-          class="slider-input"
-        >
-        <div class="slider-range">
-          <span>25%</span>
-          <span>100%</span>
+        <div class="slider-row">
+          <div class="slider-track-group">
+            <input
+              id="replacement-slider"
+              type="range"
+              v-model.number="replacementPercent"
+              min="25"
+              max="100"
+              step="5"
+              class="slider-input"
+            >
+            <div class="slider-range">
+              <span>25%</span>
+              <span>100%</span>
+            </div>
+          </div>
+          <div class="slider-value" :style="{ color: sliderColor }" aria-live="polite">
+            {{ replacementPercent }}%
+          </div>
         </div>
       </div>
       </transition>
@@ -509,13 +515,27 @@ function formatRounded(value) {
   font-weight: 600;
   color: vars.$dark;
   font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.slider-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.slider-track-group {
+  flex: 1;
+  min-width: 0;
+  margin-top: 0.4rem;
 }
 
 .slider-value {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: vars.$primary;
-  margin: 0.25rem 0 0.5rem;
+  white-space: nowrap;
+  width: 4rem;
 }
 
 .slider-input {

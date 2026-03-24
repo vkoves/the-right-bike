@@ -476,7 +476,7 @@ h1 {
 }
 
 .assessment-container {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   background-color: vars.$bg-card;

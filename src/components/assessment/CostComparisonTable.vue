@@ -242,6 +242,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
   flex-direction: column;
   align-items: center;
   line-height: 1.1;
+  min-height: 14rem;
 
   img {
     width: 150px;
@@ -263,14 +264,13 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 }
 
 .cost-breakdown {
-  padding: 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
 }
 
 .cost-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0;
   border-bottom: 1px solid vars.$border-lighter;
 
   &:has(+ .total) {
@@ -283,6 +283,9 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
     border-top: 2px solid vars.$border-lighter;
     border-bottom: none;
     padding-top: 1rem;
+    margin-bottom: 0;
+
+    .cost-item, .cost-value { font-weight: bold; }
   }
 
   &.total + .savings-total {
@@ -293,7 +296,6 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 
 .cost-label {
   color: vars.$text-secondary;
-  font-weight: 600;
 }
 
 .cost-value {
@@ -325,7 +327,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
   background-color: vars.$lighter-gray;
   border-radius: 20px;
   padding: 3px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .toggle-option {
@@ -400,6 +402,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
   margin-top: 0;
   border-top: none;
   padding: 0;
+  font-weight: bold;
 
   .cost-label,
   .cost-value {
@@ -535,6 +538,8 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .comparison-container {
     flex-direction: column;
+
+    .comparison-header { min-height: initial; }
   }
 
   .footnotes-section {
