@@ -115,11 +115,13 @@ const idealArticle = computed(() => {
     height: auto;
     border-radius: 8px;
     box-shadow: vars.$shadow-md;
+    padding: 0.5rem;
+    background: vars.$white;
   }
 
   .electric-badge {
     position: absolute;
-    top: 8px;
+    top: -8px;
     right: 8px;
     background-color: vars.$secondary-accessible;
     color: vars.$white;
