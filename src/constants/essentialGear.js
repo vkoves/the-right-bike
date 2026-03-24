@@ -30,10 +30,10 @@ export const ESSENTIAL_GEAR = [
   },
   {
     id: 'lock',
-    image: '/images/gear/lock.webp',
-    title: 'U-Lock',
+    images: ['/images/gear/lock.webp', '/images/gear/chain-lock.webp'],
+    title: 'A Good Lock',
     description:
-      'A sturdy U-lock is the best defense against bike theft. Cable locks can be cut in seconds — a quality U-lock keeps your investment safe wherever you park.',
+      'A sturdy U-lock or chain lock is your best defense against bike theft — cable locks can be cut in seconds. For e-bikes especially, it\'s worth spending more on an angle-grinder-resistant U-lock (like Litelock) or a heavy-duty chain lock, since the higher resale value makes them a bigger target.',
     wirecutter: {
       url: 'https://www.nytimes.com/wirecutter/reviews/best-bike-lock/',
       title: 'Best Bike Lock',
@@ -59,6 +59,7 @@ export const WINTER_GEAR = [
   {
     id: 'studded-tires',
     image: '/images/gear/studded-tires.webp',
+    imageClass: '-edge-to-edge',
     title: 'Studded Tires',
     description:
       'The single biggest upgrade for winter riding. Metal studs bite into ice and packed snow, giving you confident traction when regular tires would slip out.',
@@ -66,7 +67,7 @@ export const WINTER_GEAR = [
   {
     id: 'bar-mitts',
     image: '/images/gear/bar-mitts.webp',
-    title: 'Bar Mitts',
+    title: 'Pogies/Bar Mitts',
     description:
       'Handlebar-mounted pogies keep your hands warm without bulky gloves, so you keep full brake and shift control even in sub-freezing temps.',
   },

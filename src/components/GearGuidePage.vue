@@ -8,7 +8,15 @@
 
     <div class="gear-grid">
       <div v-for="item in ESSENTIAL_GEAR" :key="item.id" class="gear-card">
-        <img v-if="item.image" :src="item.image" :alt="item.title" class="gear-image" :class="item.imageClass">
+        <div v-if="item.images" class="gear-image-pair">
+          <div class="gear-image-half -left">
+            <img :src="item.images[0]" :alt="item.title">
+          </div>
+          <div class="gear-image-half -right">
+            <img :src="item.images[1]" :alt="item.title">
+          </div>
+        </div>
+        <img v-else-if="item.image" :src="item.image" :alt="item.title" class="gear-image" :class="item.imageClass">
         <div class="gear-card-body">
           <h2>{{ item.title }}</h2>
           <p>{{ item.description }}</p>
@@ -45,7 +53,7 @@
     </div>
 
     <div class="winter-section">
-      <h2 class="winter-heading">Winter Riding &#10052;&#65039;</h2>
+      <h2 class="winter-heading">Winter Riding <img src="/images/icons/snowflake.svg" class="snowflake-icon" alt=""></h2>
       <p class="winter-intro">
         Planning to ride year-round? These upgrades make cold-weather commuting safe and comfortable.
         See <a href="https://www.nytimes.com/wirecutter/reviews/best-rain-gear-for-biking/" target="_blank" rel="noopener noreferrer" class="winter-link">Wirecutter's Foul-Weather Bike Commuting Guide</a> for full reviews.
@@ -53,7 +61,9 @@
 
       <div class="gear-grid">
         <div v-for="item in WINTER_GEAR" :key="item.id" class="gear-card -winter">
-          <img v-if="item.image" :src="item.image" :alt="item.title" class="gear-image" :class="item.imageClass">
+          <div v-if="item.image" class="gear-image-container" :class="item.imageClass">
+            <img :src="item.image" :alt="item.title" class="gear-image">
+          </div>
           <div class="gear-card-body">
             <span v-if="item.emoji" class="gear-emoji">{{ item.emoji }}</span>
             <h3>{{ item.title }}</h3>
@@ -109,7 +119,7 @@ h1 {
 }
 
 .gear-card {
-  background-color: vars.$bg-body;
+  background-color: vars.$white;
   border-radius: 8px;
   padding: 0;
   box-shadow: vars.$shadow-sm;
@@ -138,16 +148,71 @@ h1 {
   p { flex: 1; }
 }
 
+.gear-image-pair {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-bottom: 2px solid vars.$border-light;
+  background-color: vars.$white;
+  overflow: hidden;
+}
+
+.gear-image-half {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 55%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.75rem;
+  }
+
+  &.-left {
+    left: 0;
+    transform: scale(0.75) translate(0.5em, 0em) rotate(28deg);
+  }
+
+  &.-right {
+    right: 0;
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
 .gear-image {
   width: 100%;
   aspect-ratio: 3 / 2;
   object-fit: contain;
   padding: 1rem;
-  border-bottom: 1px solid vars.$border-light;
+  border-bottom: 2px solid vars.$border-light;
   background-color: vars.$white;
 
   &.-extra-padding {
     padding: 2.5rem;
+  }
+}
+
+.gear-image-container {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-bottom: 2px solid vars.$border-light;
+  background-color: vars.$white;
+
+  .gear-image {
+    width: 100%;
+    border-bottom: none;
+  }
+
+  &.-edge-to-edge {
+    .gear-image {
+      aspect-ratio: unset;
+      height: auto;
+      padding: 0.75rem 0 0 0;
+      object-fit: cover;
+    }
   }
 }
 
@@ -168,6 +233,23 @@ h1 {
   padding: 2rem;
   background-color: vars.$secondary-light;
   border-radius: 8px;
+}
+
+.snowflake-icon {
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+  // Tint the SVG to match $secondary-dark using a CSS filter
+  filter: invert(44%) sepia(72%) saturate(450%) hue-rotate(172deg) brightness(90%) contrast(95%);
+}
+
+.winter-link {
+  color: vars.$secondary-dark;
+
+  &:hover {
+    color: #124a6e;
+  }
 }
 
 .winter-heading {
