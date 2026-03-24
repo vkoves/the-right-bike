@@ -28,13 +28,17 @@ const formattedSavings = computed(() => {
 });
 
 const shareText = computed(() => {
-  return `I found the right bike for me on Find The Right Bike, and could save ${formattedSavings.value} over five years! Find the right bike for you and get tips for getting started at findtheright.bike`;
+  return `I found the right bike for me on Find The Right Bike, and could save `
+   + `${formattedSavings.value} over five years! Take a look at the bike I got suggested, and ` +
+   ` find the right bike for you and get tips for getting started. ${window.location.href}`;
 });
 
 async function share() {
+  const url = window.location.href;
+
   if (navigator.share) {
     try {
-      await navigator.share({ text: shareText.value });
+      await navigator.share({ text: shareText.value, url });
       return;
     } catch (e) {
       if (e.name === 'AbortError') return;
