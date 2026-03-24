@@ -48,7 +48,7 @@
             @click="emit('car-type-change', false)"
           >Used</button>
         </div>
-        <h4 v-if="alreadyOwnsCar">Your Car<br><span class="car-subtitle">With Less Use</span></h4>
+        <h4 v-if="alreadyOwnsCar">Your Car - <span class="car-subtitle">With Less Use</span></h4>
         <h4 v-else>Average {{ isNew ? 'New' : 'Used' }} Car</h4>
       </div>
       <div class="cost-breakdown">
@@ -241,6 +241,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
   display: flex;
   flex-direction: column;
   align-items: center;
+  line-height: 1.1;
 
   img {
     width: 150px;
@@ -279,7 +280,6 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
   &.total {
     font-weight: bold;
     font-size: 1.1rem;
-    margin-top: 1.5rem;
     border-top: 2px solid vars.$border-lighter;
     border-bottom: none;
     padding-top: 1rem;
@@ -287,6 +287,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 
   &.total + .savings-total {
     border-top: none;
+    margin: 0;
   }
 }
 
@@ -387,7 +388,6 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 
 .car-subtitle {
   font-weight: normal;
-  font-size: 0.9rem;
   color: vars.$text-secondary;
 }
 
@@ -399,7 +399,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 .savings-total.total {
   margin-top: 0;
   border-top: none;
-  padding-top: 0;
+  padding: 0;
 
   .cost-label,
   .cost-value {

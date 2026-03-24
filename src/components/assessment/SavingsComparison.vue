@@ -22,7 +22,7 @@
       <label class="toggle-label">
         <input type="checkbox" v-model="alreadyOwnsCar">
         <span class="toggle-switch"></span>
-        I already own a car
+        I Already Own A Car
       </label>
 
       <div v-if="alreadyOwnsCar" class="replacement-slider">
