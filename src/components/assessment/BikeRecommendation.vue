@@ -19,6 +19,7 @@
 
     <div class="result-image">
       <img :src="recommendationDetails.image" :alt="recommendationDetails.title">
+      <div v-if="recommendationDetails.electric" class="electric-badge">⚡ Electric</div>
     </div>
     <div class="result-content">
       <div class="title-row">
@@ -107,12 +108,25 @@ const idealArticle = computed(() => {
 .result-image {
   margin-bottom: 1.5rem;
   text-align: center;
+  position: relative;
 
   img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     box-shadow: vars.$shadow-md;
+  }
+
+  .electric-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: vars.$secondary-accessible;
+    color: vars.$white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 12px;
   }
 }
 
