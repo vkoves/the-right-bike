@@ -222,7 +222,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['bike-change']);
+const emit = defineEmits(['bike-change', 'update:savings', 'update:carLabel']);
 
 const router = useRouter();
 const route = useRoute();
@@ -320,6 +320,15 @@ const savingsAmount = computed(() => {
 
 const savings10Year = computed(() => savingsAmount.value * Math.pow(1 + EstGrowthRate, InvestmentYearsShort));
 const savings40Year = computed(() => savingsAmount.value * Math.pow(1 + EstGrowthRate, InvestmentYearsLong));
+
+// Emit savings and car label to parent for sticky header
+const carLabel = computed(() => {
+  if (alreadyOwnsCar.value) return 'Car-Lite';
+  return isNew.value ? 'New Car' : 'Used Car';
+});
+
+watch(savingsAmount, (val) => emit('update:savings', val), { immediate: true });
+watch(carLabel, (val) => emit('update:carLabel', val), { immediate: true });
 
 // Get the current recommendation type
 const recommendationType = computed(() => {

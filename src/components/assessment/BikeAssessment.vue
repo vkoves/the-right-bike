@@ -51,6 +51,14 @@
 
         <!-- Step 5: Results -->
         <div v-else-if="currentStep === 5" key="step5" class="step-container results-container">
+          <div class="sticky-header" :class="{ '-visible': showStickyHeader && stickysavings }">
+            <img :src="recommendationDetails.image" :alt="recommendationDetails.title" class="sticky-bike-image">
+            <span class="sticky-bike">{{ recommendationDetails.title }}</span>
+            <span class="sticky-separator">vs</span>
+            <span class="sticky-car">{{ stickyCarLabel }}</span>
+            <span class="sticky-savings">{{ formatCurrency(stickysavings) }} savings</span>
+          </div>
+
           <h2>Your Recommended Bike Type</h2>
 
           <bike-recommendation
@@ -71,12 +79,15 @@
           </nav>
 
           <savings-comparison
+            ref="savingsSentinel"
             :bike-title="recommendationDetails.title"
             :bike-image="recommendationDetails.image"
             :costs="costs"
             :all-bike-types="bikeTypeDetails"
             :selected-bike-type="recommendation.value"
             @bike-change="handleBikeChange"
+            @update:savings="stickysavings = $event"
+            @update:car-label="stickyCarLabel = $event"
             key="savings-component"
           />
 
@@ -95,7 +106,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, watch, onMounted } from 'vue';
+import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router';
 import TransportationNeedsStep from './TransportationNeedsStep.vue';
 import StorageStep from './StorageStep.vue';
@@ -141,6 +152,11 @@ watch(geography, () => {}, { deep: true });
 const recommendation = ref('');
 const idealBikeType = ref(null);
 const recommendationDetails = ref({});
+const stickysavings = ref(0);
+const stickyCarLabel = ref('');
+const showStickyHeader = ref(false);
+const savingsSentinel = ref(null);
+let stickyScrollHandler = null;
 
 
 // Cost comparison data
@@ -340,6 +356,14 @@ onBeforeRouteUpdate((to) => {
   }
 });
 
+function formatCurrency(value) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
 // Initialize based on route param /bike/:type (need to be after all functions are defined)
 onMounted(() => {
   if (props.type && Object.keys(bikeTypeDetails).includes(props.type)) {
@@ -358,6 +382,52 @@ onMounted(() => {
     // Update the UI
     setRecommendationDetails();
     updateBikeCosts(recommendation.value);
+  }
+});
+
+// Scroll-based sticky header: appears once the savings <h3> scrolls off-screen,
+// hides when it scrolls back into view. Adjust StickyHeaderPxOffset to fine-tune
+// when exactly it triggers (positive = triggers earlier, negative = later).
+const StickyHeaderPxOffset = 0;
+const SiteHeaderHeight = 80;
+
+watch(savingsSentinel, (comp, _, onCleanup) => {
+  if (stickyScrollHandler) {
+    window.removeEventListener('scroll', stickyScrollHandler);
+    stickyScrollHandler = null;
+  }
+  showStickyHeader.value = false;
+  if (!comp?.$el) return;
+
+  const savingsHeading = comp.$el.querySelector('.savings-highlight h3');
+  if (!savingsHeading) return;
+
+  let hasBeenInView = false;
+
+  stickyScrollHandler = () => {
+    const rect = savingsHeading.getBoundingClientRect();
+    const threshold = SiteHeaderHeight + StickyHeaderPxOffset;
+
+    // Element is currently in view
+    if (rect.top >= 0 && rect.top < window.innerHeight) {
+      hasBeenInView = true;
+    }
+
+    // Show sticky only when heading has been seen and has scrolled above threshold
+    showStickyHeader.value = hasBeenInView && rect.bottom < threshold;
+  };
+
+  window.addEventListener('scroll', stickyScrollHandler, { passive: true });
+  onCleanup(() => {
+    window.removeEventListener('scroll', stickyScrollHandler);
+    stickyScrollHandler = null;
+  });
+});
+
+onUnmounted(() => {
+  if (stickyScrollHandler) {
+    window.removeEventListener('scroll', stickyScrollHandler);
+    stickyScrollHandler = null;
   }
 });
 </script>
@@ -447,6 +517,64 @@ h1 {
   &.-at-quarter { left: 25%; }
   &.-at-half { left: 50%; }
   &.-at-three-quarter { left: 75%; }
+}
+
+.sticky-header {
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background-color: vars.$primary-dark;
+  color: vars.$white;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: vars.$shadow-md;
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &.-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+}
+
+.sticky-bike-image {
+  aspect-ratio: 1;
+  border-radius: 10rem;
+  border: solid 2px vars.$lighter-gray;
+  object-fit: cover;
+  height: 3rem;
+  flex-shrink: 0;
+}
+
+.sticky-bike {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sticky-separator {
+  opacity: 0.7;
+}
+
+.sticky-car {
+  white-space: nowrap;
+}
+
+.sticky-savings {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  white-space: nowrap;
 }
 
 .step-container {
@@ -561,5 +689,15 @@ h2 {
     display: none;
   }
 
+  .sticky-header {
+    top: 4rem;
+    font-size: 0.75rem;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .sticky-bike-image {
+    display: none;
+  }
 }
 </style>

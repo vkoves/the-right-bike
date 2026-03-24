@@ -52,6 +52,7 @@ function goToAssessment() {
   position: sticky;
   top: 0;
   z-index: 100;
+  height: 5rem;
 }
 
 .header-container {
@@ -154,6 +155,7 @@ nav {
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .site-header {
     padding: 0.75rem 0.5rem;
+    height: auto;
   }
 
   .header-container {

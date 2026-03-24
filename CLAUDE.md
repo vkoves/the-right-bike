@@ -20,3 +20,6 @@ Examples of what this means in practice:
 - Avoid `$gray` (`#7f8c8d`) for text — it fails on white. Use `$text-secondary` (`#727272`) with `font-weight: 600` instead.
 - Small text (under ~1rem) is especially risky — always pair a lighter colour with bold weight.
 - Coloured text on tinted backgrounds (e.g. green text on `$primary-lighter`) requires a darker shade than on white — prefer `$primary-dark` over `$primary` in those contexts.
+
+### Constants use PascalCase
+**Use PascalCase for constants** (e.g. `StickyHeaderPxOffset`, `EstGrowthRate`), not SCREAMING_SNAKE_CASE.
