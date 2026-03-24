@@ -45,44 +45,19 @@
 
 <style lang="scss" scoped>
 @use '../assets/scss/variables' as vars;
-
-$bg-start: #1e6b3d;
-$bg-mid: #2c8a57;
-
-.social-image {
-  width: 1000px;
-  height: 522px;
-  background: linear-gradient(135deg, $bg-start 0%, $bg-mid 60%, #3aaa6e 100%);
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Montserrat', sans-serif;
-}
+@use '../assets/scss/social-image';
 
 .content {
-  flex: 1;
   padding: 2rem;
-  z-index: 1;
   flex-shrink: 0;
-  margin-bottom: 3rem;
 }
 
 .eyebrow {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: vars.$white;
-  margin-bottom: 1rem;
 }
 
 h1 {
   font-size: 3.5rem;
-  font-weight: 700;
-  color: vars.$white;
-  line-height: 1.1;
-  margin: 0 0 1.5rem;
 }
 
 .benefits-summary { gap: 1rem 0.5rem; }
@@ -140,26 +115,5 @@ h1 {
     background: #06D6A0;
     transform: rotate(-3deg) translate(-1rem, 0rem);
   }
-}
-
-.site-brand {
-  position: absolute;
-  bottom: 1.25rem;
-  left: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: vars.$white;
-  letter-spacing: 0.05em;
-  z-index: 2;
-}
-
-.site-logo {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 5px;
-  border: 2px solid vars.$white;
 }
 </style>
