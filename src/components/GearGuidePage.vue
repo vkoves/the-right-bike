@@ -71,6 +71,23 @@
           </div>
         </div>
       </div>
+
+      <div class="winter-video-card">
+        <h3>More Winter Riding Tips</h3>
+        <p>
+          Want to learn more about winter biking? We made a video just for you, with more tips o
+          winter clothing, maintenance and more.
+        </p>
+        <div class="winter-video">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/m8w0Yu6Youo"
+            title="Winter biking tips"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
     </div>
 
     <div class="page-footer">
@@ -272,6 +289,37 @@ h1 {
   }
 }
 
+.winter-video-card {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: vars.$white;
+  border-radius: 8px;
+  max-width: 600px;
+
+  h3 {
+    color: vars.$secondary-dark;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: vars.$text-secondary;
+    margin-bottom: 1rem;
+  }
+}
+
+.winter-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .gear-card.-winter {
   background-color: vars.$white;
 
@@ -318,6 +366,11 @@ h1 {
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .gear-grid {
     grid-template-columns: 1fr;
+  }
+
+  .winter-section {
+    margin: 1rem -1rem;
+    padding: 1.5rem;
   }
 }
 </style>
