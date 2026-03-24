@@ -294,8 +294,16 @@ function restartAssessment() {
 }
 
 // Reset when navigating to the assessment (e.g. clicking "Bike Finder" in the header)
+// Note: we reset state directly here rather than calling restartAssessment() to avoid
+// triggering a router.replace() inside a navigation guard, which can cause a double-navigation
 onBeforeRouteUpdate((to) => {
-  if (to.query._r) restartAssessment();
+  if (to.query._r) {
+    currentStep.value = 1;
+    transportationNeeds.value = { soloCommuting: false, cargo: false, transportingKids: false, transportingAdults: false };
+    geography.value = { windy: false, hilly: false };
+    fitnessLevel.value = 'medium';
+    recommendation.value = '';
+  }
 });
 
 // Initialize based on URL parameter (need to be after all functions are defined)
