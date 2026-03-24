@@ -53,6 +53,28 @@ export const NICE_TO_HAVE_GEAR = [
       title: 'Best Bike Pump',
     },
   },
+  {
+    id: 'rack',
+    image: '/images/gear/rack.webp',
+    title: 'Rear Rack',
+    description:
+      'A rear rack is the foundation for carrying anything on your bike — panniers, baskets, or bungee-strapped bags. Most cargo bikes come with one, but many commuter bikes don\'t, so check before you ride.',
+    wirecutter: {
+      url: 'https://www.nytimes.com/wirecutter/reviews/best-rear-bike-rack/',
+      title: 'Best Rear Bike Racks',
+    },
+  },
+  {
+    id: 'panniers',
+    image: '/images/gear/panniers.webp',
+    title: 'Panniers',
+    description:
+      'Rack-mounted panniers beat a backpack for hauling groceries, work gear, or anything heavier than a phone. They keep the weight low on the bike instead of on your shoulders, so you arrive less sweaty and more comfortable.',
+    wirecutter: {
+      url: 'https://www.nytimes.com/wirecutter/reviews/best-bike-rack-basket-panniers',
+      title: 'Best Bike Racks, Baskets, and Panniers',
+    },
+  },
 ];
 
 export const WINTER_GEAR = [
