@@ -2,11 +2,11 @@
   <div class="step-container">
     <h2>Is it Windy Or Hilly Where You Are?</h2>
     <p class="subtitle">Select all that apply to your location</p>
-    
+
     <div class="options-grid">
-      <button 
+      <button
         type="button"
-        class="option-card" 
+        class="option-card"
         :class="{ selected: modelValue.windy }"
         @click="toggleGeography('windy')"
         :aria-pressed="modelValue.windy.toString()"
@@ -14,10 +14,10 @@
         <div class="option-icon">🌬️</div>
         <div class="option-label">Windy</div>
       </button>
-      
-      <button 
+
+      <button
         type="button"
-        class="option-card" 
+        class="option-card"
         :class="{ selected: modelValue.hilly }"
         @click="toggleGeography('hilly')"
         :aria-pressed="modelValue.hilly.toString()"
@@ -25,19 +25,19 @@
         <div class="option-icon">⛰️</div>
         <div class="option-label">Hilly</div>
       </button>
-      
-      <button 
+
+      <button
         type="button"
-        class="option-card" 
-        :class="{ selected: !modelValue.windy && !modelValue.hilly }"
+        class="option-card"
+        :class="{ selected: !modelValue.hilly }"
         @click="setFlatGeography"
-        :aria-pressed="(!modelValue.windy && !modelValue.hilly).toString()"
+        :aria-pressed="(!modelValue.hilly).toString()"
       >
         <div class="option-icon">📏</div>
         <div class="option-label">Mostly Flat</div>
       </button>
     </div>
-    
+
     <div class="navigation-buttons">
       <button class="btn-prev" @click="$emit('prev')">Back</button>
       <button class="btn-next" @click="$emit('next')">Continue</button>
@@ -62,15 +62,12 @@ function toggleGeography(type) {
   updatedGeography[type] = !updatedGeography[type];
   // Emit the update event with the new object
   emit('update:modelValue', updatedGeography);
-  
+
 }
 
 function setFlatGeography() {
-  // Create a fresh object with all properties set to false
-  const flatGeography = { windy: false, hilly: false };
-  // Emit the update event with the new object
-  emit('update:modelValue', flatGeography);
-  
+  const updatedGeography = { ...props.modelValue, hilly: false };
+  emit('update:modelValue', updatedGeography);
 }
 </script>
 
