@@ -2,7 +2,7 @@
   <header class="site-header">
     <div class="header-container">
       <div class="logo">
-        <router-link to="/">
+        <router-link to="/" aria-hidden="true" tabindex="-1">
           <img src="/images/icons/favicon.svg" alt="" class="logo-icon">
         </router-link>
         <div class="logo-text-group">
@@ -153,7 +153,7 @@ function handleNavClick(link) {
     text-decoration: none;
     transition: opacity 0.3s;
     font-weight: 600;
-    color: vars.$lightest-gray;
+    color: vars.$white;
 
     &:hover {
       color: vars.$white;
@@ -241,7 +241,7 @@ function handleNavClick(link) {
     a {
       display: block;
       padding: 0.75rem 0;
-      color: vars.$lightest-gray;
+      color: vars.$white;
       text-decoration: none;
       font-weight: 600;
 
