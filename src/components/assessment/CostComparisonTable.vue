@@ -264,7 +264,7 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 }
 
 .cost-breakdown {
-  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+  padding: 0.5rem 2rem 1.5rem 2rem;
 }
 
 .cost-item {
@@ -437,14 +437,16 @@ const totalAnnualSaving = computed(() => maintenanceSaving.value + fuelSaving.va
 
 /* Footnotes */
 .footnote-link {
-  font-size: 0.7rem;
+  position: absolute;
   color: vars.$primary;
-  cursor: pointer;
   font-weight: bold;
-  border: 1px solid vars.$primary-lighter;
-  border-radius: 50%;
+  border-radius: 10rem;
   padding: 0 4px;
   margin-left: 3px;
+  font-size: 1rem;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
 
   &:hover {
     background-color: vars.$primary-lighter;
