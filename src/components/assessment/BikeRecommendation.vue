@@ -40,14 +40,15 @@
         <strong>{{ recommendationDetails.priceRange }}</strong>
       </div>
 
-      <div v-if="storageConstrained && recommendedBikeType === 'commuter-ebike'" class="storage-tip">
-        <p>
-          <strong>Storage tip:</strong> Look for a lighter e-bike with an integrated battery &mdash;
-          they're easier to carry upstairs and look more like a regular bike, which helps with indoor storage.
+      <div v-if="storageConstrained" class="storage-tip">
+        <p v-if="recommendedBikeType === 'commuter-ebike'">
+          <strong>Storage Tip!</strong> Look for a lighter eBike with an integrated battery, which
+          are easier to carry upstairs. Other ebikes are heavier, but you can pull the battery and
+          charge indoors, improving battery health and deterring theft.
         </p>
         <p>
-          Many e-bikes have a removable battery, so with those you can lock them up and pull the battery,
-          improving battery health, deterring theft, and letting you charge inside!
+          <strong>No room for a bike? Try bikeshare!</strong> Check if your area has a
+          bikeshare program you get the benefits of biking without needing to store anything at home.
         </p>
       </div>
     </div>
