@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <h2 class="section-heading">Nice to Have</h2>
+    <h2 class="section-heading">Important Extras</h2>
 
     <div class="gear-grid">
       <div v-for="item in NICE_TO_HAVE_GEAR" :key="item.id" class="gear-card">

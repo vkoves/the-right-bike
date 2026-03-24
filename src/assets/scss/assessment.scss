@@ -63,22 +63,22 @@ h2 {
   font: inherit;
   color: inherit;
   width: 100%;
-  
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: vars.$shadow-sm;
   }
-  
+
   &:focus {
     outline: none;
     border-color: vars.$secondary;
     box-shadow: vars.$shadow-focus;
   }
-  
+
   &.selected {
     border-color: vars.$primary;
     background-color: rgba(44, 138, 87, 0.05);
-    
+
     &::before {
       content: "✓";
       position: absolute;
@@ -136,7 +136,7 @@ h2 {
   @extend %btn-base;
   background-color: vars.$lighter-gray;
   color: vars.$light-gray;
-  
+
   &:hover {
     background-color: color.adjust(vars.$lighter-gray, $lightness: -5%);
   }
@@ -147,11 +147,11 @@ h2 {
   background-color: vars.$primary;
   color: vars.$white;
   margin-left: auto;
-  
+
   &:hover {
     background-color: vars.$primary-dark;
   }
-  
+
   &:disabled {
     background-color: color.adjust(vars.$primary, $lightness: 25%);
     cursor: not-allowed;
@@ -162,7 +162,7 @@ h2 {
   @extend %btn-base;
   background-color: vars.$lighter-gray;
   color: vars.$light-gray;
-  
+
   &:hover {
     background-color: color.adjust(vars.$lighter-gray, $lightness: -5%);
   }
@@ -172,7 +172,7 @@ h2 {
   @extend %btn-base;
   background-color: vars.$secondary;
   color: vars.$white;
-  
+
   &:hover {
     background-color: vars.$secondary-dark;
   }
@@ -193,6 +193,11 @@ h2 {
     flex-direction: row;
     gap: vars.$spacing-md;
     text-align: left;
+
+    &.selected::before {
+      right: 0.3125rem;
+      top: 0.3125rem;
+    }
   }
 
   .option-icon {
@@ -203,12 +208,12 @@ h2 {
   .options-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .navigation-buttons {
     flex-direction: column;
     gap: vars.$spacing-md;
   }
-  
+
   .btn-prev, .btn-next, .btn-restart, .btn-details {
     width: 100%;
   }

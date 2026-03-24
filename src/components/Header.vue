@@ -4,13 +4,15 @@
       <div class="logo">
         <router-link to="/">
           <img src="/images/icons/favicon.svg" alt="" class="logo-icon">
-          The Right Bike
+          Find The Right Bike
         </router-link>
       </div>
       <nav>
         <ul>
           <li class="hide-mobile"><router-link to="/">Home</router-link></li>
-          <li class="hide-mobile"><a href="#" @click.prevent="goToAssessment">Bike Finder</a></li>
+          <li class="hide-mobile">
+            <router-link to="/assessment" @click.prevent="goToAssessment">Bike Finder</router-link>
+          </li>
           <li class="hide-mobile"><router-link to="/gear-guide">Gear Guide</router-link></li>
           <li><router-link to="/about">About</router-link></li>
         </ul>
@@ -85,13 +87,13 @@ nav {
   }
 
   a {
-    color: vars.$white;
     text-decoration: none;
-    font-weight: 500;
     transition: opacity 0.3s;
+    font-weight: 600;
+    color: vars.$lightest-gray;
 
     &:hover {
-      opacity: 0.8;
+      color: vars.$white;
     }
 
     &.router-link-active {
