@@ -53,7 +53,7 @@ $chicago-blue: #41B6E6;
 }
 
 .stories-intro {
-  color: vars.$gray;
+  color: vars.$text-secondary;
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
@@ -62,7 +62,7 @@ $chicago-blue: #41B6E6;
   display: inline-block;
   margin-bottom: 2.5rem;
   padding: 0.75rem 2rem;
-  background-color: $chicago-blue;
+  background-color: vars.$secondary-accessible;
   color: vars.$white;
   border-radius: vars.$border-radius-lg;
   font-weight: 700;

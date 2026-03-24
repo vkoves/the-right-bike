@@ -415,7 +415,7 @@ h1 {
   .jump-label {
     font-size: 0.8rem;
     font-weight: bold;
-    color: vars.$text-muted;
+    color: vars.$text-body;
     letter-spacing: 0.05em;
     width: 100%;
   }
@@ -424,7 +424,7 @@ h1 {
     display: inline-block;
     padding: 0.4rem 1rem;
     background-color: vars.$primary-lighter;
-    color: vars.$primary;
+    color: vars.$primary-dark;
     border-radius: 50px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -453,7 +453,7 @@ h2 {
 
   p {
     margin-bottom: 0.75rem;
-    color: vars.$text-secondary;
+    color: vars.$primary-dark;
   }
 }
 

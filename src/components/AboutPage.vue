@@ -173,9 +173,9 @@ li {
   border-radius: 8px;
 
   a {
-    color: vars.$primary;
+    color: vars.$primary-dark;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
 
     &:hover {
       text-decoration: underline;

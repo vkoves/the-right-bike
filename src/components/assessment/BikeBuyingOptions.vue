@@ -55,7 +55,7 @@ const options = computed(() => BIKE_RECOMMENDATIONS[props.bikeType] || null);
 <style lang="scss" scoped>
 @use '../../assets/scss/variables' as vars;
 
-$tier-premium: #9b6b00;
+$tier-premium: #7a5200;
 $tier-premium-bg: #fef9ec;
 
 .buying-options {
@@ -70,7 +70,8 @@ $tier-premium-bg: #fef9ec;
 }
 
 .buying-subtitle {
-  color: vars.$gray;
+  color: vars.$text-secondary;
+  font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
@@ -113,7 +114,7 @@ $tier-premium-bg: #fef9ec;
   padding: 0.35rem 0.75rem;
   text-align: left;
 
-  .budget   & { color: vars.$primary; background-color: vars.$primary-lighter; }
+  .budget   & { color: vars.$primary-dark; background-color: vars.$primary-lighter; }
   .midrange & { color: vars.$secondary-dark; background-color: vars.$secondary-light; }
   .premium  & { color: $tier-premium; background-color: $tier-premium-bg; }
 }
@@ -161,8 +162,9 @@ $tier-premium-bg: #fef9ec;
 }
 
 .tier-price {
-  color: vars.$gray;
+  color: vars.$text-secondary;
   font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .tier-cta {

@@ -311,7 +311,8 @@ function formatRounded(value) {
 }
 
 .savings-intro {
-  color: vars.$gray;
+  color: vars.$text-secondary;
+  font-weight: 600;
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -457,7 +458,7 @@ function formatRounded(value) {
     position: absolute;
     top: 8px;
     right: 8px;
-    background-color: vars.$secondary;
+    background-color: vars.$secondary-accessible;
     color: vars.$white;
     font-size: 0.7rem;
     font-weight: bold;
@@ -475,7 +476,7 @@ function formatRounded(value) {
   left: 0;
   right: 0;
   display: inline-block;
-  background-color: vars.$secondary;
+  background-color: vars.$secondary-accessible;
   color: vars.$white;
   font-size: 0.65rem;
   font-weight: 600;

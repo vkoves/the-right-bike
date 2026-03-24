@@ -8,7 +8,7 @@
         <div class="alternative-card">
           <div class="alternative-icon">🚗</div>
           <h4>Car Sharing</h4>
-          <p>Services like Zipcar or Getaround offer hourly rentals (~$10-15/hour) for quick errands.</p>
+          <p>Services like Zipcar offer hourly rentals (~$10-15/hour) for quick errands.</p>
           <div class="alternative-savings">
             <strong>10 rentals/year:</strong><br>
             $300 - $450
@@ -130,8 +130,9 @@ function formatCurrency(value) {
   }
 
   p {
-    color: vars.$gray;
+    color: vars.$text-secondary;
     font-size: 0.95rem;
+    font-weight: 600;
     margin-bottom: 1rem;
     flex-grow: 1;
   }
@@ -147,7 +148,7 @@ function formatCurrency(value) {
   padding: 0.75rem;
   border-radius: 8px;
   font-size: 0.9rem;
-  color: vars.$primary-light;
+  color: vars.$primary-dark;
 }
 
 .total-comparison {
@@ -190,7 +191,8 @@ function formatCurrency(value) {
   font-size: 1.4rem;
 
   strong {
-    background-color: rgba(255, 255, 255, vars.$opacity-medium);
+    color: vars.$primary-dark;
+    background-color: vars.$white;
     padding: 0.3rem 0.7rem;
     border-radius: 6px;
     font-size: 1.5rem;

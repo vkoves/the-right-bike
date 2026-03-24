@@ -253,7 +253,8 @@ function formatCurrency(value) {
 }
 
 .cost-label {
-  color: vars.$gray;
+  color: vars.$text-secondary;
+  font-weight: 600;
 }
 
 .cost-value {
@@ -272,7 +273,7 @@ function formatCurrency(value) {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: vars.$secondary;
+  background-color: vars.$secondary-accessible;
   color: vars.$white;
   display: flex;
   align-items: center;
@@ -296,7 +297,7 @@ function formatCurrency(value) {
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  color: vars.$gray;
+  color: vars.$text-body;
   transition: background-color 0.2s, color 0.2s;
 
   &.active {
@@ -331,7 +332,7 @@ function formatCurrency(value) {
 }
 
 .car .cost-value {
-  color: vars.$danger;
+  color: vars.$danger-dark;
 }
 
 .car .cost-item.total .cost-value {
@@ -339,7 +340,7 @@ function formatCurrency(value) {
 }
 
 .bike .cost-item.total .cost-value {
-  color: vars.$primary-light;
+  color: vars.$primary-dark;
 }
 
 /* Footnotes */

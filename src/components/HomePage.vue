@@ -500,8 +500,9 @@ h1 {
   display: inline-block;
   margin-top: 1.5rem;
   margin-left: 1rem;
-  color: vars.$text-secondary;
-  font-size: 0.9rem;
+  color: vars.$text-dark;
+  font-size: 1rem;
+  font-weight: 700;
   text-decoration: none;
   opacity: 0.7;
   transition: opacity 0.2s;
@@ -531,7 +532,7 @@ h1 {
 }
 
 .gallery-intro {
-  color: vars.$gray;
+  color: vars.$text-secondary;
   font-size: 1.1rem;
   margin-bottom: 2.5rem;
 }
@@ -557,10 +558,6 @@ h1 {
   &:hover {
     transform: translateY(-4px);
     box-shadow: vars.$shadow-lg;
-
-    .gallery-cta {
-      color: vars.$primary-dark;
-    }
   }
 }
 
@@ -580,7 +577,7 @@ h1 {
     position: absolute;
     top: 8px;
     right: 8px;
-    background-color: vars.$secondary;
+    background-color: vars.$secondary-accessible;
     color: vars.$white;
     font-size: 0.7rem;
     font-weight: bold;
@@ -606,14 +603,15 @@ h1 {
 }
 
 .gallery-price {
-  color: vars.$gray;
+  color: vars.$text-secondary;
   font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .gallery-cta {
   margin-top: auto;
   padding-top: 0.5rem;
-  color: vars.$primary;
+  color: vars.$primary-dark;
   font-size: 0.9rem;
   font-weight: 600;
   transition: color 0.2s;

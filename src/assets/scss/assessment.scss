@@ -34,7 +34,7 @@ h2 {
 
 .subtitle {
   text-align: center;
-  color: vars.$gray;
+  color: vars.$text-secondary;
   margin-bottom: vars.$spacing-xl;
 }
 
@@ -109,7 +109,8 @@ h2 {
 
 .option-description {
   font-size: 0.9rem;
-  color: vars.$gray;
+  color: vars.$text-secondary;
+  font-weight: 600;
 }
 
 .fitness-card {
