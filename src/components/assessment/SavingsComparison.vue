@@ -167,7 +167,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 
@@ -208,7 +208,6 @@ const props = defineProps({
 
 const emit = defineEmits(['bike-change', 'update:savings', 'update:carLabel']);
 
-const router = useRouter();
 const route = useRoute();
 
 // State for new vs used car toggle
@@ -229,17 +228,21 @@ const sliderColor = computed(() => {
   return `rgb(${r}, ${g}, ${b})`;
 });
 
-// Sync query params when ownership/replacement changes
+// Sync query params when ownership/replacement changes — use history API
+// directly to avoid triggering Vue Router's route update cycle, which can
+// cause unexpected remounts.
 watch([alreadyOwnsCar, replacementPercent], ([owns, percent]) => {
-  const query = { ...route.query };
+  const query = new URLSearchParams(window.location.search);
   if (owns) {
-    query.own = null;
-    query.replace = String(percent);
+    query.set('own', '');
+    query.set('replace', String(percent));
   } else {
-    delete query.own;
-    delete query.replace;
+    query.delete('own');
+    query.delete('replace');
   }
-  router.replace({ query });
+  const qs = query.toString();
+  const newUrl = window.location.pathname + (qs ? `?${qs}` : '');
+  window.history.replaceState(history.state, '', newUrl);
 });
 
 // State for comparison dropdown
