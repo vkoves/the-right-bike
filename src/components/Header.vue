@@ -22,12 +22,18 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 
 function goToAssessment() {
-  router.push({ path: '/assessment', query: { _r: Date.now() } });
+  // If already on the assessment, force a reset via query param
+  if (route.name === 'Assessment') {
+    router.push({ name: 'Assessment', query: { _r: '1' } });
+  } else {
+    router.push({ name: 'Assessment' });
+  }
 }
 </script>
 

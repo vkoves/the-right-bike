@@ -4,6 +4,8 @@ import AboutPage from '../components/AboutPage.vue'
 import BikeAssessment from '../components/assessment/BikeAssessment.vue'
 import GearGuidePage from '../components/GearGuidePage.vue'
 import SocialImage from '../components/SocialImage.vue'
+import SocialImageBike from '../components/SocialImageBike.vue'
+import AdminPage from '../components/AdminPage.vue'
 import NotFoundPage from '../components/NotFoundPage.vue'
 
 const routes = [
@@ -23,6 +25,12 @@ const routes = [
     component: BikeAssessment
   },
   {
+    path: '/bike/:type',
+    name: 'BikeResult',
+    component: BikeAssessment,
+    props: true
+  },
+  {
     path: '/gear-guide',
     name: 'GearGuide',
     component: GearGuidePage
@@ -32,6 +40,18 @@ const routes = [
     name: 'SocialImage',
     component: SocialImage,
     meta: { bare: true }
+  },
+  {
+    path: '/social-image/:type',
+    name: 'SocialImageBike',
+    component: SocialImageBike,
+    meta: { bare: true },
+    props: true
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: AdminPage
   },
   {
     path: '/:pathMatch(.*)*',

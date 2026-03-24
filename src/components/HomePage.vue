@@ -107,7 +107,7 @@
           v-for="bike in bikeOptions"
           :key="bike.key"
           class="gallery-card"
-          :href="'/assessment?bike=' + bike.key"
+          :href="'/bike/' + bike.key"
           @click="navigateToBike($event, bike.key)"
         >
           <div class="gallery-card-image">
@@ -145,7 +145,7 @@ function startAssessment() {
 function navigateToBike(event, bikeKey) {
   if (event.ctrlKey || event.metaKey || event.shiftKey || event.button !== 0) return;
   event.preventDefault();
-  router.push({ path: '/assessment', query: { bike: bikeKey } });
+  router.push({ name: 'BikeResult', params: { type: bikeKey } });
 }
 
 function rotateCarousel(direction) {

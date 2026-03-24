@@ -9,16 +9,16 @@
           <div>Save Thousands</div>
         </div>
         <div class="benefit-item">
-          <div class="benefit-icon">❤️</div>
-          <div>Improve Your Health</div>
+          <div class="benefit-icon">🌍</div>
+          <div>Reduce Emissions</div>
         </div>
         <div class="benefit-item">
           <div class="benefit-icon">⏱️</div>
           <div>Get Back Time</div>
         </div>
         <div class="benefit-item">
-          <div class="benefit-icon">🌍</div>
-          <div>Reduce Emissions</div>
+          <div class="benefit-icon">❤️</div>
+          <div>Improve Your Health</div>
         </div>
       </div>
     </div>
@@ -36,7 +36,10 @@
         <img src="/images/bikes/urban-arrow.jpg" alt="Family bike">
       </div>
     </div>
-    <div class="url">findtheright.bike</div>
+    <div class="site-brand">
+      <img src="/images/icons/favicon.svg" alt="" class="site-logo">
+      findtheright.bike
+    </div>
   </div>
 </template>
 
@@ -81,16 +84,19 @@ h1 {
   margin: 0 0 1.5rem;
 }
 
+.benefits-summary { gap: 1rem 0.5rem; }
+
 .benefit-item {
   background-color: rgba(255, 255, 255, 0.18);
   color: vars.$white;
   font-weight: 700;
   box-shadow: none;
+  font-size: 1rem;
 }
 
 // 2x2 collage
 .collage {
-  width: 560px;
+  width: 550px;
   height: 100%;
   flex-shrink: 0;
   display: grid;
@@ -118,15 +124,16 @@ h1 {
 
   &.photo-1 {
     background: #E63946;
-    transform: rotate(-4deg) translate(0rem, -4px);
+    transform: rotate(-4deg) translate(0rem, -0.25rem);
   }
   &.photo-2 {
     background: #3A86FF;
-    transform: rotate(3deg)  translate(0rem, 6px);
+    transform: rotate(3deg)  translate(-2rem, 0.5rem);
   }
   &.photo-3 {
     background: #FFBE0B;
-    transform: rotate(2deg)  translate(0rem, -6px);
+    transform: rotate(2deg) translate(1rem, -2rem);
+    z-index: 1;
   }
   &.photo-4 {
     background: #06D6A0;
@@ -134,14 +141,24 @@ h1 {
   }
 }
 
-.url {
+.site-brand {
   position: absolute;
   bottom: 1.25rem;
   left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1rem;
   font-weight: 700;
   color: vars.$white;
   letter-spacing: 0.05em;
   z-index: 2;
+}
+
+.site-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 2px solid vars.$white;
 }
 </style>

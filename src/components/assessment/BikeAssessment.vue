@@ -93,6 +93,10 @@ import ResultsFooter from './ResultsFooter.vue';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 
+const props = defineProps({
+  type: { type: String, default: '' }
+});
+
 // Router setup
 const router = useRouter();
 const route = useRoute();
@@ -258,12 +262,7 @@ function handleBikeChange(bikeType) {
 
 // Function to update URL with bike recommendation
 function updateUrlWithRecommendation(bikeType) {
-  router.replace({
-    query: {
-      ...route.query,
-      bike: bikeType
-    }
-  });
+  router.replace({ name: 'BikeResult', params: { type: bikeType } });
 }
 
 function restartAssessment() {
@@ -287,15 +286,11 @@ function restartAssessment() {
   fitnessLevel.value = 'medium';
   recommendation.value = '';
 
-  // Remove bike query parameter
-  router.replace({
-    query: {}
-  });
+  // Navigate back to the assessment start
+  router.replace({ name: 'Assessment' });
 }
 
-// Reset when navigating to the assessment (e.g. clicking "Bike Finder" in the header)
-// Note: we reset state directly here rather than calling restartAssessment() to avoid
-// triggering a router.replace() inside a navigation guard, which can cause a double-navigation
+// Reset when clicking "Bike Finder" while already on the assessment page
 onBeforeRouteUpdate((to) => {
   if (to.query._r) {
     currentStep.value = 1;
@@ -304,20 +299,19 @@ onBeforeRouteUpdate((to) => {
     fitnessLevel.value = 'medium';
     recommendation.value = '';
 
-    // Clear the _r param so it doesn't re-trigger on subsequent navigations
     const { _r, ...rest } = to.query;
-    router.replace({ query: rest });
+    router.replace({ name: 'Assessment', query: rest });
   }
 });
 
-// Initialize based on URL parameter (need to be after all functions are defined)
+// Initialize based on route param /bike/:type (need to be after all functions are defined)
 onMounted(() => {
-  if (route.query.bike && Object.keys(bikeTypeDetails).includes(route.query.bike)) {
+  if (props.type && Object.keys(bikeTypeDetails).includes(props.type)) {
     // Set to the last step (results)
     currentStep.value = 4;
 
     // Set recommendation from URL
-    recommendation.value = route.query.bike;
+    recommendation.value = props.type;
 
     // Update the UI
     setRecommendationDetails();

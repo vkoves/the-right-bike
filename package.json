@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "screenshot-social": "bash scripts/screenshot-social.sh"
+    "screenshot-social": "node scripts/screenshot-social.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "puppeteer": "^24.40.0",
     "sass": "^1.86.3"
   }
 }

@@ -18,25 +18,38 @@ A web app that helps people figure out if a bike could replace some of their car
 ### Prerequisites
 
 - Node.js (v16 or newer)
-- npm
+- yarn
 
 ### Installation
 
 ```bash
-npm install
+yarn install
 ```
 
 ### Development Server with Hot Reload
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ### Build for production
 
 ```bash
-npm run build
+yarn build
 ```
+
+### Generating Social Images
+
+Social card images (for Open Graph / Twitter) are generated via Puppeteer screenshots of
+dedicated social image routes. The dev server must be running first.
+
+```bash
+yarn dev                    # start the dev server
+yarn screenshot-social      # in another terminal
+```
+
+This screenshots `/social-image` (the default card) and `/social-image/:type` for each bike
+type, saving PNGs to `public/images/`. Visit `/admin` locally to preview all social card pages.
 
 ## Project Structure
 

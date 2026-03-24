@@ -71,7 +71,7 @@ export const BikeTypes = {
     features: [
       'Extended rear deck for passengers or cargo',
       'High weight capacity (up to 550 lbs)',
-      'Can carry up to 3-4 children or 2 adults',
+      'Can carry several children',
       'No battery charging required'
     ],
     priceRange: '$1,800 - $2,200'
