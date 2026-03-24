@@ -1,1 +1,5 @@
+# Serve prerendered bike pages (with per-bike OG tags) if they exist
+/bike/:type  /bike/:type/index.html  200
+
+# SPA fallback for everything else
 /* /index.html 200

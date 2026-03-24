@@ -32,11 +32,22 @@ yarn install
 yarn dev
 ```
 
-### Build for production
+### Build for Production
 
 ```bash
 yarn build
 ```
+
+The build runs `vite build` followed by `scripts/prerender-og.js`, which generates
+static HTML files at `dist/bike/:type/index.html` for each bike type. These contain
+per-bike Open Graph meta tags and social images so that social crawlers see the correct
+preview when a bike result page is shared.
+
+### Deployment (Netlify)
+
+The site deploys on Netlify with `yarn build` as the build command and `dist` as the
+publish directory. The `public/_redirects` file routes `/bike/:type` to the prerendered
+HTML (for social crawlers) and falls back to the SPA `index.html` for all other routes.
 
 ### Generating Social Images
 
