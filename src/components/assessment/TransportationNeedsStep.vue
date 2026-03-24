@@ -14,7 +14,7 @@
         <div class="option-icon">🚴</div>
         <div class="option-content">
           <div class="option-label">Solo Commuting</div>
-          <div class="option-description">Daily commuting or exercise</div>
+          <div class="option-description">Daily commuting <br>(including light cargo)</div>
         </div>
       </button>
 
@@ -27,8 +27,8 @@
       >
         <div class="option-icon">📦</div>
         <div class="option-content">
-          <div class="option-label">Cargo</div>
-          <div class="option-description">Carrying groceries or goods</div>
+          <div class="option-label">Big Cargo</div>
+          <div class="option-description">Carrying large amounts of groceries or goods</div>
         </div>
       </button>
 
@@ -102,7 +102,7 @@ function toggleNeed(need) {
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
   .option-card {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0.5rem;
     height: 100%;
   }
 }
