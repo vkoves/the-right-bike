@@ -5,9 +5,9 @@
       <main class="main-content">
         <router-view :key="route.path" />
       </main>
-      <footer>
+      <footer :class="{ 'hide-mobile': route.name === 'Assessment' || route.name === 'BikeResult' }">
         <p>
-          ©{{ currentYear }} <a href="https://viktorkoves.com" class="author-link">Viktor Köves</a>
+          Created by <a href="https://viktorkoves.com" class="author-link">Viktor Köves</a>
 
           <a href="https://github.com/vkoves/the-right-bike" target="_blank" rel="noopener noreferrer" class="github-pill">
             <img src="/images/icons/github.svg" alt="" class="github-icon">
@@ -25,7 +25,6 @@ import { useRoute } from 'vue-router';
 import Header from './components/Header.vue';
 
 const route = useRoute();
-const currentYear = new Date().getFullYear();
 </script>
 
 <style lang="scss">

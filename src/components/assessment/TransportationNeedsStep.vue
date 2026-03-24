@@ -14,7 +14,7 @@
         <div class="option-icon">🚴</div>
         <div class="option-content">
           <div class="option-label">Solo Commuting</div>
-          <div class="option-description">Daily commuting <br>(including light cargo)</div>
+          <div class="option-description">Daily commuting, including light cargo</div>
         </div>
       </button>
 
@@ -109,15 +109,6 @@ function toggleNeed(need) {
 
 .option-icon {
   flex-shrink: 0;
-}
-
-.option-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-  gap: 0.25rem;
-  width: 100%;
 }
 
 .option-description {

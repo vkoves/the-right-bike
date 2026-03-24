@@ -74,14 +74,6 @@ function updateStorage(value) {
 @use '../../assets/scss/variables' as vars;
 @use "../../assets/scss/assessment";
 
-.option-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  width: 100%;
-}
-
 .option-description {
   font-size: 0.8rem;
   line-height: 1.3;

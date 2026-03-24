@@ -107,6 +107,14 @@ h2 {
   color: vars.$dark;
 }
 
+.option-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+}
+
 .option-description {
   font-size: 0.9rem;
   color: vars.$text-secondary;
@@ -191,7 +199,7 @@ h2 {
   .option-card {
     padding: vars.$spacing-md;
     flex-direction: row;
-    gap: vars.$spacing-md;
+    gap: vars.$spacing-lg;
     text-align: left;
 
     &.selected::before {
@@ -205,12 +213,17 @@ h2 {
     margin-bottom: 0;
   }
 
+  .option-content {
+    align-items: flex-start;
+  }
+
   .options-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .navigation-buttons {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: vars.$spacing-md;
   }
 

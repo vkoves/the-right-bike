@@ -55,6 +55,7 @@ footer {
   padding: vars.$spacing-lg;
   color: vars.$text-dark;
   font-size: 0.9rem;
+  font-weight: 600;
   background-color: vars.$bg-footer;
   border-top: 1px solid vars.$border-light;
 
@@ -74,8 +75,8 @@ footer {
     }
 
     &.author-link {
-      font-weight: 700;
-      color: #A30000;
+      display: inline;
+      color: vars.$primary;
     }
   }
 
@@ -148,5 +149,11 @@ button {
 
   &:hover {
     background-color: vars.$primary-dark;
+  }
+}
+
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .hide-mobile {
+    display: none;
   }
 }

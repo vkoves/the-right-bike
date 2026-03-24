@@ -12,8 +12,10 @@
         :aria-pressed="(modelValue === 'low').toString()"
       >
         <div class="option-icon">😅</div>
-        <div class="option-label">Low</div>
-        <p class="option-description">I'm nervous about biking at all</p>
+        <div class="option-content">
+          <div class="option-label">Low</div>
+          <p class="option-description">I'm nervous about biking at all</p>
+        </div>
       </button>
 
       <button
@@ -24,8 +26,10 @@
         :aria-pressed="(modelValue === 'medium').toString()"
       >
         <div class="option-icon">🤷</div>
-        <div class="option-label">Medium</div>
-        <p class="option-description">I'd be fine biking a few miles, but not too far!</p>
+        <div class="option-content">
+          <div class="option-label">Medium</div>
+          <p class="option-description">I'd be fine biking a few miles, but not too far!</p>
+        </div>
       </button>
 
       <button
@@ -36,8 +40,10 @@
         :aria-pressed="(modelValue === 'high').toString()"
       >
         <div class="option-icon">💪</div>
-        <div class="option-label">High</div>
-        <p class="option-description">I could bike for a long distance, no problem!</p>
+        <div class="option-content">
+          <div class="option-label">High</div>
+          <p class="option-description">I could bike for a long distance, no problem!</p>
+        </div>
       </button>
     </div>
 

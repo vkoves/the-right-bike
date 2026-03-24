@@ -211,15 +211,21 @@ const needsCargo = computed(() => {
 });
 
 // Methods
+function scrollToTop() {
+  window.scrollTo({ top: 0 });
+}
+
 function nextStep() {
   if (currentStep.value <= TOTAL_STEPS) {
     currentStep.value++;
+    scrollToTop();
   }
 }
 
 function prevStep() {
   if (currentStep.value > 1) {
     currentStep.value--;
+    scrollToTop();
   }
 }
 
@@ -681,8 +687,10 @@ h2 {
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
+  h1 { margin: 0; }
+
   .page-container {
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .assessment-container {
