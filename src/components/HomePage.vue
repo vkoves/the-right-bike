@@ -55,7 +55,7 @@
               :style="{ transform: 'rotateY(90deg) translateZ(250px)' }"
             >
               <div class="image-container">
-                <img src="/images/bikes/gazelle-ebike.jpg" alt="Electric Bike">
+                <img src="/images/bikes/gazelle-ebike.jpg" alt="Gazelle commuter eBike">
                 <div class="overlay"></div>
               </div>
               <div class="caption">Electric Power</div>

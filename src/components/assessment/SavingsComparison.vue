@@ -161,6 +161,7 @@
 import { computed, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
+import { BikeTypes } from '../../constants/bikeTypes';
 
 import CostComparisonTable from './CostComparisonTable.vue';
 import SavingsFaqSection from './SavingsFaqSection.vue';
@@ -193,32 +194,7 @@ const props = defineProps({
   allBikeTypes: {
     type: Object,
     required: false,
-    default: () => ({
-      'regular-bike': {
-        title: 'Regular Bicycle',
-        label: 'Regular Bicycle'
-      },
-      'commuter-ebike': {
-        title: 'Commuter Electric Bicycle',
-        label: 'Electric Commuter Bike'
-      },
-      'cargo-bike': {
-        title: 'Non-Electric Cargo Bicycle',
-        label: 'Non-Electric Cargo Bike'
-      },
-      'cargo-ebike': {
-        title: 'Electric Cargo Bicycle (Bucket Style)',
-        label: 'Electric Cargo Bike'
-      },
-      'longtail-bike': {
-        title: 'Non-Electric Longtail Cargo Bicycle',
-        label: 'Non-Electric Longtail Bike'
-      },
-      'longtail-ebike': {
-        title: 'Electric Longtail Cargo Bicycle',
-        label: 'Longtail E-Bike'
-      }
-    })
+    default: () => BikeTypes
   }
 });
 

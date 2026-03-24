@@ -22,12 +22,12 @@ export const BikeTypes = {
     priceRange: '$300 - $1,000'
   },
   'commuter-ebike': {
-    title: 'Commuter Electric Bicycle',
-    label: 'Electric Commuter Bike',
+    title: 'Commuter eBike',
+    label: 'Commuter eBike',
     image: '/images/bikes/gazelle-ebike.jpg',
     electric: true,
     bulky: false,
-    description: 'An electric commuter bike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
+    description: 'A commuter eBike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
     features: [
       'Electric motor assists up to 20-28 mph',
       'Helps overcome hills and wind resistance',
@@ -54,12 +54,12 @@ export const BikeTypes = {
   },
   'cargo-ebike': {
     title: 'Front-Loader Cargo eBike',
-    label: 'Electric Cargo Bike',
+    label: 'Cargo eBike',
     image: '/images/bikes/urban-arrow.jpg',
     electric: true,
     bulky: true,
     storageDowngrade: 'commuter-ebike',
-    description: 'An electric cargo bike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
+    description: 'A cargo eBike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
     features: [
       'Large front cargo area for groceries or goods',
       'Electric assist makes carrying loads easier',
@@ -85,13 +85,13 @@ export const BikeTypes = {
     priceRange: '$1,800 - $2,200'
   },
   'longtail-ebike': {
-    title: 'Electric Longtail Cargo Bike',
-    label: 'Longtail E-Bike',
+    title: 'Longtail Cargo eBike',
+    label: 'Longtail Cargo eBike',
     image: '/images/bikes/tern-gsd-500.jpg',
     electric: true,
     bulky: true,
     storageDowngrade: 'commuter-ebike',
-    description: 'A longtail electric cargo bike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
+    description: 'A longtail cargo eBike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [
       'Extended rear deck for passengers',
       'Electric assist makes carrying passengers easier',
