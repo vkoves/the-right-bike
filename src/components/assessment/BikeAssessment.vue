@@ -67,6 +67,7 @@
             :ideal-bike-type="idealBikeType"
             :storage-constrained="storage === 'upper-floor' || idealBikeType !== null"
             :recommended-bike-type="recommendation"
+            :savings-amount="stickysavings"
             @bike-change="handleBikeChange"
           />
 

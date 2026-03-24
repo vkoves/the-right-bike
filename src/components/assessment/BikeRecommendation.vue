@@ -58,6 +58,8 @@
           bikeshare program you get the benefits of biking without needing to store anything at home.
         </p>
       </div>
+
+      <share-button :savings-amount="savingsAmount" />
     </div>
     </div>
   </div>
@@ -65,6 +67,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import ShareButton from './ShareButton.vue';
 
 const props = defineProps({
   recommendationDetails: {
@@ -86,6 +89,10 @@ const props = defineProps({
   recommendedBikeType: {
     type: String,
     default: ''
+  },
+  savingsAmount: {
+    type: Number,
+    default: 0
   }
 });
 
