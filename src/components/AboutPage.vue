@@ -1,12 +1,12 @@
 <template>
   <div class="about-container">
-    <h1>About The Right Bike</h1>
+    <h1>About Find The Right Bike</h1>
 
     <section class="about-section -two-cols">
       <div>
         <h2>Our Mission</h2>
         <p>
-          At The Right Bike, we're passionate about helping people discover the benefits of cycling
+          At Find The Right Bike, we're passionate about helping people discover the benefits of cycling
           as a sustainable, healthy, and cost-effective transportation alternative. Our mission is to
           provide tools and information that make it easy for anyone to evaluate whether a bicycle
           could replace some or all of their car trips.
@@ -18,7 +18,7 @@
           alt="Photo of Viktor Köves on his White Gazelle ebike, riding down Chicago's Lakefront trail
             past a tennis court, wearing shorts, a t-shirt and sunglasses">
         <p>
-          The Right Bike is created by Viktor Köves, who also created
+          Find The Right Bike is created by Viktor Köves, who also created
           <a href="https://chiwho.bike">Chicagoans Who Bike</a>, a multi-media project interviewing
           people who bike around Chicago.
         </p>

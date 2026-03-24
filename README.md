@@ -1,4 +1,4 @@
-# The Right Bike
+# Find The Right Bike
 
 A web app that helps people figure out if a bike could replace some of their car trips — and how much they could save if it did.
 

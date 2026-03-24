@@ -1,4 +1,4 @@
-# The Right Bike — Claude Guidelines
+# Find The Right Bike — Claude Guidelines
 
 ## Core Rules
 

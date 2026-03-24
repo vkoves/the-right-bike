@@ -34,7 +34,7 @@ for (const [slug, bike] of Object.entries(BIKE_OG)) {
 
   const html = template
     .replace(/<title>[^<]*<\/title>/,
-      `<title>${ogTitle} - The Right Bike</title>`)
+      `<title>${ogTitle} - Find The Right Bike</title>`)
     .replace(/<meta property="og:title"[^>]*>/,
       `<meta property="og:title" content="${ogTitle}" />`)
     .replace(/<meta property="og:description"[^>]*>/,
