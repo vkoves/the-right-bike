@@ -574,17 +574,6 @@ h1 {
     display: block;
   }
 
-  .electric-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: vars.$secondary-accessible;
-    color: vars.$white;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 12px;
-  }
 }
 
 .gallery-card-body {

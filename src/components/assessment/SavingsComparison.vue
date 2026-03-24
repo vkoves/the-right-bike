@@ -686,23 +686,14 @@ function formatRounded(value) {
   }
 
   .electric-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background-color: vars.$secondary-accessible;
-    color: vars.$white;
-    font-size: 0.7rem;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 12px;
     z-index: 1;
   }
 }
 
 .recommendation-pill {
   position: absolute;
-  top: -5px;
-  width: 150px;
+  top: -0.8rem;
+  width: 10.5rem;
   margin: auto;
   left: 0;
   right: 0;
@@ -711,8 +702,8 @@ function formatRounded(value) {
   color: vars.$white;
   font-size: 0.65rem;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 12px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
   margin-bottom: 0.35rem;
 }
 

@@ -126,15 +126,10 @@ h1 {
 }
 
 .electric-badge {
-  position: absolute;
   top: 2rem;
   right: 2.5rem;
-  background-color: vars.$secondary-accessible;
-  color: vars.$white;
-  font-weight: 700;
   font-size: 0.9rem;
   padding: 0.35rem 0.75rem;
-  border-radius: 12px;
 }
 
 .site-brand {
