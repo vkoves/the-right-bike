@@ -52,7 +52,7 @@
           <nav class="results-jump-links" aria-label="Jump to section">
             <div class="jump-label">Jump To</div>
             <a href="#savings">💰 Savings</a>
-            <a v-if="route.query.own !== '1'" href="#car-faq">🚗 Car FAQ</a>
+            <a v-if="!('own' in route.query)" href="#car-faq">🚗 Car FAQ</a>
             <a href="#buying-options">🛒 Options</a>
             <router-link to="/gear-guide">⛑️ Gear Guide</router-link>
           </nav>

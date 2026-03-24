@@ -231,7 +231,7 @@ const route = useRoute();
 const isNew = ref(true);
 
 // State for "already own a car" mode — initialize from query params
-const alreadyOwnsCar = ref(route.query.own === '1');
+const alreadyOwnsCar = ref('own' in route.query);
 const replacementPercent = ref(
   route.query.replace ? Math.min(100, Math.max(25, parseInt(route.query.replace, 10) || 50)) : 50
 );
@@ -249,7 +249,7 @@ const sliderColor = computed(() => {
 watch([alreadyOwnsCar, replacementPercent], ([owns, percent]) => {
   const query = { ...route.query };
   if (owns) {
-    query.own = '1';
+    query.own = null;
     query.replace = String(percent);
   } else {
     delete query.own;
