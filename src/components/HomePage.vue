@@ -5,7 +5,7 @@
         <h1>
           Discover Your Perfect Bike <br>
           <span class="smaller">
-            With Just 3 Questions!
+            With Just 4 Questions!
           </span>
         </h1>
         <p class="subtitle">Find the right bike to help cycling replace some of your car trips!</p>

@@ -1,8 +1,8 @@
 <template>
   <div class="social-image">
     <div class="content">
-      <div class="eyebrow">3 questions. No nonsense.</div>
-      <h1>Find Your<br>Perfect Bike.</h1>
+      <div class="eyebrow">4 questions. No nonsense.</div>
+      <h1>Find The<br>Right Bike</h1>
       <div class="benefits-summary">
         <div class="benefit-item">
           <div class="benefit-icon">💰</div>
@@ -65,6 +65,7 @@ $bg-mid: #2c8a57;
   padding: 2rem;
   z-index: 1;
   flex-shrink: 0;
+  margin-bottom: 3rem;
 }
 
 .eyebrow {
@@ -147,8 +148,8 @@ h1 {
   left: 2rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
+  gap: 1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: vars.$white;
   letter-spacing: 0.05em;

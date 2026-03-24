@@ -18,13 +18,14 @@
     </p>
 
 
-    <div class="ownership-toggle">
+    <div class="ownership-toggle" :class="{ '-active': alreadyOwnsCar }">
       <label class="toggle-label">
         <input type="checkbox" v-model="alreadyOwnsCar">
         <span class="toggle-switch"></span>
         I Already Own A Car
       </label>
 
+      <transition name="slider-reveal">
       <div v-if="alreadyOwnsCar" class="replacement-slider">
         <label for="replacement-slider" class="slider-label">
           How much of your driving would you replace with biking?
@@ -44,6 +45,7 @@
           <span>100%</span>
         </div>
       </div>
+      </transition>
     </div>
 
     <cost-comparison-table
@@ -408,18 +410,33 @@ function formatRounded(value) {
 .ownership-toggle {
   background-color: vars.$white;
   border-radius: vars.$border-radius;
-  padding: 1.25rem 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: vars.$shadow-md;
+  overflow: hidden;
+
+  &.-active .toggle-label {
+    background-color: vars.$primary;
+    color: vars.$white;
+  }
+
+  &.-active .toggle-switch {
+    background-color: rgba(255, 255, 255, 0.3);
+
+    &::after {
+      background-color: vars.$white;
+    }
+  }
 }
 
 .toggle-label {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
   font-weight: 600;
   color: vars.$dark;
   cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 
   input[type="checkbox"] {
     position: absolute;
@@ -456,8 +473,6 @@ function formatRounded(value) {
   }
 
   input:checked + & {
-    background-color: vars.$primary;
-
     &::after {
       transform: translateX(20px);
     }
@@ -470,9 +485,23 @@ function formatRounded(value) {
 }
 
 .replacement-slider {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid vars.$border-lighter;
+  padding: 1rem 1.5rem 1.25rem;
+}
+
+.slider-reveal-enter-active,
+.slider-reveal-leave-active {
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.slider-reveal-enter-from,
+.slider-reveal-leave-to {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
 }
 
 .slider-label {

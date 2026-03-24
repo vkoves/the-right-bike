@@ -53,6 +53,7 @@ $bg-mid: #2c8a57;
   flex: 1;
   padding: 2.5rem;
   z-index: 1;
+  margin-bottom: 3rem;
 }
 
 .eyebrow {
@@ -138,8 +139,8 @@ h1 {
   left: 2.5rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
+  gap: 1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: vars.$white;
   letter-spacing: 0.05em;
