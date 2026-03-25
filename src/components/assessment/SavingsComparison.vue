@@ -143,10 +143,11 @@
               <div class="bike-price">~ {{ formatCurrency(costs.bike.purchase) }}</div>
             </div>
           </div>
-          <div class="bike-option"
+          <router-link class="bike-option"
                v-for="type in availableBikeTypes"
                :key="type.value"
-               @click="handleComparisonChange(type.value)"
+               :to="`/bike/${type.value}`"
+               @click="handleComparisonClick($event, type.value)"
                :class="{ 'active': comparisonBike === type.value }">
             <div class="bike-option-image">
               <img :src="allBikeTypes[type.value].image" :alt="type.label">
@@ -156,7 +157,7 @@
               <h4>{{ type.label }}</h4>
               <div class="bike-price">~ {{ formatCurrency(BIKE_COSTS[type.value as BikeTypeId].purchase) }}</div>
             </div>
-          </div>
+          </router-link>
         </div>
         </div>
       </div>
@@ -170,6 +171,7 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
+import { isPlainClick } from '../../utils/navigation';
 import type { AssessmentProfile, BikeTypeId } from '../../types';
 
 import CostComparisonTable from './CostComparisonTable.vue';
@@ -355,8 +357,11 @@ const availableBikeTypes = computed(() => {
 // The bike type currently shown — comparison selection takes priority over the recommendation
 const displayedBikeType = computed(() => comparisonBike.value || recommendationType.value);
 
-// Handle bike type change from buttons
-function handleComparisonChange(bikeType: string) {
+// Handle bike type change — only do in-page comparison on plain clicks;
+// let Ctrl+Click / Cmd+Click / middle-click navigate normally.
+function handleComparisonClick(event: MouseEvent, bikeType: string) {
+  if (!isPlainClick(event)) return;
+  event.preventDefault();
   comparisonBike.value = bikeType;
   emit('bike-change', bikeType);
 }
@@ -709,6 +714,8 @@ function formatRounded(value: number) {
   position: relative;
   border: 2px solid transparent;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 
   &:hover {
     transform: translateY(-5px);

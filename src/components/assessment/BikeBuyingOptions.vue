@@ -1,6 +1,6 @@
 <template>
   <div class="buying-options" v-if="recommendations && recommendations.length">
-    <h3>Some Potential Options</h3>
+    <h3 id="options">Some Potential Options <anchor-copy-button anchor="options" /></h3>
     <p class="buying-subtitle">
       Here's some specific models to consider at different price points! Use this as a starting
       point, we're not recommending any specific model.
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
+import AnchorCopyButton from '../AnchorCopyButton.vue';
 import BikeModelCard from './BikeModelCard.vue';
 import type { AssessmentProfile, BikeTypeId, BikeModelWithReasons } from '../../types';
 

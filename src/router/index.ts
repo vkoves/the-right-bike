@@ -71,7 +71,26 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from) {
     if (to.hash) {
-      return { el: to.hash, behavior: 'smooth' }
+      // Wait for the target element to appear in the DOM (it may render async),
+      // then scroll manually so scroll-margin-top is respected.
+      return new Promise((resolve) => {
+        const maxAttempts = 50;
+        let attempts = 0;
+        const poll = setInterval(() => {
+          attempts++;
+          const el = document.querySelector(to.hash);
+          if (el || attempts >= maxAttempts) {
+            clearInterval(poll);
+            if (el) {
+              // Let the browser handle scroll-margin-top via scrollIntoView
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              resolve(false); // Tell the router not to scroll again
+            } else {
+              resolve({ el: to.hash, behavior: 'smooth' });
+            }
+          }
+        }, 100);
+      });
     }
     if (to.path !== from.path) {
       return new Promise((resolve) => {

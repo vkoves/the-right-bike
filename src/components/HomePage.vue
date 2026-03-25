@@ -129,6 +129,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { BikeTypes } from '../constants/bikeTypes';
+import { isPlainClick } from '../utils/navigation';
 import StoriesSection from './StoriesSection.vue';
 
 const router = useRouter();
@@ -143,7 +144,7 @@ function startAssessment() {
 }
 
 function navigateToBike(event: MouseEvent, bikeKey: string) {
-  if (event.ctrlKey || event.metaKey || event.shiftKey || event.button !== 0) return;
+  if (!isPlainClick(event)) return;
   event.preventDefault();
   router.push({ name: 'BikeResult', params: { type: bikeKey } });
 }
