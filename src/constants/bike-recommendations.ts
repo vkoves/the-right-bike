@@ -24,7 +24,6 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       tier: 'premium',
       image: '/images/bike-models/priority-continuum-onyx.webp',
       review: 'https://www.cyclingweekly.com/reviews/hybrid-bikes/priority-continuum-onyx',
-      singleSpeed: true,
       lightweight: true,
     },
     {
