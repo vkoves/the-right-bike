@@ -6,7 +6,7 @@
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /** Share button that uses the Web Share API with a clipboard fallback. */
 import { computed, ref } from 'vue';
 
@@ -41,7 +41,7 @@ async function share() {
       await navigator.share({ text: shareText.value, url });
       return;
     } catch (e) {
-      if (e.name === 'AbortError') return;
+      if ((e as Error).name === 'AbortError') return;
     }
   }
 

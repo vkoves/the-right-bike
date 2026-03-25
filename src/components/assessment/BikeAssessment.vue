@@ -50,7 +50,7 @@
         />
 
         <!-- Step 5: Results -->
-        <div v-else-if="currentStep === 5" key="step5" class="step-container results-container">
+        <div v-else-if="currentStep === 5 && recommendationDetails" key="step5" class="step-container results-container">
           <div class="sticky-header" :class="{ '-visible': showStickyHeader && stickysavings }">
             <img :src="recommendationDetails.image" :alt="recommendationDetails.title" class="sticky-bike-image">
             <span class="sticky-bike">{{ recommendationDetails.title }}</span>
@@ -58,6 +58,12 @@
             <span class="sticky-car">{{ stickyCarLabel }}</span>
             <span class="sticky-savings">{{ formatCurrency(stickysavings) }} savings</span>
           </div>
+
+          <your-choices
+            v-if="savedChoices.length"
+            :choices="savedChoices"
+            @edit="goToStep"
+          />
 
           <h2>Your Recommended Bike Type</h2>
 
@@ -77,6 +83,7 @@
             <a v-if="!('own' in route.query)" href="#car-faq">🚗 Car FAQ</a>
             <a href="#buying-options">🛒 Options</a>
             <router-link to="/gear-guide">⛑️ Gear Guide</router-link>
+            <a href="#" class="restart-link" @click.prevent="goToStep(TOTAL_STEPS)">⬅️ Back</a>
             <a href="#" class="restart-link" @click.prevent="restartAssessment">🔄 Restart</a>
           </nav>
 
@@ -86,7 +93,7 @@
             :bike-image="recommendationDetails.image"
             :costs="costs"
             :all-bike-types="bikeTypeDetails"
-            :selected-bike-type="recommendation.value"
+            :selected-bike-type="recommendation"
             @bike-change="handleBikeChange"
             @update:savings="stickysavings = $event"
             @update:car-label="stickyCarLabel = $event"
@@ -107,7 +114,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, reactive, watch, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router';
 import TransportationNeedsStep from './TransportationNeedsStep.vue';
@@ -117,8 +124,12 @@ import FitnessStep from './FitnessStep.vue';
 import BikeRecommendation from './BikeRecommendation.vue';
 import SavingsComparison from './SavingsComparison.vue';
 import ResultsFooter from './ResultsFooter.vue';
+import YourChoices from './YourChoices.vue';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
+import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
+import BikeModelRecommender from '../../services/BikeModelRecommender';
+import type { BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
 
 const props = defineProps({
   type: { type: String, default: '' }
@@ -130,39 +141,36 @@ const route = useRoute();
 
 // State
 const currentStep = ref(1);
-// Use ref with an object inside instead of reactive directly
-const transportationNeeds = ref({
+const transportationNeeds = ref<TransportationNeeds>({
   soloCommuting: false,
   cargo: false,
   transportingKids: false,
   transportingAdults: false
 });
 
-// Use ref with an object inside instead of reactive directly
-const geography = ref({
+const geography = ref<Geography>({
   windy: false,
   hilly: false,
   flat: false
 });
 
-const storage = ref('');
-const fitnessLevel = ref('');
+const storage = ref<StorageType | ''>('');
+const fitnessLevel = ref<FitnessLevel | ''>('');
 
 // Watch for reactive state changes
 watch(transportationNeeds, () => {}, { deep: true });
 watch(geography, () => {}, { deep: true });
-const recommendation = ref('');
-const idealBikeType = ref(null);
-const recommendationDetails = ref({});
+const recommendation = ref<BikeTypeId | ''>('');
+const idealBikeType = ref<BikeTypeId | null>(null);
+const recommendationDetails = ref<BikeType | null>(null);
 const stickysavings = ref(0);
 const stickyCarLabel = ref('');
 const showStickyHeader = ref(false);
-const savingsSentinel = ref(null);
-let stickyScrollHandler = null;
-
+const savingsSentinel = ref<InstanceType<typeof SavingsComparison> | null>(null);
+let stickyScrollHandler: (() => void) | null = null;
 
 // Cost comparison data
-const costs = reactive({
+const costs: CostComparison = reactive({
   bike: {
     purchase: 0,
     maintenance: BIKE_COSTS.default.maintenance,
@@ -188,28 +196,51 @@ const progressPercent = computed(() => {
   return ((currentStep.value - 1) / TOTAL_STEPS) * 100;
 });
 
-// Determine if the user needs electric assistance - this basically means they are pulling a lot
-// (e.g. kids, adults, cargo) and are medium or below fitness, or it's windy or hilly
-const needsAssistance = computed(() => {
-  // For high fitness, needs assistance if transporting adults or hauling cargo on hills
-  if (fitnessLevel.value === 'high') {
-    return transportationNeeds.value.transportingAdults ||
-           (geography.value.hilly && needsCargo.value);
+const savedChoices = ref<ChoiceGroup[]>([]);
+
+const ChoicesStorageKey = 'bikeAssessmentChoices';
+
+function buildChoicesSummary(): ChoiceGroup[] {
+  const groups: ChoiceGroup[] = [];
+
+  const needs = transportationNeeds.value;
+  const needPills = (Object.keys(needs) as (keyof TransportationNeeds)[]).filter(k => needs[k]).map(k => ({ icon: TransportationNeedOptions[k].icon, label: TransportationNeedOptions[k].label }));
+  if (needPills.length) groups.push({ category: 'Needs', step: 1, pills: needPills });
+
+  const geo = geography.value;
+  const geoPills = (Object.keys(geo) as (keyof Geography)[]).filter(k => geo[k]).map(k => ({ icon: GeographyOptions[k].icon, label: GeographyOptions[k].label }));
+  if (geoPills.length) groups.push({ category: 'Geography', step: 2, pills: geoPills });
+
+  if (fitnessLevel.value) {
+    const opt = FitnessOptions[fitnessLevel.value];
+    groups.push({ category: 'Fitness', step: 3, pills: [{ icon: opt.icon, label: opt.label }] });
   }
 
-  // Any high load is an issue if you're not very strong, suggest e-assist. They can always opt
-  // for a cheaper option
-  return (needsCargo.value && fitnessLevel.value !== 'high') ||
-         geography.value.windy ||
-         geography.value.hilly ||
-         fitnessLevel.value === 'low';
-});
+  if (storage.value) {
+    const opt = StorageOptions[storage.value];
+    groups.push({ category: 'Storage', step: 4, pills: [{ icon: opt.icon, label: opt.label }] });
+  }
 
-const needsCargo = computed(() => {
-  return transportationNeeds.value.cargo ||
-         transportationNeeds.value.transportingKids ||
-         transportationNeeds.value.transportingAdults;
-});
+  return groups;
+}
+
+function saveChoicesToSession() {
+  const choices = buildChoicesSummary();
+  savedChoices.value = choices;
+  sessionStorage.setItem(ChoicesStorageKey, JSON.stringify(choices));
+}
+
+function loadChoicesFromSession() {
+  try {
+    const stored = sessionStorage.getItem(ChoicesStorageKey);
+    if (stored) savedChoices.value = JSON.parse(stored);
+  } catch { /* ignore */ }
+}
+
+function clearChoicesFromSession() {
+  savedChoices.value = [];
+  sessionStorage.removeItem(ChoicesStorageKey);
+}
 
 // Methods
 function scrollToTop() {
@@ -230,54 +261,41 @@ function prevStep() {
   }
 }
 
-function calculateRecommendation() {
-  if (needsCargo.value) {
-    if (transportationNeeds.value.transportingKids || transportationNeeds.value.transportingAdults) {
-      // Longtail bike recommendation
-      if (needsAssistance.value) {
-        recommendation.value = 'longtail-ebike';
-      } else {
-        recommendation.value = 'longtail-bike';
-      }
-    } else if (needsAssistance.value) {
-      // Regular cargo bike recommendation
-      recommendation.value = 'cargo-ebike';
-    } else {
-      recommendation.value = 'cargo-bike';
-    }
-  } else {
-    if (needsAssistance.value) {
-      recommendation.value = 'commuter-ebike';
-    } else {
-      recommendation.value = 'regular-bike';
-    }
-  }
+function goToStep(step: number) {
+  currentStep.value = step;
+  scrollToTop();
+}
 
-  // Downgrade for storage constraints if needed
-  const idealType = bikeTypeDetails[recommendation.value];
-  if (storage.value === 'upper-floor' && idealType.bulky && idealType.storageDowngrade) {
-    idealBikeType.value = recommendation.value;
-    recommendation.value = idealType.storageDowngrade;
-  } else {
-    idealBikeType.value = null;
-  }
+function calculateRecommendation() {
+  const recommender = new BikeModelRecommender({
+    transportationNeeds: transportationNeeds.value,
+    geography: geography.value,
+    fitnessLevel: fitnessLevel.value as FitnessLevel,
+    storage: storage.value as StorageType
+  });
+
+  recommendation.value = recommender.bikeType;
+  idealBikeType.value = recommender.idealBikeType;
 
   // Set recommendation details
   setRecommendationDetails();
 
   // Update purchase cost based on the recommendation
-  updateBikeCosts(recommendation.value);
+  updateBikeCosts(recommendation.value as BikeTypeId);
 
   // Update URL with query parameter
-  updateUrlWithRecommendation(recommendation.value);
+  updateUrlWithRecommendation(recommendation.value as BikeTypeId);
+
+  // Save choices so they survive the route change
+  saveChoicesToSession();
 
   // Move to results page
   nextStep();
 }
 
-function updateBikeCosts(bikeType = null) {
+function updateBikeCosts(bikeType?: BikeTypeId) {
   // Use the passed bike type or the current recommendation
-  const typeToUse = bikeType || recommendation.value;
+  const typeToUse = bikeType || recommendation.value as BikeTypeId;
 
   // Get bike costs from constants
   const bikeCost = BIKE_COSTS[typeToUse] || BIKE_COSTS.default;
@@ -290,20 +308,20 @@ function updateBikeCosts(bikeType = null) {
 }
 
 function setRecommendationDetails() {
-  recommendationDetails.value = bikeTypeDetails[recommendation.value];
+  recommendationDetails.value = bikeTypeDetails[recommendation.value as BikeTypeId];
 }
 
 // Handle bike change from the dropdown
-function handleBikeChange(bikeType) {
+function handleBikeChange(bikeType: BikeTypeId | null) {
   idealBikeType.value = null;
 
   if (!bikeType) {
     // Restore original bike costs and details for the recommended bike
-    updateBikeCosts(recommendation.value);
-    recommendationDetails.value = bikeTypeDetails[recommendation.value];
+    updateBikeCosts(recommendation.value as BikeTypeId);
+    recommendationDetails.value = bikeTypeDetails[recommendation.value as BikeTypeId];
 
     // Update URL to show the original recommendation
-    updateUrlWithRecommendation(recommendation.value);
+    updateUrlWithRecommendation(recommendation.value as BikeTypeId);
     return;
   }
 
@@ -316,7 +334,7 @@ function handleBikeChange(bikeType) {
 }
 
 // Function to update URL with bike recommendation
-function updateUrlWithRecommendation(bikeType) {
+function updateUrlWithRecommendation(bikeType: BikeTypeId) {
   const query = idealBikeType.value ? { ideal: idealBikeType.value } : {};
   router.replace({ name: 'BikeResult', params: { type: bikeType }, query });
 }
@@ -345,6 +363,8 @@ function restartAssessment() {
   recommendation.value = '';
   idealBikeType.value = null;
 
+  clearChoicesFromSession();
+
   // Navigate back to the assessment start
   router.replace({ name: 'Assessment' });
 }
@@ -362,13 +382,14 @@ onBeforeRouteUpdate((to) => {
     showStickyHeader.value = false;
     stickysavings.value = 0;
     stickyCarLabel.value = '';
+    clearChoicesFromSession();
 
     const { _r, ...rest } = to.query;
     router.replace({ name: 'Assessment', query: rest });
   }
 });
 
-function formatCurrency(value) {
+function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -383,17 +404,20 @@ onMounted(() => {
     currentStep.value = TOTAL_STEPS + 1;
 
     // Set recommendation from URL
-    recommendation.value = props.type;
+    recommendation.value = props.type as BikeTypeId;
 
     // Restore ideal bike type from query param if present
     const idealParam = route.query.ideal;
-    if (idealParam && Object.keys(bikeTypeDetails).includes(idealParam)) {
-      idealBikeType.value = idealParam;
+    if (typeof idealParam === 'string' && Object.keys(bikeTypeDetails).includes(idealParam)) {
+      idealBikeType.value = idealParam as BikeTypeId;
     }
+
+    // Restore choices from session if available
+    loadChoicesFromSession();
 
     // Update the UI
     setRecommendationDetails();
-    updateBikeCosts(recommendation.value);
+    updateBikeCosts(recommendation.value as BikeTypeId);
   }
 });
 
@@ -411,7 +435,7 @@ watch(savingsSentinel, (comp, _, onCleanup) => {
   showStickyHeader.value = false;
   if (!comp?.$el) return;
 
-  const savingsHeading = comp.$el.querySelector('.savings-highlight h3');
+  const savingsHeading = (comp.$el as HTMLElement).querySelector('.savings-highlight h3');
   if (!savingsHeading) return;
 
   let hasBeenInView = false;
@@ -431,7 +455,7 @@ watch(savingsSentinel, (comp, _, onCleanup) => {
 
   window.addEventListener('scroll', stickyScrollHandler, { passive: true });
   onCleanup(() => {
-    window.removeEventListener('scroll', stickyScrollHandler);
+    window.removeEventListener('scroll', stickyScrollHandler!);
     stickyScrollHandler = null;
   });
 });
@@ -646,6 +670,7 @@ h2 {
   margin-bottom: 0.5rem;
   color: vars.$dark;
 }
+
 
 .gear-guide-cta {
   margin: 2rem 0;

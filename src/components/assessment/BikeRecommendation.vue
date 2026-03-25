@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-if="idealBikeType && allBikeTypes[idealBikeType]" class="ideal-note">
+    <div v-if="idealBikeType && allBikeTypes && allBikeTypes[idealBikeType as BikeTypeId]" class="ideal-note">
       <h4 class="ideal-note-heading">Your Ideal Bike Might Be Too Hard To Store</h4>
-      <img :src="allBikeTypes[idealBikeType].image" :alt="allBikeTypes[idealBikeType].title" class="ideal-note-image">
+      <img :src="allBikeTypes[idealBikeType as BikeTypeId].image" :alt="allBikeTypes[idealBikeType as BikeTypeId].title" class="ideal-note-image">
       <div class="ideal-note-body">
         <p>
           {{ idealArticle }}
           <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link">
-            <strong>{{ allBikeTypes[idealBikeType].title }}</strong>
+            <strong>{{ allBikeTypes[idealBikeType as BikeTypeId].title }}</strong>
           </a>
           would be the ideal fit for your needs, but based on your storage situation
           <strong>we've recommended a more practical option below.</strong>
@@ -66,40 +66,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import ShareButton from './ShareButton.vue';
+import type { BikeType, BikeTypeId } from '../../types';
 
-const props = defineProps({
-  recommendationDetails: {
-    type: Object,
-    required: true
-  },
-  allBikeTypes: {
-    type: Object,
-    default: null
-  },
-  idealBikeType: {
-    type: String,
-    default: null
-  },
-  storageConstrained: {
-    type: Boolean,
-    default: false
-  },
-  recommendedBikeType: {
-    type: String,
-    default: ''
-  },
-  savingsAmount: {
-    type: Number,
-    default: 0
-  }
+const props = withDefaults(defineProps<{
+  recommendationDetails: BikeType;
+  allBikeTypes?: Record<BikeTypeId, BikeType> | null;
+  idealBikeType?: string | null;
+  storageConstrained?: boolean;
+  recommendedBikeType?: string;
+  savingsAmount?: number;
+}>(), {
+  allBikeTypes: null,
+  idealBikeType: null,
+  storageConstrained: false,
+  recommendedBikeType: '',
+  savingsAmount: 0
 });
 
 const idealArticle = computed(() => {
-  if (!props.idealBikeType || !props.allBikeTypes?.[props.idealBikeType]) return 'A';
-  const title = props.allBikeTypes[props.idealBikeType].title;
+  if (!props.idealBikeType || !props.allBikeTypes?.[props.idealBikeType as BikeTypeId]) return 'A';
+  const title = props.allBikeTypes[props.idealBikeType as BikeTypeId].title;
   return /^[aeiou]/i.test(title) ? 'An' : 'A';
 });
 </script>

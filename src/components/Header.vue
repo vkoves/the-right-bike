@@ -31,7 +31,7 @@
   </header>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
@@ -47,7 +47,7 @@ const NavLinks = [
   { to: '/about', label: 'About' },
 ];
 
-function handleNavClick(link) {
+function handleNavClick(link: { to: string; label: string }) {
   if (link.to === '/assessment') {
     // If already on /assessment, force a reset via query param since the path
     // doesn't change. For /bike/:type the path change triggers a remount.

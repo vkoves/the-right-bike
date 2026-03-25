@@ -52,7 +52,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -64,7 +64,7 @@ const adjustedSavings = computed(() => {
   return Math.floor(Math.max(0, netSavings) / 1000) * 1000;
 });
 
-function formatCurrency(value) {
+function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

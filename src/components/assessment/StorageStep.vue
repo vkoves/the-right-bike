@@ -5,44 +5,18 @@
 
     <div class="options-grid">
       <button
+        v-for="(opt, key) in StorageOptions"
+        :key="key"
         type="button"
         class="option-card"
-        :class="{ selected: modelValue === 'garage' }"
-        @click="updateStorage('garage')"
-        :aria-pressed="(modelValue === 'garage').toString()"
+        :class="{ selected: modelValue === key }"
+        @click="updateStorage(key)"
+        :aria-pressed="modelValue === key"
       >
-        <div class="option-icon">🏠</div>
+        <div class="option-icon">{{ opt.icon }}</div>
         <div class="option-content">
-          <div class="option-label">Garage or Shed</div>
-          <div class="option-description">Dedicated ground-level space for bikes</div>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        class="option-card"
-        :class="{ selected: modelValue === 'basement' }"
-        @click="updateStorage('basement')"
-        :aria-pressed="(modelValue === 'basement').toString()"
-      >
-        <div class="option-icon">🚪</div>
-        <div class="option-content">
-          <div class="option-label">Basement or a Few Steps</div>
-          <div class="option-description">Some stairs, but manageable</div>
-        </div>
-      </button>
-
-      <button
-        type="button"
-        class="option-card"
-        :class="{ selected: modelValue === 'upper-floor' }"
-        @click="updateStorage('upper-floor')"
-        :aria-pressed="(modelValue === 'upper-floor').toString()"
-      >
-        <div class="option-icon">🪜</div>
-        <div class="option-content">
-          <div class="option-label">Upper Floor / No Storage</div>
-          <div class="option-description">Need to carry bike up stairs or lock outside</div>
+          <div class="option-label">{{ opt.label }}</div>
+          <div class="option-description">{{ opt.description }}</div>
         </div>
       </button>
     </div>
@@ -54,7 +28,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { StorageOptions } from '../../constants/assessmentOptions';
+
 defineProps({
   modelValue: {
     type: String,
@@ -64,7 +40,7 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue', 'prev', 'calculate']);
 
-function updateStorage(value) {
+function updateStorage(value: string) {
   emit('update:modelValue', value);
 }
 </script>

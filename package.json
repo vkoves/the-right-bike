@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender-og.js",
     "preview": "vite preview",
-    "screenshot-social": "node scripts/screenshot-social.js"
+    "screenshot-social": "node scripts/screenshot-social.js",
+    "test": "vitest",
+    "typecheck": "vue-tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,9 @@
   },
   "devDependencies": {
     "puppeteer": "^24.40.0",
-    "sass": "^1.86.3"
+    "sass": "^1.86.3",
+    "typescript": "^6.0.2",
+    "vitest": "^2",
+    "vue-tsc": "^3.2.6"
   }
 }

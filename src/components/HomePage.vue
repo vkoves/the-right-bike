@@ -125,7 +125,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { BikeTypes } from '../constants/bikeTypes';
@@ -134,7 +134,7 @@ import StoriesSection from './StoriesSection.vue';
 const router = useRouter();
 const currentRotation = ref(0);
 const carouselIndex = ref(0);
-const autoRotateInterval = ref(null);
+const autoRotateInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
 const bikeOptions = Object.entries(BikeTypes).map(([key, bike]) => ({ key, ...bike }));
 
@@ -142,13 +142,13 @@ function startAssessment() {
   router.push('/assessment');
 }
 
-function navigateToBike(event, bikeKey) {
+function navigateToBike(event: MouseEvent, bikeKey: string) {
   if (event.ctrlKey || event.metaKey || event.shiftKey || event.button !== 0) return;
   event.preventDefault();
   router.push({ name: 'BikeResult', params: { type: bikeKey } });
 }
 
-function rotateCarousel(direction) {
+function rotateCarousel(direction: string) {
   // Stop auto-rotation temporarily when user manually rotates
   if (autoRotateInterval.value) {
     clearInterval(autoRotateInterval.value);

@@ -5,7 +5,9 @@
  * (assessment results, savings comparison, homepage gallery, etc.).
  * Do NOT duplicate this data in individual components.
  */
-export const BikeTypes = {
+import type { BikeTypeId, BikeType } from '../types';
+
+export const BikeTypes: Record<BikeTypeId, BikeType> = {
   'regular-bike': {
     title: 'Regular Bicycle',
     label: 'Regular Bicycle',

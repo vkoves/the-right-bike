@@ -154,7 +154,7 @@
             </div>
             <div class="bike-option-details">
               <h4>{{ type.label }}</h4>
-              <div class="bike-price">~ {{ formatCurrency(BIKE_COSTS[type.value].purchase) }}</div>
+              <div class="bike-price">~ {{ formatCurrency(BIKE_COSTS[type.value as BikeTypeId].purchase) }}</div>
             </div>
           </div>
         </div>
@@ -165,11 +165,12 @@
 
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
+import type { BikeTypeId } from '../../types';
 
 import CostComparisonTable from './CostComparisonTable.vue';
 import SavingsFaqSection from './SavingsFaqSection.vue';
@@ -216,7 +217,7 @@ const isNew = ref(true);
 // State for "already own a car" mode — initialize from query params
 const alreadyOwnsCar = ref('own' in route.query);
 const replacementPercent = ref(
-  route.query.replace ? Math.min(100, Math.max(25, parseInt(route.query.replace, 10) || 50)) : 50
+  route.query.replace ? Math.min(100, Math.max(25, parseInt(route.query.replace as string, 10) || 50)) : 50
 );
 
 // Interpolate slider color from grey (#727272) at 25% to green (#298653) at 100%
@@ -350,13 +351,13 @@ const availableBikeTypes = computed(() => {
 const displayedBikeType = computed(() => comparisonBike.value || recommendationType.value);
 
 // Handle bike type change from buttons
-function handleComparisonChange(bikeType) {
+function handleComparisonChange(bikeType: string) {
   comparisonBike.value = bikeType;
   emit('bike-change', bikeType);
 }
 
 // Currency formatting helper
-function formatCurrency(value) {
+function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -365,7 +366,7 @@ function formatCurrency(value) {
 }
 
 // Rounds to nearest $1k below $1M, or "$X.XM" above
-function formatRounded(value) {
+function formatRounded(value: number) {
   if (value >= 1_000_000) {
     const millions = Math.round(value / 100_000) / 10;
     const formatted = millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1);

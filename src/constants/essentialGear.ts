@@ -4,7 +4,9 @@
  * Single source of truth for gear data used on the Gear Guide page
  * and any future references. Do NOT duplicate this data elsewhere.
  */
-export const ESSENTIAL_GEAR = [
+import type { GearItem } from '../types';
+
+export const ESSENTIAL_GEAR: GearItem[] = [
   {
     id: 'helmet',
     image: '/images/gear/helmet.webp',
@@ -41,7 +43,7 @@ export const ESSENTIAL_GEAR = [
   },
 ];
 
-export const NICE_TO_HAVE_GEAR = [
+export const NICE_TO_HAVE_GEAR: GearItem[] = [
   {
     id: 'pump',
     image: '/images/gear/pump.webp',
@@ -77,7 +79,7 @@ export const NICE_TO_HAVE_GEAR = [
   },
 ];
 
-export const WINTER_GEAR = [
+export const WINTER_GEAR: GearItem[] = [
   {
     id: 'studded-tires',
     image: '/images/gear/studded-tires.webp',

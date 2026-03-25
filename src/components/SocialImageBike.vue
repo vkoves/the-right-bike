@@ -21,15 +21,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { BikeTypes } from '../constants/bikeTypes';
+import type { BikeTypeId } from '../types';
 
 const props = defineProps({
   type: { type: String, required: true }
 });
 
-const bike = computed(() => BikeTypes[props.type] || null);
+const bike = computed(() => BikeTypes[props.type as BikeTypeId] || null);
 </script>
 
 <style lang="scss" scoped>
