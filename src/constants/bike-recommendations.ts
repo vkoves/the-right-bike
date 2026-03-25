@@ -8,7 +8,7 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       price: '$299',
       tier: 'budget',
       image: '/images/bike-models/retrospec-beaumont.webp',
-      review: 'https://electricbikereview.com/retrospec/beaumont-rev-2-review/',
+      review: 'https://retrospec.com/collections/beaumont-city-bikes/products/beaumont-7-speed-diamond-city-bike',
     },
     {
       model: 'Gazelle Tour Populair',
