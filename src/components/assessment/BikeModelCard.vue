@@ -24,6 +24,7 @@
       <h4>{{ bike.model }} <span v-if="electric" class="electric-badge -light"><span class="emoji-shadow">⚡</span> Electric</span></h4>
       <div class="tier-price">{{ bike.price }}</div>
       <span class="tier-cta">Read Review <span class="tier-cta-chevron" aria-hidden="true"></span></span>
+      <a v-if="bike.purchaseLink" class="tier-buy" :href="bike.purchaseLink" target="_blank" rel="noopener noreferrer" @click.stop>Buy <span class="tier-cta-chevron" aria-hidden="true"></span></a>
     </div>
   </a>
 </template>
@@ -193,6 +194,20 @@ $tier-premium-bg: #fef9ec;
   .budget   & { color: vars.$primary; }
   .midrange & { color: vars.$secondary-dark; }
   .premium  & { color: $tier-premium; }
+}
+
+.tier-buy {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: vars.$primary;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .tier-cta-chevron {

@@ -86,6 +86,7 @@ export interface BikeModel {
   tier: RecommendationTier;
   image: string;
   review: string;
+  purchaseLink?: string;
   singleSpeed?: boolean;
   lightweight?: boolean;
   trike?: boolean;

@@ -163,6 +163,14 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       review: 'https://electricbikereport.com/lectric-xpedition-2-review/'
     },
     {
+      model: 'Aventon Abound LR',
+      price: '$1,999',
+      tier: 'midrange',
+      image: '/images/bike-models/aventon-abound-lr.webp',
+      review: 'https://www.outdoorgearlab.com/reviews/biking/cargo-bike/aventon-abound-lr',
+      // purchaseLink: 'https://www.aventon.com/products/abound-lr-ebike'
+    },
+    {
       model: 'Tern Quick Haul Long D9',
       price: '$3,799',
       tier: 'midrange',
