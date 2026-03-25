@@ -1,4 +1,6 @@
-export const TransportationNeedOptions = {
+import type { AssessmentOption } from '../types';
+
+export const TransportationNeedOptions: Record<string, AssessmentOption> = {
   soloCommuting: {
     label: 'Solo Commuting',
     icon: '🚴',
@@ -21,7 +23,7 @@ export const TransportationNeedOptions = {
   }
 };
 
-export const GeographyOptions = {
+export const GeographyOptions: Record<string, AssessmentOption> = {
   windy: {
     label: 'Windy',
     icon: '🌬️'
@@ -36,7 +38,7 @@ export const GeographyOptions = {
   }
 };
 
-export const FitnessOptions = {
+export const FitnessOptions: Record<string, AssessmentOption> = {
   low: {
     label: 'Low',
     icon: '😅',
@@ -54,7 +56,7 @@ export const FitnessOptions = {
   }
 };
 
-export const StorageOptions = {
+export const StorageOptions: Record<string, AssessmentOption> = {
   garage: {
     label: 'Garage or Shed',
     icon: '🏠',

@@ -17,12 +17,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { BIKE_RECOMMENDATIONS } from '../constants/bike-recommendations';
 import { BikeTypes } from '../constants/bikeTypes';
 import BikeModelCard from './assessment/BikeModelCard.vue';
+import type { RecommendationTier } from '../types';
 
-const tiers = ['budget', 'midrange', 'premium'];
+const tiers: RecommendationTier[] = ['budget', 'midrange', 'premium'];
 </script>
 
 <style lang="scss" scoped>

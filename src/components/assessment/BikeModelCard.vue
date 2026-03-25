@@ -12,7 +12,7 @@
         v-if="bike.image"
         :src="bike.image"
         :alt="bike.model"
-        @error="(e) => e.target.closest('.tier-image').classList.add('-no-image')"
+        @error="(e: Event) => (e.target as HTMLElement).closest('.tier-image')?.classList.add('-no-image')"
       >
     </div>
     <div class="tier-body">
@@ -23,8 +23,8 @@
   </a>
 </template>
 
-<script setup>
-const TierLabels = {
+<script setup lang="ts">
+const TierLabels: Record<string, string> = {
   budget: 'Budget',
   midrange: 'Mid-Range',
   premium: 'Premium'

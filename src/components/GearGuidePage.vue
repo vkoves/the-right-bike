@@ -21,7 +21,7 @@
           <h2>{{ item.title }}</h2>
           <p>{{ item.description }}</p>
           <a
-            :href="item.wirecutter.url"
+            :href="item.wirecutter?.url"
             target="_blank"
             rel="noopener noreferrer"
             class="wirecutter-link"
@@ -41,7 +41,7 @@
           <h3>{{ item.title }}</h3>
           <p>{{ item.description }}</p>
           <a
-            :href="item.wirecutter.url"
+            :href="item.wirecutter?.url"
             target="_blank"
             rel="noopener noreferrer"
             class="wirecutter-link"
@@ -97,7 +97,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ESSENTIAL_GEAR, NICE_TO_HAVE_GEAR, WINTER_GEAR } from '../constants/essentialGear';
 </script>
 

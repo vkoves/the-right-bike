@@ -3,8 +3,10 @@
  * All values are in USD and represent annual costs unless otherwise specified
  */
 
+import type { BikeCost, BikeTypeId, CarCosts } from '../types';
+
 // Base costs for different vehicle types with source URLs
-export const CAR_COSTS = {
+export const CAR_COSTS: CarCosts = {
   // Initial purchase price average for a new car
   purchase: 49000,
   purchaseSource: "https://www.coxautoinc.com/insights/feb-2026-atp-report/",
@@ -43,7 +45,7 @@ export const CAR_COSTS = {
 const EbikeElectricityCost = 35;
 
 // Costs for different bike types
-export const BIKE_COSTS = {
+export const BIKE_COSTS: Record<BikeTypeId | 'default', BikeCost> = {
   // Regular non-electric bicycle
   'regular-bike': {
     purchase: 800,

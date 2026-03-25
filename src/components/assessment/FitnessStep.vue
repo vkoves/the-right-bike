@@ -11,7 +11,7 @@
         class="option-card fitness-card"
         :class="{ selected: modelValue === key }"
         @click="updateFitnessLevel(key)"
-        :aria-pressed="(modelValue === key).toString()"
+        :aria-pressed="modelValue === key"
       >
         <div class="option-icon">{{ opt.icon }}</div>
         <div class="option-content">
@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { FitnessOptions } from '../../constants/assessmentOptions';
 
 defineProps({
@@ -40,7 +40,7 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue', 'prev', 'next']);
 
-function updateFitnessLevel(level) {
+function updateFitnessLevel(level: string) {
   // Emit the update event with the new level
   emit('update:modelValue', level);
 

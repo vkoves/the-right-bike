@@ -1,5 +1,15 @@
 import { BIKE_RECOMMENDATIONS } from '../constants/bike-recommendations';
 import { BikeTypes } from '../constants/bikeTypes';
+import type {
+  AssessmentProfile,
+  BikeTypeId,
+  BikeModelWithReasons,
+  RecommendationTier,
+  TieredRecommendations,
+  TopPick
+} from '../types';
+
+const Tiers: RecommendationTier[] = ['budget', 'midrange', 'premium'];
 
 /**
  * Recommends specific bike models based on the user's full assessment profile.
@@ -28,14 +38,11 @@ import { BikeTypes } from '../constants/bikeTypes';
  *   // → { tier, model, price, image, review, reasons }
  */
 export default class BikeModelRecommender {
-  /**
-   * @param {Object} profile - The user's complete assessment profile
-   * @param {Object} profile.transportationNeeds - What the user is carrying
-   * @param {Object} profile.geography - Terrain conditions (hilly, windy, flat)
-   * @param {string} profile.fitnessLevel - 'low' | 'medium' | 'high'
-   * @param {string} profile.storage - 'garage' | 'basement' | 'upper-floor'
-   */
-  constructor(profile) {
+  profile: AssessmentProfile;
+  bikeType: BikeTypeId;
+  idealBikeType: BikeTypeId | null;
+
+  constructor(profile: AssessmentProfile) {
     this.profile = profile;
     this.bikeType = this._determineBikeType();
     this.idealBikeType = this._applyStorageDowngrade();
@@ -43,17 +50,13 @@ export default class BikeModelRecommender {
 
   /**
    * Returns budget/midrange/premium recommendations tailored to the user's profile.
-   * Each tier includes the model info plus an array of reasons explaining why
-   * this model suits their specific needs.
-   *
-   * @returns {{ budget: Object, midrange: Object, premium: Object }}
    */
-  getRecommendations() {
+  getRecommendations(): TieredRecommendations {
     const models = BIKE_RECOMMENDATIONS[this.bikeType];
     const reasons = this._buildReasons();
 
-    const result = {};
-    for (const tier of ['budget', 'midrange', 'premium']) {
+    const result = {} as TieredRecommendations;
+    for (const tier of Tiers) {
       result[tier] = {
         ...models[tier],
         reasons
@@ -64,19 +67,14 @@ export default class BikeModelRecommender {
 
   /**
    * Returns the single best model across all tiers for this user's profile.
-   * Includes a `tier` field ('budget' | 'midrange' | 'premium') indicating
-   * which price tier it came from.
-   *
-   * @returns {{ tier: string, model: string, price: string, image: string, review: string, reasons: string[] }}
    */
-  getTopPick() {
+  getTopPick(): TopPick {
     const recs = this.getRecommendations();
-    const tiers = ['budget', 'midrange', 'premium'];
 
-    let bestTier = 'midrange';
+    let bestTier: RecommendationTier = 'midrange';
     let bestScore = -Infinity;
 
-    for (const tier of tiers) {
+    for (const tier of Tiers) {
       const score = this.scoreModel(recs[tier], tier);
       if (score > bestScore) {
         bestScore = score;
@@ -90,12 +88,8 @@ export default class BikeModelRecommender {
   /**
    * Scores a specific bike model against the user's profile.
    * Used internally to rank models but exposed for testing and debugging.
-   *
-   * @param {Object} model - A bike model object from bike-recommendations.js
-   * @param {string} tier - 'budget' | 'midrange' | 'premium'
-   * @returns {number} A relevance score (higher is better)
    */
-  scoreModel(model, tier = 'midrange') {
+  scoreModel(_model: BikeModelWithReasons | Record<string, never>, tier: RecommendationTier = 'midrange'): number {
     let score = 0;
 
     // Midrange is the default best pick for most users
@@ -114,12 +108,8 @@ export default class BikeModelRecommender {
 
   // --- Private methods ---
 
-  /**
-   * Determines the bike type based on transportation needs, geography, and fitness.
-   * Mirrors the logic previously in BikeAssessment.calculateRecommendation.
-   */
-  _determineBikeType() {
-    const { transportationNeeds, geography, fitnessLevel } = this.profile;
+  private _determineBikeType(): BikeTypeId {
+    const { transportationNeeds } = this.profile;
 
     const needsCargo = transportationNeeds.cargo ||
                        transportationNeeds.transportingKids ||
@@ -137,12 +127,7 @@ export default class BikeModelRecommender {
     return needsAssistance ? 'commuter-ebike' : 'regular-bike';
   }
 
-  /**
-   * Determines if the user needs electric assistance.
-   * For high fitness, only if transporting adults or hauling cargo on hills.
-   * Otherwise, cargo + not-high fitness, windy, hilly, or low fitness.
-   */
-  _needsAssistance(needsCargo) {
+  private _needsAssistance(needsCargo: boolean): boolean {
     const { geography, fitnessLevel } = this.profile;
 
     if (fitnessLevel === 'high') {
@@ -150,17 +135,13 @@ export default class BikeModelRecommender {
              (geography.hilly && needsCargo);
     }
 
-    return (needsCargo && fitnessLevel !== 'high') ||
+    return needsCargo ||
            geography.windy ||
            geography.hilly ||
            fitnessLevel === 'low';
   }
 
-  /**
-   * Applies storage downgrade if the recommended type is too bulky for
-   * upper-floor storage. Returns the original type as idealBikeType, or null.
-   */
-  _applyStorageDowngrade() {
+  private _applyStorageDowngrade(): BikeTypeId | null {
     const typeInfo = BikeTypes[this.bikeType];
     if (this.profile.storage === 'upper-floor' && typeInfo.bulky && typeInfo.storageDowngrade) {
       const ideal = this.bikeType;
@@ -170,15 +151,10 @@ export default class BikeModelRecommender {
     return null;
   }
 
-  /**
-   * Builds human-readable reasons explaining why the recommended type
-   * suits this user's profile.
-   */
-  _buildReasons() {
-    const reasons = [];
+  private _buildReasons(): string[] {
+    const reasons: string[] = [];
     const { transportationNeeds, geography, fitnessLevel, storage } = this.profile;
 
-    // Transportation need reasons
     if (transportationNeeds.transportingKids) reasons.push('Suited for carrying kids');
     if (transportationNeeds.transportingAdults) reasons.push('Can carry adult passengers');
     if (transportationNeeds.cargo) reasons.push('Built for heavy cargo loads');
@@ -187,18 +163,15 @@ export default class BikeModelRecommender {
       reasons.push('Great for daily commuting');
     }
 
-    // Geography reasons
     if (geography.hilly) reasons.push('Handles hilly terrain');
     if (geography.windy) reasons.push('Handles windy conditions');
     if (geography.flat && !geography.hilly) reasons.push('Well-suited for flat terrain');
 
-    // Fitness reasons
     if (fitnessLevel === 'low') reasons.push('Electric assist makes riding accessible');
     if (fitnessLevel === 'high' && !BikeTypes[this.bikeType].electric) {
       reasons.push('No motor needed at your fitness level');
     }
 
-    // Storage reasons
     if (this.idealBikeType) {
       reasons.push('Compact enough for upper-floor storage');
     }

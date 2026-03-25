@@ -160,7 +160,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { CAR_COSTS } from '../../constants/bikeCosts';
 
@@ -191,12 +191,12 @@ const carCostSources = {
 const showFootnotes = ref(false);
 const activeFootnote = ref('all');
 
-function showFootnote(type) {
+function showFootnote(type: string) {
   activeFootnote.value = type;
   showFootnotes.value = true;
 }
 
-function formatCurrency(value) {
+function formatCurrency(value: number) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

@@ -1,6 +1,6 @@
 <template>
   <div class="your-choices">
-    <button class="your-choices-toggle" @click="expanded = !expanded" :aria-expanded="expanded.toString()">
+    <button class="your-choices-toggle" @click="expanded = !expanded" :aria-expanded="expanded">
       Your Choices
       <span class="your-choices-arrow" :class="{ '-expanded': expanded }">&#9660;</span>
     </button>
@@ -26,15 +26,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import type { ChoiceGroup } from '../../types';
 
-defineProps({
-  choices: {
-    type: Array,
-    required: true
-  }
-});
+defineProps<{
+  choices: ChoiceGroup[];
+}>();
 
 defineEmits(['edit']);
 

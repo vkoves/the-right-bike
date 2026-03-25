@@ -9,7 +9,7 @@
         class="option-card"
         :class="{ selected: modelValue.windy }"
         @click="toggleGeography('windy')"
-        :aria-pressed="modelValue.windy.toString()"
+        :aria-pressed="modelValue.windy"
       >
         <div class="option-icon">{{ GeographyOptions.windy.icon }}</div>
         <div class="option-label">{{ GeographyOptions.windy.label }}</div>
@@ -20,7 +20,7 @@
         class="option-card"
         :class="{ selected: modelValue.hilly }"
         @click="toggleHilly"
-        :aria-pressed="modelValue.hilly.toString()"
+        :aria-pressed="modelValue.hilly"
       >
         <div class="option-icon">{{ GeographyOptions.hilly.icon }}</div>
         <div class="option-label">{{ GeographyOptions.hilly.label }}</div>
@@ -31,7 +31,7 @@
         class="option-card"
         :class="{ selected: modelValue.flat }"
         @click="setFlatGeography"
-        :aria-pressed="modelValue.flat.toString()"
+        :aria-pressed="modelValue.flat"
       >
         <div class="option-icon">{{ GeographyOptions.flat.icon }}</div>
         <div class="option-label">{{ GeographyOptions.flat.label }}</div>
@@ -45,16 +45,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { GeographyOptions } from '../../constants/assessmentOptions';
+import type { Geography } from '../../types';
 
-const props = defineProps({
-  modelValue: {
-    type: Object,
-    required: true
-  }
-});
+const props = defineProps<{
+  modelValue: Geography;
+}>();
 
 const emit = defineEmits(['update:modelValue', 'prev', 'next']);
 
@@ -62,7 +60,7 @@ const hasSelected = computed(() => {
   return props.modelValue.windy || props.modelValue.hilly || props.modelValue.flat;
 });
 
-function toggleGeography(type) {
+function toggleGeography(type: keyof Geography) {
   const updatedGeography = { ...props.modelValue };
   updatedGeography[type] = !updatedGeography[type];
   emit('update:modelValue', updatedGeography);

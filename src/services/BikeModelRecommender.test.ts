@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import BikeModelRecommender from './BikeModelRecommender';
+import type { AssessmentProfile, RecommendationTier } from '../types';
 
 // Reusable profile factories
-function makeProfile(overrides = {}) {
+function makeProfile(overrides: Partial<AssessmentProfile> = {}): AssessmentProfile {
   return {
     transportationNeeds: {
       soloCommuting: true,
@@ -17,7 +18,7 @@ function makeProfile(overrides = {}) {
   };
 }
 
-function makeCargoProfile(overrides = {}) {
+function makeCargoProfile(overrides: Partial<AssessmentProfile> = {}): AssessmentProfile {
   return makeProfile({
     transportationNeeds: {
       soloCommuting: false,
@@ -29,7 +30,7 @@ function makeCargoProfile(overrides = {}) {
   });
 }
 
-function makeLongtailProfile(overrides = {}) {
+function makeLongtailProfile(overrides: Partial<AssessmentProfile> = {}): AssessmentProfile {
   return makeProfile({
     transportationNeeds: {
       soloCommuting: false,
@@ -207,7 +208,7 @@ describe('BikeModelRecommender', () => {
       const r = new BikeModelRecommender(makeProfile());
       const recs = r.getRecommendations();
 
-      for (const tier of ['budget', 'midrange', 'premium']) {
+      for (const tier of ['budget', 'midrange', 'premium'] as const) {
         expect(recs[tier]).toHaveProperty('model');
         expect(recs[tier]).toHaveProperty('price');
         expect(recs[tier]).toHaveProperty('image');
@@ -244,7 +245,7 @@ describe('BikeModelRecommender', () => {
       }));
       const recs = r.getRecommendations();
 
-      for (const tier of ['budget', 'midrange', 'premium']) {
+      for (const tier of ['budget', 'midrange', 'premium'] as const) {
         expect(recs[tier].reasons.length).toBeGreaterThanOrEqual(1);
       }
     });
@@ -292,7 +293,7 @@ describe('BikeModelRecommender', () => {
   describe('scoreModel', () => {
     it('returns a number', () => {
       const r = new BikeModelRecommender(makeProfile());
-      const score = r.scoreModel({ model: 'Test Bike', price: '$500' });
+      const score = r.scoreModel({} as any);
       expect(typeof score).toBe('number');
     });
 

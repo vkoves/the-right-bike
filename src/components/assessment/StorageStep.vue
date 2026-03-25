@@ -11,7 +11,7 @@
         class="option-card"
         :class="{ selected: modelValue === key }"
         @click="updateStorage(key)"
-        :aria-pressed="(modelValue === key).toString()"
+        :aria-pressed="modelValue === key"
       >
         <div class="option-icon">{{ opt.icon }}</div>
         <div class="option-content">
@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { StorageOptions } from '../../constants/assessmentOptions';
 
 defineProps({
@@ -40,7 +40,7 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue', 'prev', 'calculate']);
 
-function updateStorage(value) {
+function updateStorage(value: string) {
   emit('update:modelValue', value);
 }
 </script>

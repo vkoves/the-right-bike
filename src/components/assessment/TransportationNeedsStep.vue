@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import { TransportationNeedOptions } from '../../constants/assessmentOptions';
 
@@ -44,7 +44,7 @@ const hasSelectedAny = computed(() => {
   return Object.values(props.modelValue).some(value => value);
 });
 
-function toggleNeed(need) {
+function toggleNeed(need: string) {
   // Create a new object to maintain reactivity
   const updatedNeeds = { ...props.modelValue };
   // Toggle the value of the specified need

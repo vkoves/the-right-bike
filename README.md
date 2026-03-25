@@ -15,6 +15,13 @@ A web app that helps people figure out if a bike could replace some of their car
 - **Bike gallery** — homepage grid of all bike types linking directly to their savings page
 - **Stories section** — links to [Chicagoans Who Bike](https://chiwho.bike) with real cyclist interview photos
 
+## Tech Stack
+
+- **Vue 3** with `<script setup>` and **TypeScript**
+- **Vite** for dev server and builds
+- **Vitest** for unit tests
+- **SCSS** for styling
+
 ## Development
 
 ### Prerequisites
@@ -39,6 +46,9 @@ yarn dev
 ```bash
 yarn build
 ```
+
+Note: Vite does **not** type-check during build — it only transpiles TypeScript. Run
+`yarn typecheck` to catch type errors, or add it to CI.
 
 The build runs `vite build` followed by `scripts/prerender-og.js`, which generates
 static HTML files at `dist/bike/:type/index.html` for each bike type. These contain
@@ -68,17 +78,22 @@ type, saving PNGs to `public/images/`. Visit `/admin` locally to preview all soc
 
 ```
 src/
+  types/
+    index.ts              # Shared TypeScript interfaces and types
   components/
-    assessment/     # Multi-step assessment + results components
+    assessment/           # Multi-step assessment + results components
     HomePage.vue
     StoriesSection.vue
     Header.vue
     AboutPage.vue
   constants/
-    bikeTypes.js          # Bike type metadata (single source of truth)
-    bikeCosts.js          # Cost data for savings calculations
-    bike-recommendations.js  # Budget/mid/premium model suggestions per bike type
-  assets/scss/      # Global styles and variables
+    bikeTypes.ts          # Bike type metadata (single source of truth)
+    bikeCosts.ts          # Cost data for savings calculations
+    bike-recommendations.ts  # Budget/mid/premium model suggestions per bike type
+    assessmentOptions.ts  # Labels/icons for assessment step options
+  services/
+    BikeModelRecommender.ts  # Bike type + model recommendation engine
+  assets/scss/            # Global styles and variables
 public/
   images/
     bikes/          # Homepage carousel images

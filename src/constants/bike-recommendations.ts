@@ -1,4 +1,6 @@
-export const BIKE_RECOMMENDATIONS = {
+import type { BikeTypeId, BikeModel, RecommendationTier } from '../types';
+
+export const BIKE_RECOMMENDATIONS: Record<BikeTypeId, Record<RecommendationTier, BikeModel>> = {
   'regular-bike': {
     budget: {
       model: 'Retrospec Beaumont City Bike',
