@@ -120,7 +120,9 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       price: '$6,499',
       tier: 'premium',
       image: '/images/bike-models/bunch-the-original.webp',
-      review: 'https://www.outdoorgearlab.com/reviews/biking/cargo-bike/bunch-the-original',
+      // Old review - higher profile but quite old
+      // review: 'https://www.outdoorgearlab.com/reviews/biking/cargo-bike/bunch-the-original',
+      review: 'https://www.twowheelingtots.com/bunch-bike-cargo-ebike-review',
       trike: true
     },
     {
