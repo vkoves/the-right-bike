@@ -3,7 +3,7 @@
     <h1>All Bike Recommendations</h1>
     <p class="debug-note">Debug page — all specific bike model recommendations at a glance.</p>
 
-    <div v-for="(recs, typeKey) in BIKE_RECOMMENDATIONS" :key="typeKey" class="bike-group">
+    <div v-for="(recs, typeKey) in BikeRecommendations" :key="typeKey" class="bike-group">
       <h2>{{ BikeTypes[typeKey].title }}</h2>
       <div class="tiers">
         <bike-model-card
@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { BIKE_RECOMMENDATIONS } from '../constants/bike-recommendations';
+import { BikeRecommendations } from '../constants/bike-recommendations';
 import { BikeTypes } from '../constants/bikeTypes';
 import BikeModelCard from './assessment/BikeModelCard.vue';
 import type { RecommendationTier } from '../types';

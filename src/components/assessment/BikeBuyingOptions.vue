@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BIKE_RECOMMENDATIONS } from '../../constants/bike-recommendations';
+import { BikeRecommendations } from '../../constants/bike-recommendations';
 import BikeModelCard from './BikeModelCard.vue';
 import type { BikeTypeId, RecommendationTier } from '../../types';
 
@@ -29,7 +29,7 @@ const props = defineProps({
 
 const tiers: RecommendationTier[] = ['budget', 'midrange', 'premium'];
 
-const options = computed(() => BIKE_RECOMMENDATIONS[props.bikeType as BikeTypeId] || null);
+const options = computed(() => BikeRecommendations[props.bikeType as BikeTypeId] || null);
 </script>
 
 <style lang="scss" scoped>

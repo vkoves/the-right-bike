@@ -1,4 +1,4 @@
-import { BIKE_RECOMMENDATIONS } from '../constants/bike-recommendations';
+import { BikeRecommendations } from '../constants/bike-recommendations';
 import { BikeTypes } from '../constants/bikeTypes';
 import type {
   AssessmentProfile,
@@ -52,7 +52,7 @@ export default class BikeModelRecommender {
    * Returns budget/midrange/premium recommendations tailored to the user's profile.
    */
   getRecommendations(): TieredRecommendations {
-    const models = BIKE_RECOMMENDATIONS[this.bikeType];
+    const models = BikeRecommendations[this.bikeType];
     const reasons = this._buildReasons();
 
     const result = {} as TieredRecommendations;
