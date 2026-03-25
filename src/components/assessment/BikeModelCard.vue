@@ -14,6 +14,10 @@
         :alt="bike.model"
         @error="(e: Event) => (e.target as HTMLElement).closest('.tier-image')?.classList.add('-no-image')"
       >
+      <div v-if="bike.singleSpeed || bike.lightweight" class="tier-pills">
+        <span v-if="bike.singleSpeed" class="tier-pill">⚙️ Single Speed</span>
+        <span v-if="bike.lightweight" class="tier-pill">🪶 Lightweight</span>
+      </div>
     </div>
     <div class="tier-body">
       <h4>{{ bike.model }}</h4>
@@ -83,6 +87,7 @@ $tier-premium-bg: #fef9ec;
 }
 
 .tier-image {
+  position: relative;
   background-color: vars.$white;
   height: 160px;
   display: flex;
@@ -128,6 +133,24 @@ $tier-premium-bg: #fef9ec;
   color: vars.$text-secondary;
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.tier-pills {
+  position: absolute;
+  bottom: vars.$spacing-sm;
+  left: vars.$spacing-sm;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.tier-pill {
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.1875rem vars.$spacing-sm;
+  border-radius: 10rem;
+  background-color: vars.$lighter-gray;
+  color: vars.$light-gray;
 }
 
 .tier-cta {

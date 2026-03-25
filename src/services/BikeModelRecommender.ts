@@ -50,15 +50,17 @@ export default class BikeModelRecommender {
 
   /**
    * Returns budget/midrange/premium recommendations tailored to the user's profile.
+   * Filters out models that don't suit the user's geography (e.g. single-speed on hills).
    */
   getRecommendations(): TieredRecommendations {
-    const models = BikeRecommendations[this.bikeType];
+    const allModels = BikeRecommendations[this.bikeType];
     const reasons = this._buildReasons();
 
     const result = {} as TieredRecommendations;
     for (const tier of Tiers) {
+      const best = this._pickBestModel(allModels[tier]);
       result[tier] = {
-        ...models[tier],
+        ...best,
         reasons
       };
     }
@@ -107,6 +109,31 @@ export default class BikeModelRecommender {
   }
 
   // --- Private methods ---
+
+  /**
+   * Given an array of candidate models for a tier, filters out unsuitable ones
+   * based on the user's profile and returns the best match.
+   * Falls back to the first model if all are filtered out.
+   */
+  private _pickBestModel(candidates: BikeModel[]): BikeModel {
+    const { geography, storage } = this.profile;
+
+    const suitable = candidates.filter(m => {
+      // Single-speed bikes are unsuitable on hilly terrain
+      if (geography.hilly && m.singleSpeed) return false;
+      return true;
+    });
+
+    // Score remaining candidates — prefer lightweight for upper-floor storage
+    const scored = (suitable.length > 0 ? suitable : candidates).map(m => {
+      let score = 0;
+      if (m.lightweight && storage === 'upper-floor') score += 2;
+      return { model: m, score };
+    });
+
+    scored.sort((a, b) => b.score - a.score);
+    return scored[0].model;
+  }
 
   private _determineBikeType(): BikeTypeId {
     const { transportationNeeds } = this.profile;

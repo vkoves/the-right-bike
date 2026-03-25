@@ -10,7 +10,7 @@
       <bike-model-card
         v-for="tier in tiers"
         :key="tier"
-        :bike="options[tier]"
+        :bike="options[tier][0]"
         :tier="tier"
       />
     </div>

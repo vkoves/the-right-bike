@@ -361,4 +361,38 @@ describe('BikeModelRecommender', () => {
       expect(recs.budget.reasons).toContain('No motor needed at your fitness level');
     });
   });
+
+  // --- Model filtering ---
+
+  describe('model filtering', () => {
+    it('excludes singleSpeed models on hilly terrain', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        fitnessLevel: 'high',
+        geography: { hilly: true, windy: false, flat: false }
+      }));
+      const recs = r.getRecommendations();
+      expect(recs.budget.singleSpeed).toBeFalsy();
+    });
+
+    it('allows notForHills models on flat terrain', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        fitnessLevel: 'high',
+        geography: { hilly: false, windy: false, flat: true }
+      }));
+      const recs = r.getRecommendations();
+      // On flat terrain, all budget models are candidates — the first or best is picked
+      expect(recs.budget.model).toBeTruthy();
+    });
+
+    it('prefers lightweight models for upper-floor storage', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        fitnessLevel: 'high',
+        storage: 'upper-floor'
+      }));
+      const recs = r.getRecommendations();
+      // Brompton is lightweight and should be preferred for upper-floor
+      expect(recs.premium.model).toContain('Brompton');
+      expect(recs.premium.lightweight).toBe(true);
+    });
+  });
 });

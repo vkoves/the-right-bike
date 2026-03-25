@@ -85,6 +85,9 @@ export interface BikeModel {
   price: string;
   image: string;
   review: string;
+  singleSpeed?: boolean;
+  lightweight?: boolean;
+  trike?: boolean;
 }
 
 export interface BikeModelWithReasons extends BikeModel {
@@ -96,6 +99,9 @@ export interface TieredRecommendations {
   midrange: BikeModelWithReasons;
   premium: BikeModelWithReasons;
 }
+
+/** Raw data shape: arrays of candidates per tier, before filtering */
+export type BikeModelCatalog = Record<BikeTypeId, Record<RecommendationTier, BikeModel[]>>;
 
 export interface TopPick extends BikeModelWithReasons {
   tier: RecommendationTier;

@@ -6,12 +6,14 @@
     <div v-for="(recs, typeKey) in BikeRecommendations" :key="typeKey" class="bike-group">
       <h2>{{ BikeTypes[typeKey].title }}</h2>
       <div class="tiers">
-        <bike-model-card
-          v-for="tier in tiers"
-          :key="tier"
-          :bike="recs[tier]"
-          :tier="tier"
-        />
+        <template v-for="tier in tiers" :key="tier">
+          <bike-model-card
+            v-for="(bike, i) in recs[tier]"
+            :key="`${tier}-${i}`"
+            :bike="bike"
+            :tier="tier"
+          />
+        </template>
       </div>
     </div>
   </div>
