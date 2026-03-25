@@ -5,6 +5,7 @@ import BikeAssessment from '../components/assessment/BikeAssessment.vue'
 import GearGuidePage from '../components/GearGuidePage.vue'
 import SocialImage from '../components/SocialImage.vue'
 import SocialImageBike from '../components/SocialImageBike.vue'
+import AllBikesPage from '../components/AllBikesPage.vue'
 import AdminPage from '../components/AdminPage.vue'
 import NotFoundPage from '../components/NotFoundPage.vue'
 
@@ -47,6 +48,11 @@ const routes = [
     component: SocialImageBike,
     meta: { bare: true },
     props: true
+  },
+  {
+    path: '/bikes',
+    name: 'AllBikes',
+    component: AllBikesPage
   },
   {
     path: '/admin',
