@@ -16,6 +16,7 @@
         v-for="(bike, i) in recommendations"
         :key="i"
         :bike="bike"
+        :electric="bikeType.includes('ebike')"
       />
     </div>
   </div>
@@ -23,7 +24,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BikeRecommendations } from '../../constants/bike-recommendations';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
 import BikeModelCard from './BikeModelCard.vue';
 import type { AssessmentProfile, BikeTypeId, BikeModelWithReasons } from '../../types';
@@ -39,11 +39,7 @@ const recommendations = computed<BikeModelWithReasons[] | null>(() => {
     return recommender.getRecommendations();
   }
 
-  // Fallback: no profile available, show first 3 models
-  const allModels = BikeRecommendations[props.bikeType as BikeTypeId];
-  if (!allModels) return null;
-
-  return allModels.slice(0, 3).map(m => ({ ...m, reasons: [] }));
+  return BikeModelRecommender.getDefaultRecommendations(props.bikeType as BikeTypeId);
 });
 
 const lightweightHillsWarning = computed(() => {
@@ -87,15 +83,14 @@ const lightweightHillsWarning = computed(() => {
 }
 
 .tiers {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.25rem;
-  justify-content: center;
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .tiers {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 1fr;
   }
 }
 </style>

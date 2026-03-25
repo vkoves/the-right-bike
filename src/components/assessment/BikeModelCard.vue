@@ -14,15 +14,16 @@
         :alt="bike.model"
         @error="(e: Event) => (e.target as HTMLElement).closest('.tier-image')?.classList.add('-no-image')"
       >
-      <div v-if="bike.singleSpeed || bike.lightweight" class="tier-pills">
-        <span v-if="bike.singleSpeed" class="tier-pill">⚙️ Single Speed</span>
-        <span v-if="bike.lightweight" class="tier-pill">🪶 Lightweight</span>
+      <div v-if="bike.singleSpeed || bike.lightweight || bike.trike" class="tier-pills">
+        <span v-if="bike.singleSpeed" class="tier-pill"><span class="tier-pill-emoji emoji-shadow">⚙️</span><span class="tier-pill-text">Single Speed</span></span>
+        <span v-if="bike.lightweight" class="tier-pill"><span class="tier-pill-emoji emoji-shadow">🪶</span><span class="tier-pill-text">Lightweight</span></span>
+        <span v-if="bike.trike" class="tier-pill"><span class="tier-pill-emoji emoji-shadow">🛞</span><span class="tier-pill-text">Trike</span></span>
       </div>
     </div>
     <div class="tier-body">
-      <h4>{{ bike.model }}</h4>
+      <h4>{{ bike.model }} <span v-if="electric" class="electric-badge -light"><span class="emoji-shadow">⚡</span> Electric</span></h4>
       <div class="tier-price">{{ bike.price }}</div>
-      <span class="tier-cta">Read Review &#8594;</span>
+      <span class="tier-cta">Read Review <span class="tier-cta-chevron" aria-hidden="true"></span></span>
     </div>
   </a>
 </template>
@@ -35,7 +36,8 @@ const TierLabels: Record<string, string> = {
 };
 
 const props = defineProps({
-  bike: { type: Object, required: true }
+  bike: { type: Object, required: true },
+  electric: { type: Boolean, default: false }
 });
 
 const tierLabel = TierLabels[props.bike.tier] || props.bike.tier;
@@ -51,7 +53,6 @@ $tier-premium-bg: #fef9ec;
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-width: 300px;
   background-color: vars.$white;
   border-radius: vars.$border-radius;
   box-shadow: vars.$shadow-md;
@@ -125,6 +126,11 @@ $tier-premium-bg: #fef9ec;
     font-weight: 700;
     margin: 0;
     line-height: 1.3;
+
+    .electric-badge {
+      position: static;
+      white-space: nowrap;
+    }
   }
 }
 
@@ -146,10 +152,33 @@ $tier-premium-bg: #fef9ec;
 .tier-pill {
   font-size: 0.7rem;
   font-weight: bold;
-  padding: 0.1875rem vars.$spacing-sm;
   border-radius: 10rem;
   background-color: vars.$lighter-gray;
   color: vars.$light-gray;
+  border: 1px solid vars.$border-gray;
+  box-shadow: vars.$shadow-sm;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0.25rem;
+  max-width: 1.75rem;
+  transition: max-width 0.3s ease, padding 0.3s ease;
+
+  &:hover {
+    max-width: 10rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+.tier-pill-emoji {
+  font-size: 125%;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.tier-pill-text {
+  white-space: nowrap;
+  margin-left: 0.5rem;
 }
 
 .tier-cta {
@@ -157,10 +186,23 @@ $tier-premium-bg: #fef9ec;
   padding-top: 0.5rem;
   font-size: 0.85rem;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 
   .budget   & { color: vars.$primary; }
   .midrange & { color: vars.$secondary-dark; }
   .premium  & { color: $tier-premium; }
+}
+
+.tier-cta-chevron {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  transform: scaleX(-1);
+  background-color: currentColor;
+  mask: url('/images/icons/chevron-left.svg') no-repeat center / contain;
+  -webkit-mask: url('/images/icons/chevron-left.svg') no-repeat center / contain;
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {

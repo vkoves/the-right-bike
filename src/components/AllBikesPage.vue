@@ -10,6 +10,7 @@
           v-for="(bike, i) in bikes"
           :key="i"
           :bike="bike"
+          :electric="(typeKey as string).includes('ebike')"
         />
       </div>
     </div>
@@ -56,9 +57,9 @@ h1 {
 }
 
 .tiers {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.25rem;
-  justify-content: center;
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
@@ -67,8 +68,7 @@ h1 {
   }
 
   .tiers {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: 1fr;
   }
 }
 </style>

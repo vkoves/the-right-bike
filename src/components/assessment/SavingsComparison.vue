@@ -735,7 +735,7 @@ function formatRounded(value: number) {
   position: relative;
   width: 100%;
   height: auto;
-  padding: 0.5rem;
+  padding: 1.5rem 0.5rem 0.5rem;
 
   img {
     width: 100%;
@@ -745,6 +745,7 @@ function formatRounded(value: number) {
 
   .electric-badge {
     z-index: 1;
+    top: 0.8125rem;
   }
 }
 

@@ -8,7 +8,7 @@ import type {
   TopPick
 } from '../types';
 
-const NumRecommendations = 3;
+export const NumRecommendations = 4;
 
 /**
  * Recommends specific bike models based on the user's full assessment profile.
@@ -77,6 +77,43 @@ export default class BikeModelRecommender {
   getTopPick(): TopPick {
     const recs = this.getRecommendations();
     return { ...recs[0] };
+  }
+
+  /**
+   * Returns default recommendations for a bike type when no user profile is available.
+   * Picks one model per tier (preferring non-lightweight), fills remaining slots,
+   * and sorts by tier then price.
+   */
+  static getDefaultRecommendations(bikeType: BikeTypeId): BikeModelWithReasons[] {
+    const allModels = BikeRecommendations[bikeType];
+    if (!allModels) return [];
+
+    const picked: BikeModel[] = [];
+    const seen = new Set<string>();
+
+    for (const tier of ['budget', 'midrange', 'premium'] as const) {
+      const inTier = allModels.filter(m => m.tier === tier);
+      const best = inTier.find(m => !m.lightweight) || inTier[0];
+      if (best) {
+        picked.push(best);
+        seen.add(best.model);
+      }
+    }
+
+    const remaining = allModels
+      .filter(m => !seen.has(m.model))
+      .sort((a, b) => (a.lightweight ? 1 : 0) - (b.lightweight ? 1 : 0));
+    for (const m of remaining) {
+      if (picked.length >= NumRecommendations) break;
+      picked.push(m);
+    }
+
+    const TierOrder: Record<string, number> = { budget: 0, midrange: 1, premium: 2 };
+    const parsePrice = (p: string) => Number(p.replace(/[^0-9.]/g, '')) || 0;
+    picked.sort((a, b) => (TierOrder[a.tier] ?? 9) - (TierOrder[b.tier] ?? 9)
+      || parsePrice(a.price) - parsePrice(b.price));
+
+    return picked.map(m => ({ ...m, reasons: [] }));
   }
 
   /**

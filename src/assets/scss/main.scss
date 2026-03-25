@@ -25,6 +25,15 @@ html {
   font-weight: bold;
   padding: 0.1875rem vars.$spacing-sm;
   border-radius: 10rem;
+
+  &.-light {
+    background-color: vars.$lightest-gray;
+    color: vars.$secondary-dark;
+  }
+}
+
+.emoji-shadow {
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
 :focus-visible {

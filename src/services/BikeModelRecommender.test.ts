@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import BikeModelRecommender from './BikeModelRecommender';
-import type { AssessmentProfile } from '../types';
+import BikeModelRecommender, { NumRecommendations } from './BikeModelRecommender';
+import type { AssessmentProfile, BikeTypeId } from '../types';
 
 // Reusable profile factories
 function makeProfile(overrides: Partial<AssessmentProfile> = {}): AssessmentProfile {
@@ -195,13 +195,13 @@ describe('BikeModelRecommender', () => {
   // --- getRecommendations ---
 
   describe('getRecommendations', () => {
-    it('returns an array of up to 3 recommendations', () => {
+    it('returns an array of up to 4 recommendations', () => {
       const r = new BikeModelRecommender(makeProfile());
       const recs = r.getRecommendations();
 
       expect(Array.isArray(recs)).toBe(true);
       expect(recs.length).toBeGreaterThanOrEqual(1);
-      expect(recs.length).toBeLessThanOrEqual(3);
+      expect(recs.length).toBeLessThanOrEqual(4);
     });
 
     it('each recommendation includes model, price, tier, image, review, and reasons', () => {
@@ -390,6 +390,74 @@ describe('BikeModelRecommender', () => {
       const models = recs.map(rec => rec.model);
       expect(models).toContain('Gazelle Tour Populair');
       expect(models).toContain('Retrospec Beaumont City Bike');
+    });
+  });
+
+  // --- getDefaultRecommendations (no profile fallback) ---
+
+  describe('getDefaultRecommendations', () => {
+    it('returns up to NumRecommendations results', () => {
+      const recs = BikeModelRecommender.getDefaultRecommendations('commuter-ebike');
+      expect(recs.length).toBeLessThanOrEqual(NumRecommendations);
+      expect(recs.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it('includes one model from each available tier', () => {
+      const recs = BikeModelRecommender.getDefaultRecommendations('commuter-ebike');
+      const tiers = recs.map(r => r.tier);
+      expect(tiers).toContain('budget');
+      expect(tiers).toContain('midrange');
+      expect(tiers).toContain('premium');
+    });
+
+    it('sorts by tier (budget → midrange → premium) then by price within tier', () => {
+      const recs = BikeModelRecommender.getDefaultRecommendations('commuter-ebike');
+      const tierOrder: Record<string, number> = { budget: 0, midrange: 1, premium: 2 };
+
+      for (let i = 1; i < recs.length; i++) {
+        const prevTier = tierOrder[recs[i - 1].tier];
+        const currTier = tierOrder[recs[i].tier];
+        if (prevTier === currTier) {
+          const prevPrice = Number(recs[i - 1].price.replace(/[^0-9.]/g, ''));
+          const currPrice = Number(recs[i].price.replace(/[^0-9.]/g, ''));
+          expect(prevPrice).toBeLessThanOrEqual(currPrice);
+        } else {
+          expect(prevTier).toBeLessThan(currTier);
+        }
+      }
+    });
+
+    it('prefers non-lightweight models per tier', () => {
+      // commuter-ebike has both lightweight and non-lightweight budget options;
+      // the non-lightweight one (REI) should be picked in the first-pass tier
+      // selection, and the lightweight one (Velotric) may fill a remaining slot.
+      const recs = BikeModelRecommender.getDefaultRecommendations('commuter-ebike');
+      const budgetPicks = recs.filter(r => r.tier === 'budget');
+      expect(budgetPicks.some(r => !r.lightweight)).toBe(true);
+    });
+
+    it('returns empty reasons array for each model', () => {
+      const recs = BikeModelRecommender.getDefaultRecommendations('regular-bike');
+      for (const rec of recs) {
+        expect(rec.reasons).toEqual([]);
+      }
+    });
+
+    it('returns empty array for unknown bike type', () => {
+      const recs = BikeModelRecommender.getDefaultRecommendations('nonexistent' as BikeTypeId);
+      expect(recs).toEqual([]);
+    });
+
+    it('works for every bike type', () => {
+      const types: BikeTypeId[] = [
+        'regular-bike', 'commuter-ebike', 'cargo-bike',
+        'cargo-ebike', 'longtail-bike', 'longtail-ebike'
+      ];
+      for (const type of types) {
+        const recs = BikeModelRecommender.getDefaultRecommendations(type);
+        expect(recs.length).toBeGreaterThanOrEqual(1);
+        expect(recs[0].model).toBeTruthy();
+      }
     });
   });
 });
