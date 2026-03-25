@@ -128,6 +128,7 @@ import YourChoices from './YourChoices.vue';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
+import BikeModelRecommender from '../../services/BikeModelRecommender';
 
 const props = defineProps({
   type: { type: String, default: '' }
@@ -197,23 +198,6 @@ const progressPercent = computed(() => {
   return ((currentStep.value - 1) / TOTAL_STEPS) * 100;
 });
 
-// Determine if the user needs electric assistance - this basically means they are pulling a lot
-// (e.g. kids, adults, cargo) and are medium or below fitness, or it's windy or hilly
-const needsAssistance = computed(() => {
-  // For high fitness, needs assistance if transporting adults or hauling cargo on hills
-  if (fitnessLevel.value === 'high') {
-    return transportationNeeds.value.transportingAdults ||
-           (geography.value.hilly && needsCargo.value);
-  }
-
-  // Any high load is an issue if you're not very strong, suggest e-assist. They can always opt
-  // for a cheaper option
-  return (needsCargo.value && fitnessLevel.value !== 'high') ||
-         geography.value.windy ||
-         geography.value.hilly ||
-         fitnessLevel.value === 'low';
-});
-
 const savedChoices = ref([]);
 
 const ChoicesStorageKey = 'bikeAssessmentChoices';
@@ -260,12 +244,6 @@ function clearChoicesFromSession() {
   sessionStorage.removeItem(ChoicesStorageKey);
 }
 
-const needsCargo = computed(() => {
-  return transportationNeeds.value.cargo ||
-         transportationNeeds.value.transportingKids ||
-         transportationNeeds.value.transportingAdults;
-});
-
 // Methods
 function scrollToTop() {
   window.scrollTo({ top: 0 });
@@ -291,36 +269,15 @@ function goToStep(step) {
 }
 
 function calculateRecommendation() {
-  if (needsCargo.value) {
-    if (transportationNeeds.value.transportingKids || transportationNeeds.value.transportingAdults) {
-      // Longtail bike recommendation
-      if (needsAssistance.value) {
-        recommendation.value = 'longtail-ebike';
-      } else {
-        recommendation.value = 'longtail-bike';
-      }
-    } else if (needsAssistance.value) {
-      // Regular cargo bike recommendation
-      recommendation.value = 'cargo-ebike';
-    } else {
-      recommendation.value = 'cargo-bike';
-    }
-  } else {
-    if (needsAssistance.value) {
-      recommendation.value = 'commuter-ebike';
-    } else {
-      recommendation.value = 'regular-bike';
-    }
-  }
+  const recommender = new BikeModelRecommender({
+    transportationNeeds: transportationNeeds.value,
+    geography: geography.value,
+    fitnessLevel: fitnessLevel.value,
+    storage: storage.value
+  });
 
-  // Downgrade for storage constraints if needed
-  const idealType = bikeTypeDetails[recommendation.value];
-  if (storage.value === 'upper-floor' && idealType.bulky && idealType.storageDowngrade) {
-    idealBikeType.value = recommendation.value;
-    recommendation.value = idealType.storageDowngrade;
-  } else {
-    idealBikeType.value = null;
-  }
+  recommendation.value = recommender.bikeType;
+  idealBikeType.value = recommender.idealBikeType;
 
   // Set recommendation details
   setRecommendationDetails();

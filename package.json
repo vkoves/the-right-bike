@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender-og.js",
     "preview": "vite preview",
-    "screenshot-social": "node scripts/screenshot-social.js"
+    "screenshot-social": "node scripts/screenshot-social.js",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "puppeteer": "^24.40.0",
-    "sass": "^1.86.3"
+    "sass": "^1.86.3",
+    "vitest": "^2"
   }
 }
