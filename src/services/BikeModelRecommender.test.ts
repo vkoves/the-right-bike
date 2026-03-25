@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import BikeModelRecommender from './BikeModelRecommender';
-import type { AssessmentProfile, RecommendationTier } from '../types';
+import type { AssessmentProfile } from '../types';
 
 // Reusable profile factories
 function makeProfile(overrides: Partial<AssessmentProfile> = {}): AssessmentProfile {
@@ -195,26 +195,27 @@ describe('BikeModelRecommender', () => {
   // --- getRecommendations ---
 
   describe('getRecommendations', () => {
-    it('returns budget, midrange, and premium tiers', () => {
+    it('returns an array of up to 3 recommendations', () => {
       const r = new BikeModelRecommender(makeProfile());
       const recs = r.getRecommendations();
 
-      expect(recs).toHaveProperty('budget');
-      expect(recs).toHaveProperty('midrange');
-      expect(recs).toHaveProperty('premium');
+      expect(Array.isArray(recs)).toBe(true);
+      expect(recs.length).toBeGreaterThanOrEqual(1);
+      expect(recs.length).toBeLessThanOrEqual(3);
     });
 
-    it('each tier includes model, price, image, review, and reasons', () => {
+    it('each recommendation includes model, price, tier, image, review, and reasons', () => {
       const r = new BikeModelRecommender(makeProfile());
       const recs = r.getRecommendations();
 
-      for (const tier of ['budget', 'midrange', 'premium'] as const) {
-        expect(recs[tier]).toHaveProperty('model');
-        expect(recs[tier]).toHaveProperty('price');
-        expect(recs[tier]).toHaveProperty('image');
-        expect(recs[tier]).toHaveProperty('review');
-        expect(recs[tier]).toHaveProperty('reasons');
-        expect(Array.isArray(recs[tier].reasons)).toBe(true);
+      for (const rec of recs) {
+        expect(rec).toHaveProperty('model');
+        expect(rec).toHaveProperty('price');
+        expect(rec).toHaveProperty('tier');
+        expect(rec).toHaveProperty('image');
+        expect(rec).toHaveProperty('review');
+        expect(rec).toHaveProperty('reasons');
+        expect(Array.isArray(rec.reasons)).toBe(true);
       }
     });
 
@@ -231,9 +232,8 @@ describe('BikeModelRecommender', () => {
       for (const profile of profiles) {
         const r = new BikeModelRecommender(profile);
         const recs = r.getRecommendations();
-        expect(recs.budget.model).toBeTruthy();
-        expect(recs.midrange.model).toBeTruthy();
-        expect(recs.premium.model).toBeTruthy();
+        expect(recs.length).toBeGreaterThanOrEqual(1);
+        expect(recs[0].model).toBeTruthy();
       }
     });
 
@@ -245,8 +245,8 @@ describe('BikeModelRecommender', () => {
       }));
       const recs = r.getRecommendations();
 
-      for (const tier of ['budget', 'midrange', 'premium'] as const) {
-        expect(recs[tier].reasons.length).toBeGreaterThanOrEqual(1);
+      for (const rec of recs) {
+        expect(rec.reasons.length).toBeGreaterThanOrEqual(1);
       }
     });
   });
@@ -264,51 +264,12 @@ describe('BikeModelRecommender', () => {
       expect(pick).toHaveProperty('reasons');
     });
 
-    it('pick matches one of the tiers from getRecommendations', () => {
+    it('top pick is the first recommendation', () => {
       const r = new BikeModelRecommender(makeCargoProfile());
       const recs = r.getRecommendations();
       const pick = r.getTopPick();
 
-      expect(pick.model).toBe(recs[pick.tier].model);
-    });
-
-    it('defaults to midrange for a typical profile', () => {
-      const r = new BikeModelRecommender(makeProfile());
-      const pick = r.getTopPick();
-      expect(pick.tier).toBe('midrange');
-    });
-
-    it('favours premium for low fitness + hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        fitnessLevel: 'low',
-        geography: { hilly: true, windy: false, flat: false }
-      }));
-      const pick = r.getTopPick();
-      expect(pick.tier).toBe('premium');
-    });
-  });
-
-  // --- scoreModel ---
-
-  describe('scoreModel', () => {
-    it('returns a number', () => {
-      const r = new BikeModelRecommender(makeProfile());
-      const score = r.scoreModel({} as any);
-      expect(typeof score).toBe('number');
-    });
-
-    it('scores midrange higher than budget for a typical profile', () => {
-      const r = new BikeModelRecommender(makeProfile());
-      const mid = r.scoreModel({}, 'midrange');
-      const budget = r.scoreModel({}, 'budget');
-      expect(mid).toBeGreaterThan(budget);
-    });
-
-    it('boosts premium for low fitness', () => {
-      const r = new BikeModelRecommender(makeProfile({ fitnessLevel: 'low' }));
-      const premium = r.scoreModel({}, 'premium');
-      const mid = r.scoreModel({}, 'midrange');
-      expect(premium).toBeGreaterThan(mid);
+      expect(pick.model).toBe(recs[0].model);
     });
   });
 
@@ -318,7 +279,7 @@ describe('BikeModelRecommender', () => {
     it('mentions kids when transporting kids', () => {
       const r = new BikeModelRecommender(makeLongtailProfile());
       const recs = r.getRecommendations();
-      expect(recs.budget.reasons).toContain('Suited for carrying kids');
+      expect(recs[0].reasons).toContain('Suited for carrying kids');
     });
 
     it('mentions adults when transporting adults', () => {
@@ -329,7 +290,7 @@ describe('BikeModelRecommender', () => {
         }
       }));
       const recs = r.getRecommendations();
-      expect(recs.budget.reasons).toContain('Can carry adult passengers');
+      expect(recs[0].reasons).toContain('Can carry adult passengers');
     });
 
     it('mentions hilly terrain', () => {
@@ -337,7 +298,7 @@ describe('BikeModelRecommender', () => {
         geography: { hilly: true, windy: false, flat: false }
       }));
       const recs = r.getRecommendations();
-      expect(recs.budget.reasons).toContain('Handles hilly terrain');
+      expect(recs[0].reasons).toContain('Handles hilly terrain');
     });
 
     it('mentions storage downgrade', () => {
@@ -346,42 +307,57 @@ describe('BikeModelRecommender', () => {
         storage: 'upper-floor'
       }));
       const recs = r.getRecommendations();
-      expect(recs.budget.reasons).toContain('Compact enough for upper-floor storage');
+      expect(recs[0].reasons).toContain('Compact enough for upper-floor storage');
     });
 
     it('mentions commuting for solo commuter with no cargo', () => {
       const r = new BikeModelRecommender(makeProfile());
       const recs = r.getRecommendations();
-      expect(recs.budget.reasons).toContain('Great for daily commuting');
+      expect(recs[0].reasons).toContain('Great for daily commuting');
     });
 
     it('mentions no motor needed for high fitness non-electric', () => {
       const r = new BikeModelRecommender(makeProfile({ fitnessLevel: 'high' }));
       const recs = r.getRecommendations();
-      expect(recs.budget.reasons).toContain('No motor needed at your fitness level');
+      expect(recs[0].reasons).toContain('No motor needed at your fitness level');
+    });
+
+    it('mentions lightweight prioritized for upper-floor storage', () => {
+      const r = new BikeModelRecommender(makeProfile({ storage: 'upper-floor' }));
+      const recs = r.getRecommendations();
+      expect(recs[0].reasons).toContain('Lightweight options prioritized for carrying upstairs');
+    });
+
+    it('mentions single-speed excluded on hilly terrain', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: true, windy: false, flat: false }
+      }));
+      const recs = r.getRecommendations();
+      expect(recs[0].reasons).toContain('Single-speed bikes excluded — not suited for hills');
     });
   });
 
-  // --- Model filtering ---
+  // --- Model filtering and scoring ---
 
-  describe('model filtering', () => {
+  describe('model filtering and scoring', () => {
     it('excludes singleSpeed models on hilly terrain', () => {
       const r = new BikeModelRecommender(makeProfile({
         fitnessLevel: 'high',
         geography: { hilly: true, windy: false, flat: false }
       }));
       const recs = r.getRecommendations();
-      expect(recs.budget.singleSpeed).toBeFalsy();
+      for (const rec of recs) {
+        expect(rec.singleSpeed).toBeFalsy();
+      }
     });
 
-    it('allows notForHills models on flat terrain', () => {
+    it('allows singleSpeed models on flat terrain', () => {
       const r = new BikeModelRecommender(makeProfile({
         fitnessLevel: 'high',
         geography: { hilly: false, windy: false, flat: true }
       }));
       const recs = r.getRecommendations();
-      // On flat terrain, all budget models are candidates — the first or best is picked
-      expect(recs.budget.model).toBeTruthy();
+      expect(recs[0].model).toBeTruthy();
     });
 
     it('prefers lightweight models for upper-floor storage', () => {
@@ -390,9 +366,30 @@ describe('BikeModelRecommender', () => {
         storage: 'upper-floor'
       }));
       const recs = r.getRecommendations();
-      // Brompton is lightweight and should be preferred for upper-floor
-      expect(recs.premium.model).toContain('Brompton');
-      expect(recs.premium.lightweight).toBe(true);
+      // At least the top pick should be lightweight when available
+      expect(recs.some(rec => rec.lightweight)).toBe(true);
+    });
+
+    it('deprioritizes lightweight models on hilly terrain', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: true, windy: false, flat: false }
+      }));
+      const recs = r.getRecommendations();
+      // Top pick should not be lightweight on hills (heavier-duty preferred)
+      expect(recs[0].lightweight).toBeFalsy();
+    });
+
+    it('shows non-lightweight regular bikes with garage storage', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        fitnessLevel: 'high',
+        storage: 'garage'
+      }));
+      const recs = r.getRecommendations();
+      // With garage storage, non-lightweight bikes should rank above lightweight ones
+      // Gazelle (midrange) and Retrospec (budget) should rank above Brompton/Priority
+      const models = recs.map(rec => rec.model);
+      expect(models).toContain('Gazelle Tour Populair');
+      expect(models).toContain('Retrospec Beaumont City Bike');
     });
   });
 });

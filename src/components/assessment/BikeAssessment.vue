@@ -94,6 +94,7 @@
             :costs="costs"
             :all-bike-types="bikeTypeDetails"
             :selected-bike-type="recommendation"
+            :profile="assessmentProfile"
             @bike-change="handleBikeChange"
             @update:savings="stickysavings = $event"
             @update:car-label="stickyCarLabel = $event"
@@ -129,7 +130,7 @@ import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
-import type { BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
+import type { AssessmentProfile, BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
 
 const props = defineProps({
   type: { type: String, default: '' }
@@ -183,6 +184,17 @@ const costs: CostComparison = reactive({
     fuel: CAR_COSTS.fuel,
     insurance: CAR_COSTS.insurance
   }
+});
+
+// Build the full assessment profile for passing to child components
+const assessmentProfile = computed<AssessmentProfile | null>(() => {
+  if (!fitnessLevel.value || !storage.value) return null;
+  return {
+    transportationNeeds: transportationNeeds.value,
+    geography: geography.value,
+    fitnessLevel: fitnessLevel.value as FitnessLevel,
+    storage: storage.value as StorageType
+  };
 });
 
 // All bike type details — sourced from the single constant, not duplicated here

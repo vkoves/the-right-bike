@@ -83,6 +83,7 @@ export type RecommendationTier = 'budget' | 'midrange' | 'premium';
 export interface BikeModel {
   model: string;
   price: string;
+  tier: RecommendationTier;
   image: string;
   review: string;
   singleSpeed?: boolean;
@@ -94,18 +95,7 @@ export interface BikeModelWithReasons extends BikeModel {
   reasons: string[];
 }
 
-export interface TieredRecommendations {
-  budget: BikeModelWithReasons;
-  midrange: BikeModelWithReasons;
-  premium: BikeModelWithReasons;
-}
-
-/** Raw data shape: arrays of candidates per tier, before filtering */
-export type BikeModelCatalog = Record<BikeTypeId, Record<RecommendationTier, BikeModel[]>>;
-
-export interface TopPick extends BikeModelWithReasons {
-  tier: RecommendationTier;
-}
+export interface TopPick extends BikeModelWithReasons {}
 
 // --- Assessment Options (assessmentOptions.ts) ---
 export interface AssessmentOption {

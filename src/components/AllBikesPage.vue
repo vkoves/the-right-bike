@@ -3,17 +3,14 @@
     <h1>All Bike Recommendations</h1>
     <p class="debug-note">Debug page — all specific bike model recommendations at a glance.</p>
 
-    <div v-for="(recs, typeKey) in BikeRecommendations" :key="typeKey" class="bike-group">
+    <div v-for="(bikes, typeKey) in BikeRecommendations" :key="typeKey" class="bike-group">
       <h2>{{ BikeTypes[typeKey].title }}</h2>
       <div class="tiers">
-        <template v-for="tier in tiers" :key="tier">
-          <bike-model-card
-            v-for="(bike, i) in recs[tier]"
-            :key="`${tier}-${i}`"
-            :bike="bike"
-            :tier="tier"
-          />
-        </template>
+        <bike-model-card
+          v-for="(bike, i) in bikes"
+          :key="i"
+          :bike="bike"
+        />
       </div>
     </div>
   </div>
@@ -23,9 +20,6 @@
 import { BikeRecommendations } from '../constants/bike-recommendations';
 import { BikeTypes } from '../constants/bikeTypes';
 import BikeModelCard from './assessment/BikeModelCard.vue';
-import type { RecommendationTier } from '../types';
-
-const tiers: RecommendationTier[] = ['budget', 'midrange', 'premium'];
 </script>
 
 <style lang="scss" scoped>

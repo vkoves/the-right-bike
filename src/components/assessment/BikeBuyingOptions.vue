@@ -1,17 +1,21 @@
 <template>
-  <div class="buying-options" v-if="options">
+  <div class="buying-options" v-if="recommendations && recommendations.length">
     <h3>Some Potential Options</h3>
     <p class="buying-subtitle">
       Here's some specific models to consider at different price points! Use this as a starting
       point, we're not recommending any specific model.
     </p>
 
+    <p v-if="lightweightHillsWarning" class="buying-warning">
+      ⚠️ We're showing lightweight bikes since you need to carry yours upstairs, but lighter
+      e-bikes may have less powerful motors — consider test-riding on hills before buying.
+    </p>
+
     <div class="tiers">
       <bike-model-card
-        v-for="tier in tiers"
-        :key="tier"
-        :bike="options[tier][0]"
-        :tier="tier"
+        v-for="(bike, i) in recommendations"
+        :key="i"
+        :bike="bike"
       />
     </div>
   </div>
@@ -20,16 +24,34 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { BikeRecommendations } from '../../constants/bike-recommendations';
+import BikeModelRecommender from '../../services/BikeModelRecommender';
 import BikeModelCard from './BikeModelCard.vue';
-import type { BikeTypeId, RecommendationTier } from '../../types';
+import type { AssessmentProfile, BikeTypeId, BikeModelWithReasons } from '../../types';
 
 const props = defineProps({
-  bikeType: { type: String, required: true }
+  bikeType: { type: String, required: true },
+  profile: { type: Object as () => AssessmentProfile | null, default: null }
 });
 
-const tiers: RecommendationTier[] = ['budget', 'midrange', 'premium'];
+const recommendations = computed<BikeModelWithReasons[] | null>(() => {
+  if (props.profile) {
+    const recommender = new BikeModelRecommender(props.profile);
+    return recommender.getRecommendations();
+  }
 
-const options = computed(() => BikeRecommendations[props.bikeType as BikeTypeId] || null);
+  // Fallback: no profile available, show first 3 models
+  const allModels = BikeRecommendations[props.bikeType as BikeTypeId];
+  if (!allModels) return null;
+
+  return allModels.slice(0, 3).map(m => ({ ...m, reasons: [] }));
+});
+
+const lightweightHillsWarning = computed(() => {
+  if (!props.profile || !recommendations.value) return false;
+  return props.profile.geography.hilly &&
+    props.profile.storage === 'upper-floor' &&
+    recommendations.value.some(r => r.lightweight);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -50,6 +72,18 @@ const options = computed(() => BikeRecommendations[props.bikeType as BikeTypeId]
   color: vars.$text-secondary;
   font-weight: 600;
   margin-bottom: 1.5rem;
+}
+
+.buying-warning {
+  background-color: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: vars.$border-radius;
+  color: vars.$text-body;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
 .tiers {

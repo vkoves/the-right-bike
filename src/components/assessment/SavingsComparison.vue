@@ -103,7 +103,7 @@
 
     <savings-faq-section v-if="!alreadyOwnsCar" :savings-amount="savingsAmount" />
 
-    <bike-buying-options id="buying-options" :bike-type="displayedBikeType" />
+    <bike-buying-options id="buying-options" :bike-type="displayedBikeType" :profile="profile" />
 
     <div class="local-shops">
       <div class="local-shops-icon">🏪</div>
@@ -170,7 +170,7 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
-import type { BikeTypeId } from '../../types';
+import type { AssessmentProfile, BikeTypeId } from '../../types';
 
 import CostComparisonTable from './CostComparisonTable.vue';
 import SavingsFaqSection from './SavingsFaqSection.vue';
@@ -204,6 +204,11 @@ const props = defineProps({
     type: Object,
     required: false,
     default: () => BikeTypes
+  },
+  profile: {
+    type: Object as () => AssessmentProfile | null,
+    required: false,
+    default: null
   }
 });
 

@@ -1,7 +1,7 @@
 <template>
   <a
     class="tier-card"
-    :class="tier"
+    :class="bike.tier"
     :href="bike.review"
     target="_blank"
     rel="noopener noreferrer"
@@ -35,11 +35,10 @@ const TierLabels: Record<string, string> = {
 };
 
 const props = defineProps({
-  bike: { type: Object, required: true },
-  tier: { type: String, required: true }
+  bike: { type: Object, required: true }
 });
 
-const tierLabel = TierLabels[props.tier] || props.tier;
+const tierLabel = TierLabels[props.bike.tier] || props.bike.tier;
 </script>
 
 <style lang="scss" scoped>
