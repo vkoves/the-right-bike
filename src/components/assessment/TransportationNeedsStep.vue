@@ -13,7 +13,12 @@
         @click="toggleNeed(key)"
         :aria-pressed="modelValue[key].toString()"
       >
-        <div class="option-icon">{{ opt.icon }}</div>
+        <div class="option-icon">
+          <template v-if="Array.isArray(opt.icon)">
+            <span v-for="(emoji, i) in opt.icon" :key="i" :class="{ 'icon-extra': i > 0 }">{{ emoji }}</span>
+          </template>
+          <template v-else>{{ opt.icon }}</template>
+        </div>
         <div class="option-content">
           <div class="option-label">{{ opt.label }}</div>
           <div class="option-description">{{ opt.description }}</div>
@@ -69,6 +74,11 @@ function toggleNeed(need: string) {
 
 .option-icon {
   flex-shrink: 0;
+
+  .icon-extra {
+    margin-left: 0.25rem;
+    font-size: 0.95em;
+  }
 }
 
 .option-description {

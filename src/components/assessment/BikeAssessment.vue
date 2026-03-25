@@ -212,25 +212,31 @@ const savedChoices = ref<ChoiceGroup[]>([]);
 
 const ChoicesStorageKey = 'bikeAssessmentChoices';
 
+function flatIcon(icon: string | string[]): string {
+  return Array.isArray(icon) ? icon.join('') : icon;
+}
+
 function buildChoicesSummary(): ChoiceGroup[] {
   const groups: ChoiceGroup[] = [];
 
   const needs = transportationNeeds.value;
-  const needPills = (Object.keys(needs) as (keyof TransportationNeeds)[]).filter(k => needs[k]).map(k => ({ icon: TransportationNeedOptions[k].icon, label: TransportationNeedOptions[k].label }));
+  const needPills = (Object.keys(needs) as (keyof TransportationNeeds)[]).filter(k => needs[k]).map(k => {
+    return { icon: flatIcon(TransportationNeedOptions[k].icon), label: TransportationNeedOptions[k].label };
+  });
   if (needPills.length) groups.push({ category: 'Needs', step: 1, pills: needPills });
 
   const geo = geography.value;
-  const geoPills = (Object.keys(geo) as (keyof Geography)[]).filter(k => geo[k]).map(k => ({ icon: GeographyOptions[k].icon, label: GeographyOptions[k].label }));
+  const geoPills = (Object.keys(geo) as (keyof Geography)[]).filter(k => geo[k]).map(k => ({ icon: flatIcon(GeographyOptions[k].icon), label: GeographyOptions[k].label }));
   if (geoPills.length) groups.push({ category: 'Geography', step: 2, pills: geoPills });
 
   if (fitnessLevel.value) {
     const opt = FitnessOptions[fitnessLevel.value];
-    groups.push({ category: 'Fitness', step: 3, pills: [{ icon: opt.icon, label: opt.label }] });
+    groups.push({ category: 'Fitness', step: 3, pills: [{ icon: flatIcon(opt.icon), label: opt.label }] });
   }
 
   if (storage.value) {
     const opt = StorageOptions[storage.value];
-    groups.push({ category: 'Storage', step: 4, pills: [{ icon: opt.icon, label: opt.label }] });
+    groups.push({ category: 'Storage', step: 4, pills: [{ icon: flatIcon(opt.icon), label: opt.label }] });
   }
 
   return groups;

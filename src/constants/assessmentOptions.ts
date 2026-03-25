@@ -7,9 +7,9 @@ export const TransportationNeedOptions: Record<string, AssessmentOption> = {
     description: 'Daily commuting, including light cargo'
   },
   cargo: {
-    label: 'Big Cargo',
-    icon: '📦',
-    description: 'Carrying large amounts of groceries or goods'
+    label: 'Heavy Cargo / Pets',
+    icon: ['📦', '🐕'],
+    description: 'Carrying large amounts of groceries, goods, or pets'
   },
   transportingKids: {
     label: 'Transporting Kids',

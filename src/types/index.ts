@@ -101,7 +101,7 @@ export interface TopPick extends BikeModelWithReasons {}
 // --- Assessment Options (assessmentOptions.ts) ---
 export interface AssessmentOption {
   label: string;
-  icon: string;
+  icon: string | string[];
   description?: string;
 }
 
