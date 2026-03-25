@@ -45,14 +45,14 @@ export const BikeRecommendations: Record<BikeTypeId, Record<RecommendationTier, 
         model: 'Velotric T1 ST Plus',
         price: '$1,299',
         image: '/images/bike-models/velotric-t1-st-plus.webp',
-        review: 'https://www.velotricbike.com/products/velotric-t1st-ebike',
+        review:'https://electricbikereport.com/velotric-t1-st-review',
         lightweight: true
       },
       {
         model: 'REI Co-op Cycles CTY e2.1',
         price: '$1,799',
         image: '/images/bike-models/rei-cty-e21.webp',
-        review: 'https://www.rei.com/product/198781/co-op-cycles-cty-e21-electric-bike#product-reviews'
+        review: 'https://www.wired.com/review/rei-cty-e21/'
       }
     ],
     midrange: [
@@ -61,8 +61,7 @@ export const BikeRecommendations: Record<BikeTypeId, Record<RecommendationTier, 
         price: '$1,395',
         image: '/images/bike-models/ride1up-roadster-v3.webp',
         review: 'https://electricbikereview.com/ride1up/roadster-v3-st-review/',
-        lightweight: true,
-        singleSpeed: true
+        lightweight: true
       },
       {
         model: 'Specialized Haul ST',
