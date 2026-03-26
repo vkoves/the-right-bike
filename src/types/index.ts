@@ -17,6 +17,7 @@ export interface BikeType {
   electric: boolean;
   bulky: boolean;
   storageDowngrade?: BikeTypeId;
+  similarTypes?: BikeTypeId[];
   description: string;
   features: string[];
   priceRange: string;

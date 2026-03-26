@@ -135,7 +135,7 @@
           <div class="bike-option original-option active">
             <div class="bike-option-image">
               <img :src="bikeImage" :alt="bikeTitle">
-              <div v-if="selectedBikeType && selectedBikeType.includes('ebike')" class="electric-badge">⚡ Electric</div>
+              <div v-if="selectedBikeType && allBikeTypes[selectedBikeType]?.electric" class="electric-badge">⚡ Electric</div>
             </div>
             <div class="bike-option-details">
               <div class="recommendation-pill">Your Recommendation</div>
@@ -151,7 +151,7 @@
                :class="{ 'active': comparisonBike === type.value }">
             <div class="bike-option-image">
               <img :src="allBikeTypes[type.value].image" :alt="type.label">
-              <div v-if="type.value.includes('ebike')" class="electric-badge">⚡ Electric</div>
+              <div v-if="allBikeTypes[type.value]?.electric" class="electric-badge">⚡ Electric</div>
             </div>
             <div class="bike-option-details">
               <h4>{{ type.label }}</h4>
@@ -345,13 +345,24 @@ const recommendationType = computed(() => {
 // Generate list of available bike types for comparison
 const availableBikeTypes = computed(() => {
   const currentType = recommendationType.value;
+  const similarTypes = currentType ?
+    BikeTypes[currentType as BikeTypeId]?.similarTypes ?? [] : [];
 
   return Object.entries(props.allBikeTypes)
     .filter(([key]) => key !== currentType)
     .map(([key, value]) => ({
       value: key,
       label: value.label || value.title
-    }));
+    }))
+    .sort((a, b) => {
+      const aIndex = similarTypes.indexOf(a.value as BikeTypeId);
+      const bIndex = similarTypes.indexOf(b.value as BikeTypeId);
+      // Similar types first (by their order in the array), then the rest
+      if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+      if (aIndex !== -1) return -1;
+      if (bIndex !== -1) return 1;
+      return 0;
+    });
 });
 
 // The bike type currently shown — comparison selection takes priority over the recommendation
