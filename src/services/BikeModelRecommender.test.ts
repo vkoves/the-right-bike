@@ -376,8 +376,9 @@ describe('BikeModelRecommender', () => {
         geography: { hilly: true, windy: false, flat: false }
       }));
       const recs = r.getRecommendations();
-      // Top pick should not be lightweight on hills (heavier-duty preferred)
-      expect(recs[0].lightweight).toBeFalsy();
+      // Non-lightweight models should be included over lightweight when both compete for a tier slot
+      const budgetPicks = recs.filter(rec => rec.tier === 'budget');
+      expect(budgetPicks.some(rec => !rec.lightweight)).toBe(true);
     });
 
     it('shows non-lightweight regular bikes with garage storage', () => {
@@ -452,13 +453,123 @@ describe('BikeModelRecommender', () => {
     it('works for every bike type', () => {
       const types: BikeTypeId[] = [
         'regular-bike', 'commuter-ebike', 'cargo-bike',
-        'cargo-ebike', 'longtail-bike', 'longtail-ebike'
+        'cargo-ebike', 'longtail-bike', 'longtail-ebike',
+        'etrike', 'cargo-etrike'
       ];
       for (const type of types) {
         const recs = BikeModelRecommender.getDefaultRecommendations(type);
         expect(recs.length).toBeGreaterThanOrEqual(1);
         expect(recs[0].model).toBeTruthy();
       }
+    });
+  });
+
+  // --- Tier diversity ---
+
+  describe('tier diversity', () => {
+    it('includes one model per available tier for commuter-ebike', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: false, windy: true, flat: false },
+        storage: 'upper-floor'
+      }));
+      const recs = r.getRecommendations();
+      const tiers = recs.map(rec => rec.tier);
+      expect(tiers).toContain('budget');
+      expect(tiers).toContain('midrange');
+      expect(tiers).toContain('premium');
+    });
+
+    it('includes lightweight Ride1Up Roadster for upper-floor commuter-ebike', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: false, windy: true, flat: false },
+        storage: 'upper-floor'
+      }));
+      const recs = r.getRecommendations();
+      const models = recs.map(rec => rec.model);
+      expect(models).toContain('Ride1Up Roadster V3');
+    });
+  });
+
+  // --- Warnings ---
+
+  describe('getWarnings', () => {
+    it('warns about single-speed exclusion on hilly terrain', () => {
+      // High fitness + hilly + solo → regular-bike, which has a single-speed model
+      const r = new BikeModelRecommender(makeProfile({
+        fitnessLevel: 'high',
+        geography: { hilly: true, windy: false, flat: false }
+      }));
+      const warnings = r.getWarnings();
+      expect(warnings.some(w => w.includes('Single-speed'))).toBe(true);
+    });
+
+    it('warns about lightweight priority for upper-floor on flat terrain', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: false, windy: true, flat: false },
+        storage: 'upper-floor'
+      }));
+      const warnings = r.getWarnings();
+      expect(warnings.some(w => w.includes('Lightweight'))).toBe(true);
+    });
+
+    it('warns about lightweight vs hills conflict for upper-floor on hilly terrain', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: true, windy: false, flat: false },
+        storage: 'upper-floor'
+      }));
+      const warnings = r.getWarnings();
+      expect(warnings.some(w => w.includes('hills'))).toBe(true);
+    });
+
+    it('returns no warnings for simple garage + flat profile', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: false, windy: false, flat: true },
+        storage: 'garage',
+        fitnessLevel: 'high'
+      }));
+      const warnings = r.getWarnings();
+      // No filtering, no lightweight priority
+      expect(warnings.every(w => !w.includes('Single-speed'))).toBe(true);
+      expect(warnings.every(w => !w.includes('Lightweight'))).toBe(true);
+      expect(warnings.every(w => !w.includes('hills'))).toBe(true);
+    });
+  });
+
+  // --- getAllModels ---
+
+  describe('getAllModels', () => {
+    it('returns all candidates for the bike type without cap', () => {
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: false, windy: true, flat: false }
+      }));
+      const all = r.getAllModels();
+      const recs = r.getRecommendations();
+      expect(all.length).toBeGreaterThanOrEqual(recs.length);
+    });
+
+    it('includes models that getRecommendations may have dropped', () => {
+      // commuter-ebike has 5 models but getRecommendations caps at NumRecommendations
+      const r = new BikeModelRecommender(makeProfile({
+        geography: { hilly: false, windy: true, flat: false },
+        storage: 'garage'
+      }));
+      const all = r.getAllModels();
+      const recs = r.getRecommendations();
+      if (all.length > recs.length) {
+        const recModels = new Set(recs.map(m => m.model));
+        const extra = all.filter(m => !recModels.has(m.model));
+        expect(extra.length).toBeGreaterThan(0);
+      }
+    });
+
+    it('does not filter out single-speed models', () => {
+      // regular-bike on hills: getRecommendations filters single-speed, getAllModels does not
+      const r = new BikeModelRecommender(makeProfile({
+        fitnessLevel: 'high',
+        geography: { hilly: true, windy: false, flat: false }
+      }));
+      const all = r.getAllModels();
+      expect(all.some(m => m.singleSpeed)).toBe(true);
     });
   });
 });

@@ -19,7 +19,7 @@ const props = defineProps({
 const showCopied = ref(false);
 
 async function copyAnchorLink() {
-  const url = window.location.origin + window.location.pathname + '#' + props.anchor;
+  const url = window.location.origin + window.location.pathname + window.location.search + '#' + props.anchor;
   try {
     await navigator.clipboard.writeText(url);
     showCopied.value = true;

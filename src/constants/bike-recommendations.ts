@@ -70,7 +70,6 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       image: '/images/bike-models/ride1up-roadster-v3.webp',
       review: 'https://electricbikereview.com/ride1up/roadster-v3-st-review/',
       lightweight: true,
-      singleSpeed: true
     },
     {
       model: 'Specialized Haul ST',

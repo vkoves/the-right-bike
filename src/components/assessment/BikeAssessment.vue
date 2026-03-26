@@ -131,6 +131,7 @@ import { CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes, DefaultBikeCosts } from '../../constants/bikeTypes';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
+import { encodeProfile, decodeProfile } from '../../services/AssessmentForm';
 import type { AssessmentProfile, BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
 
 const props = defineProps({
@@ -214,6 +215,7 @@ const progressPercent = computed(() => {
 const savedChoices = ref<ChoiceGroup[]>([]);
 
 const ChoicesStorageKey = 'bikeAssessmentChoices';
+const ProfileStorageKey = 'bikeAssessmentProfile';
 
 function flatIcon(icon: string | string[]): string {
   return Array.isArray(icon) ? icon.join('') : icon;
@@ -249,6 +251,10 @@ function saveChoicesToSession() {
   const choices = buildChoicesSummary();
   savedChoices.value = choices;
   sessionStorage.setItem(ChoicesStorageKey, JSON.stringify(choices));
+
+  if (assessmentProfile.value) {
+    sessionStorage.setItem(ProfileStorageKey, JSON.stringify(assessmentProfile.value));
+  }
 }
 
 function loadChoicesFromSession() {
@@ -256,11 +262,24 @@ function loadChoicesFromSession() {
     const stored = sessionStorage.getItem(ChoicesStorageKey);
     if (stored) savedChoices.value = JSON.parse(stored);
   } catch { /* ignore */ }
+
+  try {
+    const stored = sessionStorage.getItem(ProfileStorageKey);
+    if (stored) {
+      const profile = JSON.parse(stored) as AssessmentProfile;
+      transportationNeeds.value = profile.transportationNeeds;
+      geography.value = profile.geography;
+      fitnessLevel.value = profile.fitnessLevel;
+      prefersStability.value = profile.prefersStability;
+      storage.value = profile.storage;
+    }
+  } catch { /* ignore */ }
 }
 
 function clearChoicesFromSession() {
   savedChoices.value = [];
   sessionStorage.removeItem(ChoicesStorageKey);
+  sessionStorage.removeItem(ProfileStorageKey);
 }
 
 // Methods
@@ -357,7 +376,9 @@ function handleBikeChange(bikeType: BikeTypeId | null) {
 
 // Function to update URL with bike recommendation
 function updateUrlWithRecommendation(bikeType: BikeTypeId) {
-  const query = idealBikeType.value ? { ideal: idealBikeType.value } : {};
+  const query: Record<string, string> = {};
+  if (idealBikeType.value) query.ideal = idealBikeType.value;
+  if (assessmentProfile.value) query.form = encodeProfile(assessmentProfile.value);
   router.replace({ name: 'BikeResult', params: { type: bikeType }, query });
 }
 
@@ -434,6 +455,19 @@ onMounted(() => {
     const idealParam = route.query.ideal;
     if (typeof idealParam === 'string' && Object.keys(bikeTypeDetails).includes(idealParam)) {
       idealBikeType.value = idealParam as BikeTypeId;
+    }
+
+    // Restore profile from query param, falling back to session storage
+    const formParam = route.query.form;
+    if (typeof formParam === 'string') {
+      const profile = decodeProfile(formParam);
+      if (profile) {
+        transportationNeeds.value = profile.transportationNeeds;
+        geography.value = profile.geography;
+        fitnessLevel.value = profile.fitnessLevel;
+        prefersStability.value = profile.prefersStability;
+        storage.value = profile.storage;
+      }
     }
 
     // Restore choices from session if available

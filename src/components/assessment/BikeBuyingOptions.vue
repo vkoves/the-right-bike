@@ -1,29 +1,36 @@
 <template>
-  <div class="buying-options" v-if="recommendations && recommendations.length">
+  <div class="buying-options" v-if="visibleModels && visibleModels.length">
     <h3 id="options">Some Potential Options <anchor-copy-button anchor="options" /></h3>
     <p class="buying-subtitle">
       <strong>Here's some specific models to consider at different price points!</strong> <br>
       Use these as a starting point, we not recommending any specific models.
     </p>
 
-    <p v-if="lightweightHillsWarning" class="buying-warning">
-      ⚠️ We're showing lightweight bikes since you need to carry yours upstairs, but lighter
-      e-bikes may have less powerful motors — consider test-riding on hills before buying.
+    <p v-for="(warning, i) in warnings" :key="i" class="buying-warning">
+      <strong>Note:</strong> {{ warning }}
     </p>
 
     <div class="tiers">
       <bike-model-card
-        v-for="(bike, i) in recommendations"
-        :key="i"
+        v-for="bike in visibleModels"
+        :key="bike.model"
         :bike="bike"
         :electric="BikeTypes[bikeType as BikeTypeId]?.electric ?? false"
       />
     </div>
+
+    <button
+      v-if="!showAll && hasMore"
+      class="view-all-btn"
+      @click="showAll = true"
+    >
+      View All {{ BikeTypes[bikeType as BikeTypeId]?.label }} Models
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
 import { BikeTypes } from '../../constants/bikeTypes';
 import AnchorCopyButton from '../AnchorCopyButton.vue';
@@ -35,21 +42,33 @@ const props = defineProps({
   profile: { type: Object as () => AssessmentProfile | null, default: null }
 });
 
-const recommendations = computed<BikeModelWithReasons[] | null>(() => {
-  if (props.profile) {
-    const recommender = new BikeModelRecommender(props.profile);
-    return recommender.getRecommendations();
-  }
+const showAll = ref(false);
 
+const recommender = computed(() =>
+  props.profile ? new BikeModelRecommender(props.profile) : null
+);
+
+const recommendations = computed<BikeModelWithReasons[] | null>(() => {
+  if (recommender.value) return recommender.value.getRecommendations();
   return BikeModelRecommender.getDefaultRecommendations(props.bikeType as BikeTypeId);
 });
 
-const lightweightHillsWarning = computed(() => {
-  if (!props.profile || !recommendations.value) return false;
-  return props.profile.geography.hilly &&
-    props.profile.storage === 'upper-floor' &&
-    recommendations.value.some(r => r.lightweight);
+const allModels = computed<BikeModelWithReasons[] | null>(() => {
+  if (recommender.value) return recommender.value.getAllModels();
+  return BikeModelRecommender.getDefaultRecommendations(props.bikeType as BikeTypeId);
 });
+
+const visibleModels = computed(() =>
+  showAll.value ? allModels.value : recommendations.value
+);
+
+const hasMore = computed(() =>
+  (allModels.value?.length ?? 0) > (recommendations.value?.length ?? 0)
+);
+
+const warnings = computed(() =>
+  recommender.value ? recommender.value.getWarnings() : []
+);
 </script>
 
 <style lang="scss" scoped>
@@ -72,12 +91,11 @@ const lightweightHillsWarning = computed(() => {
 }
 
 .buying-warning {
-  background-color: #fff8e1;
-  border: 1px solid #ffe082;
+  background-color: vars.$secondary-light;
+  border: 1px solid vars.$secondary;
   border-radius: vars.$border-radius;
   color: vars.$text-body;
   font-size: 0.9rem;
-  font-weight: 600;
   padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
   text-align: left;
@@ -87,6 +105,24 @@ const lightweightHillsWarning = computed(() => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.25rem;
+}
+
+.view-all-btn {
+  margin-top: 1.25rem;
+  padding: 0.6rem 1.5rem;
+  background-color: vars.$lightest-gray;
+  color: vars.$text-secondary;
+  border: 2px solid vars.$lighter-gray;
+  border-radius: vars.$border-radius-lg;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    border-color: vars.$primary;
+    color: vars.$primary;
+  }
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
