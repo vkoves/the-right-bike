@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
 import { BikeTypes } from '../../constants/bikeTypes';
 import AnchorCopyButton from '../AnchorCopyButton.vue';
@@ -43,9 +43,12 @@ const props = defineProps({
 });
 
 const showAll = ref(false);
+watch(() => props.bikeType, () => { showAll.value = false; });
 
 const recommender = computed(() =>
-  props.profile ? new BikeModelRecommender(props.profile) : null
+  props.profile
+    ? new BikeModelRecommender(props.bikeType as BikeTypeId, props.profile)
+    : null
 );
 
 const recommendations = computed<BikeModelWithReasons[] | null>(() => {

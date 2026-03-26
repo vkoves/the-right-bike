@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import BikeModelRecommender, { NumRecommendations } from './BikeModelRecommender';
+import BikeTypeRecommender from './BikeTypeRecommender';
 import type { AssessmentProfile, BikeTypeId } from '../types';
 
 // Reusable profile factories
@@ -43,161 +44,18 @@ function makeLongtailProfile(overrides: Partial<AssessmentProfile> = {}): Assess
   });
 }
 
+// Helper: determine type then create a model recommender with it
+function makeRecommender(profile: AssessmentProfile): BikeModelRecommender {
+  const { bikeType } = new BikeTypeRecommender(profile);
+  return new BikeModelRecommender(bikeType, profile);
+}
+
 describe('BikeModelRecommender', () => {
-  // --- Bike type determination ---
-
-  describe('bike type determination', () => {
-    it('recommends regular-bike for solo commuter, flat, medium fitness', () => {
-      const r = new BikeModelRecommender(makeProfile());
-      expect(r.bikeType).toBe('regular-bike');
-    });
-
-    it('recommends commuter-ebike for solo commuter, hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        geography: { hilly: true, windy: false, flat: false }
-      }));
-      expect(r.bikeType).toBe('commuter-ebike');
-    });
-
-    it('recommends commuter-ebike for solo commuter, windy conditions', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        geography: { hilly: false, windy: true, flat: false }
-      }));
-      expect(r.bikeType).toBe('commuter-ebike');
-    });
-
-    it('recommends commuter-ebike for solo commuter, low fitness', () => {
-      const r = new BikeModelRecommender(makeProfile({ fitnessLevel: 'low' }));
-      expect(r.bikeType).toBe('commuter-ebike');
-    });
-
-    it('recommends regular-bike for solo commuter, high fitness, flat', () => {
-      const r = new BikeModelRecommender(makeProfile({ fitnessLevel: 'high' }));
-      expect(r.bikeType).toBe('regular-bike');
-    });
-
-    it('recommends cargo-bike for cargo needs, flat, medium fitness', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({ fitnessLevel: 'high' }));
-      expect(r.bikeType).toBe('cargo-bike');
-    });
-
-    it('recommends cargo-ebike for cargo needs, medium fitness', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({ fitnessLevel: 'medium' }));
-      expect(r.bikeType).toBe('cargo-ebike');
-    });
-
-    it('recommends longtail-bike for transporting kids, high fitness, flat', () => {
-      const r = new BikeModelRecommender(makeLongtailProfile({ fitnessLevel: 'high' }));
-      expect(r.bikeType).toBe('longtail-bike');
-    });
-
-    it('recommends longtail-ebike for transporting kids, medium fitness', () => {
-      const r = new BikeModelRecommender(makeLongtailProfile({ fitnessLevel: 'medium' }));
-      expect(r.bikeType).toBe('longtail-ebike');
-    });
-
-    it('recommends longtail-ebike for transporting adults regardless of fitness', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        transportationNeeds: {
-          soloCommuting: false, cargo: false,
-          transportingKids: false, transportingAdults: true
-        },
-        fitnessLevel: 'high'
-      }));
-      expect(r.bikeType).toBe('longtail-ebike');
-    });
-  });
-
-  // --- Needs assistance logic ---
-
-  describe('needs assistance (electric)', () => {
-    it('high fitness + cargo + hilly = needs assistance', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
-        fitnessLevel: 'high',
-        geography: { hilly: true, windy: false, flat: false }
-      }));
-      expect(r.bikeType).toBe('cargo-ebike');
-    });
-
-    it('high fitness + cargo + flat = no assistance', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
-        fitnessLevel: 'high',
-        geography: { hilly: false, windy: false, flat: true }
-      }));
-      expect(r.bikeType).toBe('cargo-bike');
-    });
-
-    it('high fitness + solo + hilly = no assistance (no cargo)', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        fitnessLevel: 'high',
-        geography: { hilly: true, windy: false, flat: false }
-      }));
-      expect(r.bikeType).toBe('regular-bike');
-    });
-
-    it('medium fitness + hilly = needs assistance', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        fitnessLevel: 'medium',
-        geography: { hilly: true, windy: false, flat: false }
-      }));
-      expect(r.bikeType).toBe('commuter-ebike');
-    });
-  });
-
-  // --- Storage downgrade ---
-
-  describe('storage downgrade', () => {
-    it('downgrades cargo-ebike to commuter-ebike for upper-floor storage', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
-        fitnessLevel: 'medium',
-        storage: 'upper-floor'
-      }));
-      expect(r.bikeType).toBe('commuter-ebike');
-      expect(r.idealBikeType).toBe('cargo-ebike');
-    });
-
-    it('downgrades longtail-ebike to commuter-ebike for upper-floor storage', () => {
-      const r = new BikeModelRecommender(makeLongtailProfile({
-        fitnessLevel: 'medium',
-        storage: 'upper-floor'
-      }));
-      expect(r.bikeType).toBe('commuter-ebike');
-      expect(r.idealBikeType).toBe('longtail-ebike');
-    });
-
-    it('downgrades cargo-bike to regular-bike for upper-floor storage', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
-        fitnessLevel: 'high',
-        storage: 'upper-floor'
-      }));
-      expect(r.bikeType).toBe('regular-bike');
-      expect(r.idealBikeType).toBe('cargo-bike');
-    });
-
-    it('does not downgrade for garage storage', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
-        fitnessLevel: 'medium',
-        storage: 'garage'
-      }));
-      expect(r.bikeType).toBe('cargo-ebike');
-      expect(r.idealBikeType).toBeNull();
-    });
-
-    it('does not downgrade non-bulky types for upper-floor', () => {
-      const r = new BikeModelRecommender(makeProfile({
-        fitnessLevel: 'medium',
-        storage: 'upper-floor'
-      }));
-      expect(r.bikeType).toBe('regular-bike');
-      expect(r.idealBikeType).toBeNull();
-    });
-  });
-
   // --- getRecommendations ---
 
   describe('getRecommendations', () => {
     it('returns an array of up to 4 recommendations', () => {
-      const r = new BikeModelRecommender(makeProfile());
+      const r = makeRecommender(makeProfile());
       const recs = r.getRecommendations();
 
       expect(Array.isArray(recs)).toBe(true);
@@ -206,7 +64,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('each recommendation includes model, price, tier, image, review, and reasons', () => {
-      const r = new BikeModelRecommender(makeProfile());
+      const r = makeRecommender(makeProfile());
       const recs = r.getRecommendations();
 
       for (const rec of recs) {
@@ -231,7 +89,7 @@ describe('BikeModelRecommender', () => {
       ];
 
       for (const profile of profiles) {
-        const r = new BikeModelRecommender(profile);
+        const r = makeRecommender(profile);
         const recs = r.getRecommendations();
         expect(recs.length).toBeGreaterThanOrEqual(1);
         expect(recs[0].model).toBeTruthy();
@@ -239,7 +97,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('includes at least one reason for every recommendation', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
+      const r = makeRecommender(makeCargoProfile({
         geography: { hilly: true, windy: true, flat: false },
         fitnessLevel: 'low',
         storage: 'upper-floor'
@@ -256,7 +114,7 @@ describe('BikeModelRecommender', () => {
 
   describe('getTopPick', () => {
     it('returns a single recommendation with a tier field', () => {
-      const r = new BikeModelRecommender(makeProfile());
+      const r = makeRecommender(makeProfile());
       const pick = r.getTopPick();
 
       expect(pick).toHaveProperty('tier');
@@ -266,7 +124,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('top pick is the first recommendation', () => {
-      const r = new BikeModelRecommender(makeCargoProfile());
+      const r = makeRecommender(makeCargoProfile());
       const recs = r.getRecommendations();
       const pick = r.getTopPick();
 
@@ -278,13 +136,13 @@ describe('BikeModelRecommender', () => {
 
   describe('reasons', () => {
     it('mentions kids when transporting kids', () => {
-      const r = new BikeModelRecommender(makeLongtailProfile());
+      const r = makeRecommender(makeLongtailProfile());
       const recs = r.getRecommendations();
       expect(recs[0].reasons).toContain('Suited for carrying kids');
     });
 
     it('mentions adults when transporting adults', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         transportationNeeds: {
           soloCommuting: false, cargo: false,
           transportingKids: false, transportingAdults: true
@@ -295,7 +153,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('mentions hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: true, windy: false, flat: false }
       }));
       const recs = r.getRecommendations();
@@ -303,7 +161,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('mentions storage downgrade', () => {
-      const r = new BikeModelRecommender(makeCargoProfile({
+      const r = makeRecommender(makeCargoProfile({
         fitnessLevel: 'medium',
         storage: 'upper-floor'
       }));
@@ -312,25 +170,25 @@ describe('BikeModelRecommender', () => {
     });
 
     it('mentions commuting for solo commuter with no cargo', () => {
-      const r = new BikeModelRecommender(makeProfile());
+      const r = makeRecommender(makeProfile());
       const recs = r.getRecommendations();
       expect(recs[0].reasons).toContain('Great for daily commuting');
     });
 
     it('mentions no motor needed for high fitness non-electric', () => {
-      const r = new BikeModelRecommender(makeProfile({ fitnessLevel: 'high' }));
+      const r = makeRecommender(makeProfile({ fitnessLevel: 'high' }));
       const recs = r.getRecommendations();
       expect(recs[0].reasons).toContain('No motor needed at your fitness level');
     });
 
     it('mentions lightweight prioritized for upper-floor storage', () => {
-      const r = new BikeModelRecommender(makeProfile({ storage: 'upper-floor' }));
+      const r = makeRecommender(makeProfile({ storage: 'upper-floor' }));
       const recs = r.getRecommendations();
       expect(recs[0].reasons).toContain('Lightweight options prioritized for carrying upstairs');
     });
 
     it('mentions single-speed excluded on hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: true, windy: false, flat: false }
       }));
       const recs = r.getRecommendations();
@@ -342,7 +200,7 @@ describe('BikeModelRecommender', () => {
 
   describe('model filtering and scoring', () => {
     it('excludes singleSpeed models on hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         fitnessLevel: 'high',
         geography: { hilly: true, windy: false, flat: false }
       }));
@@ -353,7 +211,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('allows singleSpeed models on flat terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         fitnessLevel: 'high',
         geography: { hilly: false, windy: false, flat: true }
       }));
@@ -362,33 +220,29 @@ describe('BikeModelRecommender', () => {
     });
 
     it('prefers lightweight models for upper-floor storage', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         fitnessLevel: 'high',
         storage: 'upper-floor'
       }));
       const recs = r.getRecommendations();
-      // At least the top pick should be lightweight when available
       expect(recs.some(rec => rec.lightweight)).toBe(true);
     });
 
     it('deprioritizes lightweight models on hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: true, windy: false, flat: false }
       }));
       const recs = r.getRecommendations();
-      // Non-lightweight models should be included over lightweight when both compete for a tier slot
       const budgetPicks = recs.filter(rec => rec.tier === 'budget');
       expect(budgetPicks.some(rec => !rec.lightweight)).toBe(true);
     });
 
     it('shows non-lightweight regular bikes with garage storage', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         fitnessLevel: 'high',
         storage: 'garage'
       }));
       const recs = r.getRecommendations();
-      // With garage storage, non-lightweight bikes should rank above lightweight ones
-      // Gazelle (midrange) and Retrospec (budget) should rank above Brompton/Priority
       const models = recs.map(rec => rec.model);
       expect(models).toContain('Gazelle Tour Populair');
       expect(models).toContain('Retrospec Beaumont City Bike');
@@ -430,9 +284,6 @@ describe('BikeModelRecommender', () => {
     });
 
     it('prefers non-lightweight models per tier', () => {
-      // commuter-ebike has both lightweight and non-lightweight budget options;
-      // the non-lightweight one (REI) should be picked in the first-pass tier
-      // selection, and the lightweight one (Velotric) may fill a remaining slot.
       const recs = BikeModelRecommender.getDefaultRecommendations('commuter-ebike');
       const budgetPicks = recs.filter(r => r.tier === 'budget');
       expect(budgetPicks.some(r => !r.lightweight)).toBe(true);
@@ -468,7 +319,7 @@ describe('BikeModelRecommender', () => {
 
   describe('tier diversity', () => {
     it('includes one model per available tier for commuter-ebike', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: false, windy: true, flat: false },
         storage: 'upper-floor'
       }));
@@ -480,7 +331,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('includes lightweight Ride1Up Roadster for upper-floor commuter-ebike', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: false, windy: true, flat: false },
         storage: 'upper-floor'
       }));
@@ -494,8 +345,7 @@ describe('BikeModelRecommender', () => {
 
   describe('getWarnings', () => {
     it('warns about single-speed exclusion on hilly terrain', () => {
-      // High fitness + hilly + solo → regular-bike, which has a single-speed model
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         fitnessLevel: 'high',
         geography: { hilly: true, windy: false, flat: false }
       }));
@@ -504,7 +354,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('warns about lightweight priority for upper-floor on flat terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: false, windy: true, flat: false },
         storage: 'upper-floor'
       }));
@@ -513,7 +363,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('warns about lightweight vs hills conflict for upper-floor on hilly terrain', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: true, windy: false, flat: false },
         storage: 'upper-floor'
       }));
@@ -522,13 +372,12 @@ describe('BikeModelRecommender', () => {
     });
 
     it('returns no warnings for simple garage + flat profile', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: false, windy: false, flat: true },
         storage: 'garage',
         fitnessLevel: 'high'
       }));
       const warnings = r.getWarnings();
-      // No filtering, no lightweight priority
       expect(warnings.every(w => !w.includes('Single-speed'))).toBe(true);
       expect(warnings.every(w => !w.includes('Lightweight'))).toBe(true);
       expect(warnings.every(w => !w.includes('hills'))).toBe(true);
@@ -539,7 +388,7 @@ describe('BikeModelRecommender', () => {
 
   describe('getAllModels', () => {
     it('returns all candidates for the bike type without cap', () => {
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: false, windy: true, flat: false }
       }));
       const all = r.getAllModels();
@@ -548,8 +397,7 @@ describe('BikeModelRecommender', () => {
     });
 
     it('includes models that getRecommendations may have dropped', () => {
-      // commuter-ebike has 5 models but getRecommendations caps at NumRecommendations
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         geography: { hilly: false, windy: true, flat: false },
         storage: 'garage'
       }));
@@ -563,13 +411,34 @@ describe('BikeModelRecommender', () => {
     });
 
     it('does not filter out single-speed models', () => {
-      // regular-bike on hills: getRecommendations filters single-speed, getAllModels does not
-      const r = new BikeModelRecommender(makeProfile({
+      const r = makeRecommender(makeProfile({
         fitnessLevel: 'high',
         geography: { hilly: true, windy: false, flat: false }
       }));
       const all = r.getAllModels();
       expect(all.some(m => m.singleSpeed)).toBe(true);
+    });
+  });
+
+  // --- Explicit bikeType override ---
+
+  describe('explicit bikeType (comparison mode)', () => {
+    it('returns models for the specified type, not the profile-determined type', () => {
+      const profile = makeProfile();
+      const r = new BikeModelRecommender('cargo-ebike', profile);
+      const recs = r.getRecommendations();
+      expect(recs.length).toBeGreaterThanOrEqual(1);
+      expect(r.bikeType).toBe('cargo-ebike');
+    });
+
+    it('still applies profile-based scoring to the overridden type', () => {
+      const profile = makeProfile({
+        fitnessLevel: 'high',
+        storage: 'upper-floor'
+      });
+      const r = new BikeModelRecommender('commuter-ebike', profile);
+      const recs = r.getRecommendations();
+      expect(recs.some(rec => rec.lightweight)).toBe(true);
     });
   });
 });

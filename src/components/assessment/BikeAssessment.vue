@@ -130,7 +130,7 @@ import YourChoices from './YourChoices.vue';
 import { CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes, DefaultBikeCosts } from '../../constants/bikeTypes';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
-import BikeModelRecommender from '../../services/BikeModelRecommender';
+import BikeTypeRecommender from '../../services/BikeTypeRecommender';
 import { encodeProfile, decodeProfile } from '../../services/AssessmentForm';
 import type { AssessmentProfile, BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
 
@@ -307,7 +307,7 @@ function goToStep(step: number) {
 }
 
 function calculateRecommendation() {
-  const recommender = new BikeModelRecommender({
+  const typeRecommender = new BikeTypeRecommender({
     transportationNeeds: transportationNeeds.value,
     geography: geography.value,
     fitnessLevel: fitnessLevel.value as FitnessLevel,
@@ -315,8 +315,8 @@ function calculateRecommendation() {
     storage: storage.value as StorageType
   });
 
-  recommendation.value = recommender.bikeType;
-  idealBikeType.value = recommender.idealBikeType;
+  recommendation.value = typeRecommender.bikeType;
+  idealBikeType.value = typeRecommender.idealBikeType;
 
   // Set recommendation details
   setRecommendationDetails();
