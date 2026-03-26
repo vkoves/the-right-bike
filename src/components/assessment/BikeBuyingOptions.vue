@@ -3,7 +3,7 @@
     <h3 id="options">Some Potential Options <anchor-copy-button anchor="options" /></h3>
     <p class="buying-subtitle">
       <strong>Here's some specific models to consider at different price points!</strong> <br>
-      Use these as a starting point, we not recommending any specific models.
+      Use these as a starting point, we are not recommending any specific models.
     </p>
 
     <p v-for="(warning, i) in warnings" :key="i" class="buying-warning">
