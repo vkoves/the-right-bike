@@ -3,7 +3,7 @@
  * All values are in USD and represent annual costs unless otherwise specified
  */
 
-import type { BikeCost, BikeTypeId, CarCosts } from '../types';
+import type { CarCosts } from '../types';
 
 // Base costs for different vehicle types with source URLs
 export const CAR_COSTS: CarCosts = {
@@ -41,58 +41,3 @@ export const CAR_COSTS: CarCosts = {
   averageAnnualMiles: 13500
 };
 
-// Annual electricity cost for e-bikes: $0.20/kWh × 500 Wh battery × ~180 charges/year ≈ $35
-const EbikeElectricityCost = 35;
-
-// Costs for different bike types
-export const BIKE_COSTS: Record<BikeTypeId | 'default', BikeCost> = {
-  // Regular non-electric bicycle
-  'regular-bike': {
-    purchase: 800,
-    maintenance: 150,
-    fuel: 0,
-    insurance: 0
-  },
-  // Electric commuter bicycle
-  'commuter-ebike': {
-    purchase: 2500,
-    maintenance: 250,
-    fuel: EbikeElectricityCost,
-    insurance: 100
-  },
-  // Traditional cargo bicycle (non-electric)
-  'cargo-bike': {
-    purchase: 1800,
-    maintenance: 200,
-    fuel: 0,
-    insurance: 100
-  },
-  // Electric cargo bicycle with bucket/box design
-  'cargo-ebike': {
-    purchase: 4500,
-    maintenance: 350,
-    fuel: EbikeElectricityCost,
-    insurance: 150
-  },
-  // Non-electric longtail cargo bicycle
-  'longtail-bike': {
-    purchase: 2000, // Based on Yuba Mundo Lux ($1,999)
-    maintenance: 250,
-    fuel: 0,
-    insurance: 100
-  },
-  // Electric longtail cargo bicycle designed for passengers
-  'longtail-ebike': {
-    purchase: 5000,
-    maintenance: 400,
-    fuel: EbikeElectricityCost,
-    insurance: 200
-  },
-  // Default fallback values
-  'default': {
-    purchase: 1000,
-    maintenance: 150,
-    fuel: 0,
-    insurance: 0
-  }
-};

@@ -13,6 +13,7 @@ function makeProfile(overrides: Partial<AssessmentProfile> = {}): AssessmentProf
     },
     geography: { hilly: false, windy: false, flat: true },
     fitnessLevel: 'medium',
+    prefersStability: false,
     storage: 'garage',
     ...overrides
   };

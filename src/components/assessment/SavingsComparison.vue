@@ -155,7 +155,7 @@
             </div>
             <div class="bike-option-details">
               <h4>{{ type.label }}</h4>
-              <div class="bike-price">~ {{ formatCurrency(BIKE_COSTS[type.value as BikeTypeId].purchase) }}</div>
+              <div class="bike-price">~ {{ formatCurrency(BikeTypes[type.value as BikeTypeId].costs.purchase) }}</div>
             </div>
           </router-link>
         </div>
@@ -169,7 +169,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
+import { CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { isPlainClick } from '../../utils/navigation';
 import type { AssessmentProfile, BikeTypeId } from '../../types';

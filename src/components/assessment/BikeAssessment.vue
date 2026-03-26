@@ -36,6 +36,7 @@
           v-else-if="currentStep === 3"
           key="step3"
           v-model="fitnessLevel"
+          v-model:prefersStability="prefersStability"
           @prev="prevStep"
           @next="nextStep"
         />
@@ -126,8 +127,8 @@ import BikeRecommendation from './BikeRecommendation.vue';
 import SavingsComparison from './SavingsComparison.vue';
 import ResultsFooter from './ResultsFooter.vue';
 import YourChoices from './YourChoices.vue';
-import { BIKE_COSTS, CAR_COSTS } from '../../constants/bikeCosts';
-import { BikeTypes } from '../../constants/bikeTypes';
+import { CAR_COSTS } from '../../constants/bikeCosts';
+import { BikeTypes, DefaultBikeCosts } from '../../constants/bikeTypes';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
 import type { AssessmentProfile, BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
@@ -157,6 +158,7 @@ const geography = ref<Geography>({
 
 const storage = ref<StorageType | ''>('');
 const fitnessLevel = ref<FitnessLevel | ''>('');
+const prefersStability = ref(false);
 
 // Watch for reactive state changes
 watch(transportationNeeds, () => {}, { deep: true });
@@ -174,9 +176,9 @@ let stickyScrollHandler: (() => void) | null = null;
 const costs: CostComparison = reactive({
   bike: {
     purchase: 0,
-    maintenance: BIKE_COSTS.default.maintenance,
-    fuel: BIKE_COSTS.default.fuel,
-    insurance: BIKE_COSTS.default.insurance
+    maintenance: DefaultBikeCosts.maintenance,
+    fuel: DefaultBikeCosts.fuel,
+    insurance: DefaultBikeCosts.insurance
   },
   car: {
     purchase: CAR_COSTS.purchase,
@@ -193,6 +195,7 @@ const assessmentProfile = computed<AssessmentProfile | null>(() => {
     transportationNeeds: transportationNeeds.value,
     geography: geography.value,
     fitnessLevel: fitnessLevel.value as FitnessLevel,
+    prefersStability: prefersStability.value,
     storage: storage.value as StorageType
   };
 });
@@ -289,6 +292,7 @@ function calculateRecommendation() {
     transportationNeeds: transportationNeeds.value,
     geography: geography.value,
     fitnessLevel: fitnessLevel.value as FitnessLevel,
+    prefersStability: prefersStability.value,
     storage: storage.value as StorageType
   });
 
@@ -315,8 +319,8 @@ function updateBikeCosts(bikeType?: BikeTypeId) {
   // Use the passed bike type or the current recommendation
   const typeToUse = bikeType || recommendation.value as BikeTypeId;
 
-  // Get bike costs from constants
-  const bikeCost = BIKE_COSTS[typeToUse] || BIKE_COSTS.default;
+  // Get bike costs from the bike type definition
+  const bikeCost = BikeTypes[typeToUse]?.costs ?? DefaultBikeCosts;
 
   // Update all cost values at once
   costs.bike.purchase = bikeCost.purchase;
@@ -378,6 +382,7 @@ function restartAssessment() {
 
   storage.value = '';
   fitnessLevel.value = '';
+  prefersStability.value = false;
   recommendation.value = '';
   idealBikeType.value = null;
 
@@ -395,6 +400,7 @@ onBeforeRouteUpdate((to) => {
     geography.value = { windy: false, hilly: false, flat: false };
     storage.value = '';
     fitnessLevel.value = '';
+    prefersStability.value = false;
     recommendation.value = '';
     idealBikeType.value = null;
     showStickyHeader.value = false;

@@ -145,11 +145,15 @@ export default class BikeModelRecommender {
   // --- Private methods ---
 
   private _determineBikeType(): BikeTypeId {
-    const { transportationNeeds } = this.profile;
+    const { transportationNeeds, prefersStability } = this.profile;
 
     const needsCargo = transportationNeeds.cargo ||
                        transportationNeeds.transportingKids ||
                        transportationNeeds.transportingAdults;
+
+    if (prefersStability) {
+      return needsCargo ? 'cargo-etrike' : 'etrike';
+    }
 
     const needsAssistance = this._needsAssistance(needsCargo);
 
@@ -189,7 +193,7 @@ export default class BikeModelRecommender {
 
   private _buildReasons(): string[] {
     const reasons: string[] = [];
-    const { transportationNeeds, geography, fitnessLevel, storage } = this.profile;
+    const { transportationNeeds, geography, fitnessLevel, prefersStability, storage } = this.profile;
 
     if (transportationNeeds.transportingKids) reasons.push('Suited for carrying kids');
     if (transportationNeeds.transportingAdults) reasons.push('Can carry adult passengers');
@@ -198,6 +202,8 @@ export default class BikeModelRecommender {
         !transportationNeeds.transportingKids && !transportationNeeds.transportingAdults) {
       reasons.push('Great for daily commuting');
     }
+
+    if (prefersStability) reasons.push('Three-wheel design for extra stability');
 
     if (geography.hilly) reasons.push('Handles hilly terrain');
     if (geography.windy) reasons.push('Handles windy conditions');

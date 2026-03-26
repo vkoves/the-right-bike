@@ -45,6 +45,34 @@ h2 {
   margin-bottom: vars.$spacing-xl;
 }
 
+%focus-ring {
+  outline: none;
+  border-color: vars.$secondary;
+  box-shadow: vars.$shadow-focus;
+}
+
+%selected-card {
+  border-color: vars.$primary;
+  background-color: rgba(44, 138, 87, 0.05);
+
+  &::before {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background-color: vars.$primary;
+    color: vars.$white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
 .option-card {
   background-color: vars.$lightest-gray;
   border: 2px solid vars.$lighter-gray;
@@ -70,31 +98,11 @@ h2 {
   }
 
   &:focus {
-    outline: none;
-    border-color: vars.$secondary;
-    box-shadow: vars.$shadow-focus;
+    @extend %focus-ring;
   }
 
   &.selected {
-    border-color: vars.$primary;
-    background-color: rgba(44, 138, 87, 0.05);
-
-    &::before {
-      content: "✓";
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 24px;
-      height: 24px;
-      background-color: vars.$primary;
-      color: vars.$white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 14px;
-    }
+    @extend %selected-card;
   }
 }
 

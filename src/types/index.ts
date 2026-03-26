@@ -5,7 +5,9 @@ export type BikeTypeId =
   | 'cargo-bike'
   | 'cargo-ebike'
   | 'longtail-bike'
-  | 'longtail-ebike';
+  | 'longtail-ebike'
+  | 'etrike'
+  | 'cargo-etrike';
 
 // --- Bike Type metadata (bikeTypes.ts) ---
 export interface BikeType {
@@ -18,6 +20,7 @@ export interface BikeType {
   description: string;
   features: string[];
   priceRange: string;
+  costs: BikeCost;
 }
 
 // --- Costs (bikeCosts.ts) ---
@@ -74,6 +77,7 @@ export interface AssessmentProfile {
   transportationNeeds: TransportationNeeds;
   geography: Geography;
   fitnessLevel: FitnessLevel;
+  prefersStability: boolean;
   storage: StorageType;
 }
 
