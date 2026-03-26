@@ -1,17 +1,18 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
+const { bikeTypes } = require('./bike-types');
 
 const BASE_URL = 'http://localhost:5173';
 const OUT_DIR = path.join(__dirname, '..', 'public', 'images');
 
 const pages = [
   { url: '/social-image', file: 'social.png', width: 1000, height: 522 },
-  { url: '/social-image/regular-bike', file: 'social-regular-bike.png', width: 1000, height: 522 },
-  { url: '/social-image/commuter-ebike', file: 'social-commuter-ebike.png', width: 1000, height: 522 },
-  { url: '/social-image/cargo-bike', file: 'social-cargo-bike.png', width: 1000, height: 522 },
-  { url: '/social-image/cargo-ebike', file: 'social-cargo-ebike.png', width: 1000, height: 522 },
-  { url: '/social-image/longtail-bike', file: 'social-longtail-bike.png', width: 1000, height: 522 },
-  { url: '/social-image/longtail-ebike', file: 'social-longtail-ebike.png', width: 1000, height: 522 },
+  ...Object.keys(bikeTypes).map(slug => ({
+    url: `/social-image/${slug}`,
+    file: `social-${slug}.png`,
+    width: 1000,
+    height: 522
+  }))
 ];
 
 (async () => {

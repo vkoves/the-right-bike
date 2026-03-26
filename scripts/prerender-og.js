@@ -9,27 +9,17 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { bikeTypes } = require('./bike-types');
 
 const DIST = path.join(__dirname, '..', 'dist');
 const BASE_URL = 'https://findtheright.bike';
 
-// Duplicated from bikeTypes.js — only the fields needed for OG tags.
-// Keep in sync with src/constants/bikeTypes.js.
-const BIKE_OG = {
-  'regular-bike':   { title: 'Regular Bicycle',              image: 'social-regular-bike.png' },
-  'commuter-ebike': { title: 'Commuter Electric Bicycle',    image: 'social-commuter-ebike.png' },
-  'cargo-bike':     { title: 'Classic Cargo Bike',           image: 'social-cargo-bike.png' },
-  'cargo-ebike':    { title: 'Front-Loader Cargo eBike',     image: 'social-cargo-ebike.png' },
-  'longtail-bike':  { title: 'Longtail Cargo Bike',          image: 'social-longtail-bike.png' },
-  'longtail-ebike': { title: 'Electric Longtail Cargo Bike', image: 'social-longtail-ebike.png' },
-};
-
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8');
 
-for (const [slug, bike] of Object.entries(BIKE_OG)) {
+for (const [slug, bike] of Object.entries(bikeTypes)) {
   const ogTitle = `Your Perfect Bike: ${bike.title}`;
   const ogDesc = `See how much you could save with a ${bike.title}. Find the right bike to replace some car trips!`;
-  const ogImage = `${BASE_URL}/images/${bike.image}`;
+  const ogImage = `${BASE_URL}/images/social-${slug}.png`;
   const ogUrl = `${BASE_URL}/bike/${slug}`;
 
   const html = template
