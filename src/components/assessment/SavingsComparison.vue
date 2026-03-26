@@ -113,7 +113,7 @@
         <a
           href="https://www.google.com/maps/search/bike+shop+near+me"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
           class="find-shops-btn"
         >
           Search Bike Shops Near You &#8594;

@@ -225,7 +225,7 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       price: "$2,299",
       tier: "budget", // Highly competitive pricing for a heavy-duty cargo trike
       image: '/images/bike-models/dirwin-caravan.webp',
-      review: "https://www.electricbike-reviews.com/dirwin-caravan-review/",
+      review: null,
       purchaseLink: "https://dirwinbike.com/products/caravan-cargo-electric-bike",
       trike: true
     },
@@ -234,7 +234,7 @@ export const BikeRecommendations: Record<BikeTypeId, BikeModel[]> = {
       price: "$4,799",
       tier: "midrange", // Positioned as a mid-tier front-loader compared to their $5k+ models
       image: '/images/bike-models/ferla-inspire.webp',
-      review: "https://electricbikereview.com/ferla/inspire-cargo-bike/",
+      review: null,
       purchaseLink: "https://ferlafamilybikes.com/products/ferla-cargo-bike-inspire",
       trike: true
     },

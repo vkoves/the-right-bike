@@ -3,22 +3,22 @@
     <div class="stories-content">
       <h2>Need Inspiration?</h2>
       <p class="stories-intro">Read interviews with everyday cyclists who replaced car trips with bikes.</p>
-      <a href="https://chiwho.bike" target="_blank" rel="noopener noreferrer" class="stories-cta">
+      <a href="https://chiwho.bike" target="_blank" rel="noopener" class="stories-cta">
         Read Their Stories on Chicagoans Who Bike &#8594;
       </a>
     </div>
     <div class="stories-img-row">
       <div class="stories-imgs">
-        <a href="https://chiwho.bike/interviews/17" target="_blank" rel="noopener noreferrer">
+        <a href="https://chiwho.bike/interviews/17" target="_blank" rel="noopener">
           <img src="/images/stories/post17.webp" alt="A man stands in front of an orange long-tail bike with two of his kids sitting on the bike, on an autumn day">
         </a>
-        <a href="https://chiwho.bike/interviews/12" target="_blank" rel="noopener noreferrer">
+        <a href="https://chiwho.bike/interviews/12" target="_blank" rel="noopener">
           <img src="/images/stories/post12.webp" alt="A man stands smiling in a park holding his bike, wearing a grey shirt that says Bike City">
         </a>
-        <a href="https://chiwho.bike/interviews/18" target="_blank" rel="noopener noreferrer">
+        <a href="https://chiwho.bike/interviews/18" target="_blank" rel="noopener">
           <img src="/images/stories/post18.webp" alt="An older man stands smiling with his black ebike in front of Chicago's 606 trail">
         </a>
-        <a href="https://chiwho.bike/interviews/15" target="_blank" rel="noopener noreferrer">
+        <a href="https://chiwho.bike/interviews/15" target="_blank" rel="noopener">
           <img src="/images/stories/post15.webp" alt="A woman stands smiling looking down at her two young children in a bucket cargo bike in a downtown plaza">
         </a>
       </div>

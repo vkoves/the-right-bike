@@ -89,7 +89,7 @@ export interface BikeModel {
   price: string;
   tier: RecommendationTier;
   image: string;
-  review: string;
+  review: string | null;
   purchaseLink?: string;
   singleSpeed?: boolean;
   lightweight?: boolean;

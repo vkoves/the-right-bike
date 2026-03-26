@@ -6,7 +6,7 @@
       <div class="ideal-note-body">
         <p>
           {{ idealArticle }}
-          <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener noreferrer" class="ideal-link">
+          <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener" class="ideal-link">
             <strong>{{ allBikeTypes[idealBikeType as BikeTypeId].title }}</strong>
           </a>
           would be the ideal fit for your needs, but based on your storage situation
@@ -15,7 +15,7 @@
         </p>
         <p class="ideal-note-tip">
           However, some people do store cargo bikes outside under motorcycle covers!
-          <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440" target="_blank" rel="noopener noreferrer" class="ideal-link">
+          <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440" target="_blank" rel="noopener" class="ideal-link">
             See how one cargo bike family in NYC does it.
           </a>
         </p>

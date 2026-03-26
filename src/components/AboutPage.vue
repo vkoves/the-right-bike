@@ -65,7 +65,7 @@
 
       <p>
         Have questions or feedback? We'd love to hear from you!
-        <a href="https://github.com/vkoves/the-right-bike/issues" target="_blank" rel="noopener noreferrer">Create an issue on GitHub</a>.
+        <a href="https://github.com/vkoves/the-right-bike/issues" target="_blank" rel="noopener">Create an issue on GitHub</a>.
       </p>
     </section>
   </div>

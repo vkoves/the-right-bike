@@ -7,7 +7,7 @@
         </router-link>
         <div class="logo-text-group">
           <router-link to="/" class="logo-title">Find The Right Bike</router-link>
-          <span class="logo-byline">By <a href="https://chiwho.bike" target="_blank" rel="noopener noreferrer" class="byline-link">Chicagoans Who Bike</a></span>
+          <span class="logo-byline">By <a href="https://chiwho.bike" target="_blank" rel="noopener" class="byline-link">Chicagoans Who Bike</a></span>
         </div>
       </div>
       <nav class="desktop-nav">

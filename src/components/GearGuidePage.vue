@@ -23,7 +23,7 @@
           <a
             :href="item.wirecutter?.url"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
             class="wirecutter-link"
           >
             Read Wirecutter Guide &rarr;
@@ -43,7 +43,7 @@
           <a
             :href="item.wirecutter?.url"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener"
             class="wirecutter-link"
           >
             Read Wirecutter Guide &rarr;
@@ -56,7 +56,7 @@
       <h2 class="winter-heading">Winter Riding <img src="/images/icons/snowflake.svg" class="snowflake-icon" alt=""></h2>
       <p class="winter-intro">
         Planning to ride year-round? These upgrades make cold-weather commuting safe and comfortable.
-        See <a href="https://www.nytimes.com/wirecutter/reviews/best-rain-gear-for-biking/" target="_blank" rel="noopener noreferrer" class="winter-link">Wirecutter's Foul-Weather Bike Commuting Guide</a> for full reviews.
+        See <a href="https://www.nytimes.com/wirecutter/reviews/best-rain-gear-for-biking/" target="_blank" rel="noopener" class="winter-link">Wirecutter's Foul-Weather Bike Commuting Guide</a> for full reviews.
       </p>
 
       <div class="gear-grid">

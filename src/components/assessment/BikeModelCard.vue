@@ -1,10 +1,7 @@
 <template>
-  <a
+  <div
     class="tier-card"
     :class="bike.tier"
-    :href="bike.review"
-    target="_blank"
-    rel="noopener noreferrer"
   >
     <div class="tier-badge">{{ tierLabel }}</div>
     <div class="tier-image" :class="{ '-no-image': !bike.image }">
@@ -23,10 +20,16 @@
     <div class="tier-body">
       <h4>{{ bike.model }} <span v-if="electric" class="electric-badge -light"><span class="emoji-shadow">⚡</span> Electric</span></h4>
       <div class="tier-price">{{ bike.price }}</div>
-      <span class="tier-cta">Read Review <span class="tier-cta-chevron" aria-hidden="true"></span></span>
-      <a v-if="bike.purchaseLink" class="tier-buy" :href="bike.purchaseLink" target="_blank" rel="noopener noreferrer" @click.stop>Buy <span class="tier-cta-chevron" aria-hidden="true"></span></a>
+      <a v-if="bike.review" :href="bike.review" class="tier-cta"
+        target="_blank" rel="noopener">
+        Read Review <span class="tier-cta-chevron" aria-hidden="true"></span>
+      </a>
+      <span v-else class="no-review">No independent reviews found</span>
+      <a v-if="bike.purchaseLink" class="tier-buy" :href="bike.purchaseLink" target="_blank" rel="noopener" @click.stop>
+        Visit Product Page <span class="tier-cta-chevron" aria-hidden="true"></span>
+      </a>
     </div>
-  </a>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -194,6 +197,15 @@ $tier-premium-bg: #fef9ec;
   .budget   & { color: vars.$primary; }
   .midrange & { color: vars.$secondary-dark; }
   .premium  & { color: $tier-premium; }
+}
+
+.no-review {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: vars.$text-secondary;
+  font-weight: 600;
 }
 
 .tier-buy {
