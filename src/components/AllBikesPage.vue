@@ -10,7 +10,7 @@
           v-for="(bike, i) in bikes"
           :key="i"
           :bike="bike"
-          :electric="(typeKey as string).includes('ebike')"
+          :electric="BikeTypes[typeKey].electric"
         />
       </div>
     </div>

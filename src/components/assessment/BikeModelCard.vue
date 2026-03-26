@@ -11,14 +11,11 @@
         :alt="bike.model"
         @error="(e: Event) => (e.target as HTMLElement).closest('.tier-image')?.classList.add('-no-image')"
       >
-      <div v-if="bike.singleSpeed || bike.lightweight || bike.trike" class="tier-pills">
-        <span v-if="bike.singleSpeed" class="tier-pill"><span class="tier-pill-emoji emoji-shadow">⚙️</span><span class="tier-pill-text">Single Speed</span></span>
-        <span v-if="bike.lightweight" class="tier-pill"><span class="tier-pill-emoji emoji-shadow">🪶</span><span class="tier-pill-text">Lightweight</span></span>
-        <span v-if="bike.trike" class="tier-pill"><span class="tier-pill-emoji emoji-shadow">🛞</span><span class="tier-pill-text">Trike</span></span>
-      </div>
+      <TierPills :bike="bike" :electric="electric" class="pills-desktop" />
     </div>
     <div class="tier-body">
-      <h4>{{ bike.model }} <span v-if="electric" class="electric-badge -light"><span class="emoji-shadow">⚡</span> Electric</span></h4>
+      <h4>{{ bike.model }}</h4>
+      <TierPills :bike="bike" :electric="electric" class="pills-mobile" />
       <div class="tier-price">{{ bike.price }}</div>
       <a v-if="bike.review" :href="bike.review" class="tier-cta"
         target="_blank" rel="noopener">
@@ -33,6 +30,8 @@
 </template>
 
 <script setup lang="ts">
+import TierPills from './TierPills.vue';
+
 const TierLabels: Record<string, string> = {
   budget: 'Budget',
   midrange: 'Mid-Range',
@@ -130,11 +129,6 @@ $tier-premium-bg: #fef9ec;
     font-weight: 700;
     margin: 0;
     line-height: 1.3;
-
-    .electric-badge {
-      position: static;
-      white-space: nowrap;
-    }
   }
 }
 
@@ -144,16 +138,36 @@ $tier-premium-bg: #fef9ec;
   font-weight: 600;
 }
 
-.tier-pills {
+.pills-mobile {
+  display: none;
+}
+
+.pills-desktop {
   position: absolute;
   bottom: vars.$spacing-sm;
   left: vars.$spacing-sm;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
+
+  :deep(.tier-pills) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  :deep(.tier-pill) {
+    cursor: default;
+    overflow: hidden;
+    padding: 0.25rem;
+    max-width: 1.75rem;
+    transition: max-width 0.3s ease, padding 0.3s ease;
+
+    &:hover {
+      max-width: 10rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
 }
 
-.tier-pill {
+:deep(.tier-pill) {
   font-size: 0.7rem;
   font-weight: bold;
   border-radius: 10rem;
@@ -163,24 +177,16 @@ $tier-premium-bg: #fef9ec;
   box-shadow: vars.$shadow-sm;
   display: inline-flex;
   align-items: center;
-  overflow: hidden;
-  padding: 0.25rem;
-  max-width: 1.75rem;
-  transition: max-width 0.3s ease, padding 0.3s ease;
-
-  &:hover {
-    max-width: 10rem;
-    padding: 0.25rem 0.5rem;
-  }
+  padding: 0.25rem 0.5rem;
 }
 
-.tier-pill-emoji {
+:deep(.tier-pill-emoji) {
   font-size: 125%;
   flex-shrink: 0;
   line-height: 1;
 }
 
-.tier-pill-text {
+:deep(.tier-pill-text) {
   white-space: nowrap;
   margin-left: 0.5rem;
 }
@@ -258,6 +264,20 @@ $tier-premium-bg: #fef9ec;
 
   .tier-body {
     padding: 0.75rem;
+  }
+
+  .pills-desktop {
+    display: none;
+  }
+
+  .pills-mobile {
+    display: block;
+
+    :deep(.tier-pills) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
   }
 }
 </style>

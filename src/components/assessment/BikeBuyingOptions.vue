@@ -2,8 +2,8 @@
   <div class="buying-options" v-if="recommendations && recommendations.length">
     <h3 id="options">Some Potential Options <anchor-copy-button anchor="options" /></h3>
     <p class="buying-subtitle">
-      Here's some specific models to consider at different price points! Use this as a starting
-      point, we're not recommending any specific model.
+      <strong>Here's some specific models to consider at different price points!</strong> <br>
+      Use these as a starting point, we not recommending any specific models.
     </p>
 
     <p v-if="lightweightHillsWarning" class="buying-warning">
@@ -16,7 +16,7 @@
         v-for="(bike, i) in recommendations"
         :key="i"
         :bike="bike"
-        :electric="bikeType.includes('ebike')"
+        :electric="BikeTypes[bikeType as BikeTypeId]?.electric ?? false"
       />
     </div>
   </div>
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import BikeModelRecommender from '../../services/BikeModelRecommender';
+import { BikeTypes } from '../../constants/bikeTypes';
 import AnchorCopyButton from '../AnchorCopyButton.vue';
 import BikeModelCard from './BikeModelCard.vue';
 import type { AssessmentProfile, BikeTypeId, BikeModelWithReasons } from '../../types';
@@ -67,7 +68,6 @@ const lightweightHillsWarning = computed(() => {
 
 .buying-subtitle {
   color: vars.$text-secondary;
-  font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
