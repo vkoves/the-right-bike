@@ -30,10 +30,14 @@
         <label for="replacement-slider" class="slider-label">
           How much of your driving would you replace with biking?
         </label>
+        <p id="replace-subtitle" class="smaller">
+          Like grocery shopping, dropping off kids at school, or commuting!
+        </p>
         <div class="slider-row">
           <div class="slider-track-group">
             <input
               id="replacement-slider"
+              attr.aria-describedby="replace-subtitle"
               type="range"
               v-model.number="replacementPercent"
               min="25"
@@ -544,6 +548,8 @@ function formatRounded(value: number) {
 
 .replacement-slider {
   padding: 1rem 1.5rem 1.25rem;
+
+  .slider-row { margin-top: 0.5rem; }
 }
 
 .slider-reveal-enter-active,
@@ -567,7 +573,6 @@ function formatRounded(value: number) {
   font-weight: 600;
   color: vars.$dark;
   font-size: 0.95rem;
-  margin-bottom: 0.5rem;
 }
 
 .slider-row {
