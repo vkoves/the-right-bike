@@ -105,18 +105,45 @@
 
     <bike-buying-options id="buying-options" :bike-type="displayedBikeType" :profile="profile" />
 
-    <div class="local-shops">
-      <div class="local-shops-icon">🏪</div>
-      <div class="local-shops-content">
+    <h3>Tips For Buying A Bike</h3>
+
+    <div class="buying-tips">
+      <div class="buying-tips-icon">🚍</div>
+      <div class="buying-tips-content">
+        <h4>Consider Your Needs</h4>
+        <p>
+          Think about any specific needs you have for your bike.
+        </p>
+        <p>
+          <strong>Need to take it on transit?</strong> Make sure it's light enough that you can lift
+          it up on a bus' bike rack, and within the limits allowed by your transit agency.
+        </p>
+        <p>
+          <strong>Dealing With Tons Of Snow?</strong> Look for bikes with wider, knobby tires
+           and fenders to keep salt and slush off your frame.
+        </p>
+      </div>
+    </div>
+
+    <div class="buying-tips">
+      <div class="buying-tips-icon">🏪</div>
+      <div class="buying-tips-content">
         <h4>Find a Local Bike Shop</h4>
-        <p>Test ride before you buy — a good local shop can also help with fit, accessories, and ongoing maintenance.</p>
+        <p>
+          It's best to test ride a few bikes before you settle on one, and a good local shop can
+          also help you pick the best model for you, along and help fit, accessories,
+          and ongoing maintenance.
+        </p>
+        <p>
+          <strong>Buying online might be easier, but can make maintenance harder!</strong>
+        </p>
         <a
           href="https://www.google.com/maps/search/bike+shop+near+me"
           target="_blank"
           rel="noopener"
           class="find-shops-btn"
         >
-          Search Bike Shops Near You &#8594;
+          Search Bike Shops Near You <span class="chevron-right" aria-hidden="true"></span>
         </a>
       </div>
     </div>
@@ -956,10 +983,10 @@ function formatRounded(value: number) {
   opacity: 0.7;
 }
 
-.local-shops {
+.buying-tips {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   background-color: vars.$primary-lighter;
   border-radius: vars.$border-radius;
   border-left: 4px solid vars.$primary;
@@ -968,12 +995,12 @@ function formatRounded(value: number) {
   text-align: left;
 }
 
-.local-shops-icon {
+.buying-tips-icon {
   font-size: 2.5rem;
   flex-shrink: 0;
 }
 
-.local-shops-content {
+.buying-tips-content {
   h4 {
     color: vars.$primary-dark;
     font-size: 1.1rem;
@@ -993,7 +1020,7 @@ function formatRounded(value: number) {
   background-color: vars.$primary;
   color: vars.$white;
   text-decoration: none;
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 0.75rem 0.5rem 1.25rem;
   border-radius: vars.$border-radius-lg;
   font-size: 0.9rem;
   font-weight: 600;
@@ -1003,6 +1030,8 @@ function formatRounded(value: number) {
     background-color: vars.$primary-dark;
     transform: translateY(-1px);
   }
+
+  span { margin-left: 0.25rem; }
 }
 
 @media (max-width: 900px) {
@@ -1059,14 +1088,14 @@ function formatRounded(value: number) {
     padding: 1.5rem;
   }
 
-  .local-shops {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
+  .buying-tips {
+    display: block;
   }
 
-  .local-shops-icon {
+  .buying-tips-icon {
+    float: left;
     font-size: 2rem;
+    margin: 1rem 1rem 1rem 0.5rem;
   }
 }
 </style>

@@ -146,6 +146,18 @@ h2 {
   font-size: 1.2rem;
 }
 
+.chevron-right {
+  display: inline-block;
+  vertical-align: -3px;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  transform: scale(-1.5, 1.5);
+  background-color: currentColor;
+  mask: url('/images/icons/chevron-left.svg') no-repeat center / contain;
+  -webkit-mask: url('/images/icons/chevron-left.svg') no-repeat center / contain;
+}
+
 button {
   background-color: vars.$primary;
   color: vars.$white;

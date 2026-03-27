@@ -2,7 +2,11 @@
   <div class="buying-options" v-if="visibleModels && visibleModels.length">
     <h3 id="options">Some Potential Options <anchor-copy-button anchor="options" /></h3>
     <p class="buying-subtitle">
-      <strong>Here's some specific models to consider at different price points!</strong> <br>
+      Here's some specific models to consider at different price points!
+    </p>
+    <p>
+      Use this as a starting point - we're not recommending any specific model, and aren't
+      affiliated with any brand.
       Use these as a starting point, we are not recommending any specific models.
     </p>
 
@@ -86,11 +90,17 @@ const warnings = computed(() =>
     font-size: 1.6rem;
     margin-bottom: 0.5rem;
   }
-}
 
-.buying-subtitle {
-  color: vars.$text-secondary;
-  margin-bottom: 1.5rem;
+  p {
+    max-width: 37.5rem;
+    margin: auto;
+  }
+
+  .buying-subtitle {
+    font-size: 1.125em;
+    font-weight: 600;
+    max-width: none;
+  }
 }
 
 .buying-warning {
@@ -102,6 +112,13 @@ const warnings = computed(() =>
   padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
   text-align: left;
+}
+
+.tiers {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
 .tiers {
