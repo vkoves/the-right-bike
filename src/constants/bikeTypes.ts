@@ -104,7 +104,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'Can carry several children',
       'No battery charging required'
     ],
-    priceRange: '$1,800 - $2,200',
+    priceRange: '$1,800 - $2,500',
     // Based on Yuba Mundo Lux ($1,999)
     costs: { purchase: 2000, maintenance: 250, fuel: 0, insurance: 100 }
   },
@@ -123,8 +123,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'Can accommodate child seats or passenger seating',
       'High weight capacity'
     ],
-    priceRange: '$3,500 - $8,000',
-    costs: { purchase: 5000, maintenance: 400, fuel: EbikeElectricityCost, insurance: 200 }
+    priceRange: '$1,500 - $6,000',
+    costs: { purchase: 3500, maintenance: 400, fuel: EbikeElectricityCost, insurance: 200 }
   },
   'etrike': {
     title: 'Electric Trike',
@@ -143,7 +143,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'Large cargo capacity'
     ],
     priceRange: '$1,500 - $3,999',
-    costs: { purchase: 5000, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 }
+    costs: { purchase: 2500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 }
   },
   'cargo-etrike': {
     title: 'Cargo Electric Trike',
