@@ -1,13 +1,14 @@
 <template>
   <div class="buying-options" v-if="visibleModels && visibleModels.length">
-    <h3 id="options">Some Specific Bikes to Consider <anchor-copy-button anchor="options" /></h3>
+    <h3 id="options">
+      <span class="hide-mobile">Some Specific </span>Bikes to Consider <anchor-copy-button anchor="options" />
+    </h3>
     <p class="buying-subtitle">
       Here's some specific models to consider at different price points!
     </p>
     <p>
       Use this as a starting point - we're not recommending any specific model, and aren't
       affiliated with any brand.
-      Use these as a starting point, we are not recommending any specific models.
     </p>
 
     <p v-for="(warning, i) in warnings" :key="i" class="buying-warning">
@@ -91,11 +92,6 @@ const warnings = computed(() =>
     margin-bottom: 0.5rem;
   }
 
-  p {
-    max-width: 37.5rem;
-    margin: auto;
-  }
-
   .buying-subtitle {
     font-size: 1.125em;
     font-weight: 600;
@@ -110,7 +106,7 @@ const warnings = computed(() =>
   color: vars.$text-body;
   font-size: 0.9rem;
   padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
+  margin: 1rem 0;
   text-align: left;
 }
 

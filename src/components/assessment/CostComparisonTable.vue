@@ -48,7 +48,9 @@
             @click="emit('car-type-change', false)"
           >Used</button>
         </div>
-        <h4 v-if="alreadyOwnsCar">Your Car - <span class="car-subtitle">With Less Use</span></h4>
+        <h4 v-if="alreadyOwnsCar">Your Car -
+          <span class="car-subtitle">With {{replacementPercent }}% Less Use</span>
+        </h4>
         <h4 v-else>Average {{ isNew ? 'New' : 'Used' }} Car</h4>
       </div>
       <div class="cost-breakdown">
