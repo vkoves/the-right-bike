@@ -27,7 +27,10 @@
     </div>
 
     <div class="navigation-buttons">
-      <button class="btn-next" @click="$emit('next')" :disabled="!hasSelectedAny">Continue</button>
+      <button class="btn-next" @click="$emit('next')" :disabled="!hasSelectedAny">
+        Continue
+        <span class="chevron-right"></span>
+      </button>
     </div>
   </div>
 </template>

@@ -39,8 +39,13 @@
     </div>
 
     <div class="navigation-buttons">
-      <button class="btn-prev" @click="$emit('prev')">Back</button>
-      <button class="btn-next" @click="$emit('next')" :disabled="!hasSelected">Continue</button>
+      <button class="btn-prev" @click="$emit('prev')">
+        <span class="chevron-left"></span> Back
+      </button>
+      <button class="btn-next" @click="$emit('next')" :disabled="!hasSelected">
+        Continue
+        <span class="chevron-right"></span>
+      </button>
     </div>
   </div>
 </template>

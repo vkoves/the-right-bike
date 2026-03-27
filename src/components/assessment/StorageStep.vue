@@ -22,8 +22,12 @@
     </div>
 
     <div class="navigation-buttons">
-      <button class="btn-prev" @click="$emit('prev')">Back</button>
-      <button class="btn-next" @click="$emit('calculate')" :disabled="!modelValue">See My Results</button>
+      <button class="btn-prev" @click="$emit('prev')">
+        <span class="chevron-left"></span> Back
+      </button>
+      <button class="btn-next" @click="$emit('calculate')" :disabled="!modelValue">
+        See My Results!
+      </button>
     </div>
   </div>
 </template>
