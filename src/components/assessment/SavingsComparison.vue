@@ -158,7 +158,7 @@
     <div class="bike-comparison-grid" id="compare">
       <h3>
         <p>Want to check out something else?</p>
-        Compare With Other Bikes
+        Compare With Other Types Of Bikes
       </h3>
       <div class="bike-options-scroll-wrapper">
         <div class="bike-options-scroll-container">
