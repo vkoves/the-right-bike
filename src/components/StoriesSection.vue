@@ -2,9 +2,9 @@
   <section class="stories-section">
     <div class="stories-content">
       <h2>Need Inspiration?</h2>
-      <p class="stories-intro">Read interviews with everyday cyclists who replaced car trips with bikes.</p>
+      <p class="stories-intro">Read interviews with everyday Chicagoans who replaced car trips with bikes.</p>
       <a href="https://chiwho.bike" target="_blank" rel="noopener" class="stories-cta">
-        Read Their Stories on Chicagoans Who Bike &#8594;
+        Read Their Stories <span class="chevron-right"></span>
       </a>
     </div>
     <div class="stories-img-row">

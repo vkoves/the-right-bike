@@ -60,11 +60,17 @@
             <span class="sticky-savings">{{ formatCurrency(stickysavings) }} savings</span>
           </div>
 
-          <your-choices
-            v-if="savedChoices.length"
-            :choices="savedChoices"
-            @edit="goToStep"
-          />
+          <div class="top-row">
+            <a href="#" class="jump-link restart-link" @click.prevent="goToStep(TOTAL_STEPS)">
+              <span class="chevron-left"></span> Back
+            </a>
+
+            <your-choices
+              v-if="savedChoices.length"
+              :choices="savedChoices"
+              @edit="goToStep"
+            />
+          </div>
 
           <h2>Your Recommended Bike Type</h2>
 
@@ -80,12 +86,23 @@
 
           <nav class="results-jump-links" aria-label="Jump to section">
             <div class="jump-label">Quick Links</div>
-            <a href="#savings">💰 Savings</a>
-            <a v-if="!('own' in route.query)" href="#car-faq">🚗 Car FAQ</a>
-            <a href="#buying-options">🛒 Options</a>
-            <router-link to="/gear-guide">⛑️ Gear Guide</router-link>
-            <a href="#" class="restart-link" @click.prevent="goToStep(TOTAL_STEPS)">⬅️ Back</a>
-            <a href="#" class="restart-link" @click.prevent="restartAssessment">🔄 Restart</a>
+
+            <a class="jump-link" href="#savings">
+              <span>💰</span>
+              Savings
+            </a>
+            <a v-if="!('own' in route.query)" class="jump-link" href="#car-faq">
+              <span>🚗</span>
+              FAQ
+            </a>
+            <a class="jump-link" href="#buying-options">
+              <span>🛒</span>
+              Options
+            </a>
+            <a class="jump-link restart-link" href="#" @click.prevent="restartAssessment">
+              <img src="/images/icons/refresh.svg" alt="" class="icon">
+              Restart
+            </a>
           </nav>
 
           <savings-comparison
@@ -103,7 +120,9 @@
           />
 
           <div class="gear-guide-cta">
-            <p>Now that you know your bike, make sure you have the essentials.</p>
+            <p>
+              Now that you know the type of bike we think you should get - learn about some essentials gear!
+            </p>
             <router-link to="/gear-guide" class="gear-guide-btn">
               View Essential Gear Guide
             </router-link>
@@ -544,6 +563,12 @@ onUnmounted(() => {
   padding: 2rem;
 }
 
+.top-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
 .page-intro {
   text-align: center;
   max-width: 700px;
@@ -694,31 +719,33 @@ h1 {
     width: 100%;
     text-align: left;
   }
+}
 
-  a {
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    background-color: vars.$primary-lighter;
-    color: vars.$primary-dark;
-    border-radius: 50px;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.2s, color 0.2s;
+a.jump-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  background-color: vars.$primary-lighter;
+  color: vars.$primary-dark;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: vars.$primary;
+    color: vars.$white;
+  }
+
+  &.restart-link {
+    background-color: vars.$lighter-gray;
+    color: vars.$light-gray;
 
     &:hover {
-      background-color: vars.$primary;
-      color: vars.$white;
-    }
-
-    &.restart-link {
-      background-color: vars.$lighter-gray;
-      color: vars.$light-gray;
-
-      &:hover {
-        background-color: vars.$border-gray;
-        color: vars.$dark;
-      }
+      background-color: vars.$border-gray;
+      color: vars.$dark;
     }
   }
 }
@@ -738,8 +765,10 @@ h2 {
   text-align: center;
 
   p {
-    margin-bottom: 0.75rem;
+    margin: 0 auto 1rem auto;
+    margin-bottom: 1rem;
     color: vars.$primary-dark;
+    max-width: 37.5rem;
   }
 }
 

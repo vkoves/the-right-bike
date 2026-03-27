@@ -8,7 +8,7 @@
             With Just 4 Questions!
           </span>
         </h1>
-        <p class="subtitle">Find the right bike to help cycling replace some of your car trips</p>
+        <p class="subtitle">Find the right bike to help biking replace some of your car trips</p>
 
         <h2>Why Bike?</h2>
 
@@ -222,7 +222,6 @@ h1 {
 .subtitle {
   color: vars.$dark;
   font-size: 1.25rem;
-  max-width: 18.75rem;
   margin: 0 auto 1.5rem auto;
 }
 
@@ -424,7 +423,6 @@ h1 {
 }
 
 @media (max-width: 1024px) {
-
   .hero-container {
     flex-direction: column;
   }
@@ -439,6 +437,9 @@ h1 {
     .smaller {
       font-size: 1.5rem;
       font-weight: 600;
+    }
+    .subtitle {
+      max-width: 18.75rem;
     }
   }
 

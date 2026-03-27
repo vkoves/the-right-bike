@@ -1,6 +1,6 @@
 <template>
   <div class="buying-options" v-if="visibleModels && visibleModels.length">
-    <h3 id="options">Some Potential Options <anchor-copy-button anchor="options" /></h3>
+    <h3 id="options">Some Specific Bikes to Consider <anchor-copy-button anchor="options" /></h3>
     <p class="buying-subtitle">
       Here's some specific models to consider at different price points!
     </p>

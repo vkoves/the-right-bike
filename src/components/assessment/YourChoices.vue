@@ -6,7 +6,7 @@
     </button>
     <div v-show="expanded" class="your-choices-body">
       <p>
-        Click Any Option To Change It!
+        Click Any Option To Change It
       </p>
       <div class="your-choices-pills">
         <div v-for="group in choices" :key="group.category" class="choice-group">
@@ -47,7 +47,7 @@ const expanded = ref(false);
   max-width: 100%;
   margin-bottom: 1.5rem;
   border: 1px solid vars.$border-gray;
-  border-radius: vars.$border-radius-sm;
+  border-radius: vars.$border-radius;
   overflow: hidden;
 }
 
@@ -57,11 +57,11 @@ const expanded = ref(false);
   align-items: center;
   justify-content: flex-start;
   gap: 0.5rem;
-  padding: 0.4rem 0.75rem;
-  background-color: vars.$lightest-gray;
+  padding: 0.55rem 0.75rem;
+  background-color: vars.$lighter-gray;
   border: none;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: vars.$text-secondary;
   font-family: inherit;
 

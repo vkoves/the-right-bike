@@ -6,8 +6,8 @@
       <div>
         <h2>Our Mission</h2>
         <p>
-          At Find The Right Bike, we're passionate about helping people discover the benefits of cycling
-          as a sustainable, healthy, and cost-effective transportation alternative. Our mission is to
+          Find The Right Bike is built to help people discover the benefits of biking as a
+          sustainable, healthy, and cost-effective transportation alternative. We want to
           provide tools and information that make it easy for anyone to evaluate whether a bicycle
           could replace some or all of their car trips.
         </p>
@@ -19,14 +19,14 @@
             past a tennis court, wearing shorts, a t-shirt and sunglasses">
         <p>
           Find The Right Bike is created by Viktor Köves, who also created
-          <a href="https://chiwho.bike">Chicagoans Who Bike</a>, a multi-media project interviewing
-          people who bike around Chicago.
+          <a href="https://chiwho.bike" target="_blank" rel="noopener">Chicagoans Who Bike</a>,
+          a photo and video project interviewing people who bike around Chicago.
         </p>
       </div>
     </section>
 
     <section class="about-section">
-      <h2>Why Cycling?</h2>
+      <h2>Why Start Biking?</h2>
       <div class="benefits-grid">
         <div class="benefit-card">
           <h3>Financial Savings</h3>
