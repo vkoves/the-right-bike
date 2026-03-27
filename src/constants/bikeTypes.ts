@@ -115,7 +115,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     electric: true,
     bulky: true,
     storageDowngrade: 'commuter-ebike',
-    similarTypes: ['longtail-bike', 'cargo-ebike', 'commuter-ebike'],
+    similarTypes: ['cargo-ebike', 'cargo-etrike', 'longtail-bike', 'commuter-ebike'],
     description: 'A longtail cargo eBike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [
       'Extended rear deck for passengers',
@@ -133,7 +133,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     electric: true,
     bulky: true,
     storageDowngrade: 'commuter-ebike',
-    similarTypes: ['cargo-etrike', 'commuter-ebike'],
+    similarTypes: ['cargo-etrike', 'longtail-ebike', 'commuter-ebike'],
     description: 'An electric trike offers maximum stability with three wheels, making it ideal ' +
       'if you have balance concerns. Electric assist makes hauling cargo or passengers effortless.',
     features: [
