@@ -3,9 +3,9 @@
     class="anchor-copy-btn"
     :class="{ '-copied': showCopied }"
     @click="copyAnchorLink"
-    :title="showCopied ? 'Copied!' : 'Copy link to this section'"
-  >
+    >
     <span class="anchor-copy-icon" aria-hidden="true"></span>
+    <span :class="{ '-show': showCopied }" class="copied-text">Copied!</span>
   </button>
 </template>
 
@@ -34,6 +34,7 @@ async function copyAnchorLink() {
 @use '../assets/scss/variables' as vars;
 
 .anchor-copy-btn {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
@@ -55,5 +56,20 @@ async function copyAnchorLink() {
   background-color: vars.$primary;
   mask: url('/images/icons/share.svg') no-repeat center / contain;
   -webkit-mask: url('/images/icons/share.svg') no-repeat center / contain;
+}
+
+.copied-text {
+  background: vars.$dark;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem;
+  position: absolute;
+  border-radius: 5px;
+  top: 5%;
+  left: 120%;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  &.-show { opacity: 1; }
 }
 </style>

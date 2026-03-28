@@ -43,10 +43,11 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: vars.$text-body;
   background-color: vars.$bg-body;
+
+  &, * { font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 }
 
 .app-wrapper {
