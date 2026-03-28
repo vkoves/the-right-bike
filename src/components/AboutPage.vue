@@ -7,9 +7,9 @@
         <h2>Our Mission</h2>
         <p>
           Find The Right Bike is built to help people discover the benefits of biking as a
-          sustainable, healthy, and cost-effective transportation alternative. We want to
-          provide tools and information that make it easy for anyone to evaluate whether a bicycle
-          could replace some or all of their car trips.
+          sustainable, healthy, and cost-effective transportation alternative. We wanted to build
+          a third-party tool, unaffiliated with any brand, to make it easy for anyone to
+          what type of bike is right for them, and some potential purchase options!
         </p>
       </div>
 
@@ -23,41 +23,6 @@
           a photo and video project interviewing people who bike around Chicago.
         </p>
       </div>
-    </section>
-
-    <section class="about-section">
-      <h2>Why Start Biking?</h2>
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <h3>Financial Savings</h3>
-          <p>Save thousands annually on fuel, car payments, insurance, maintenance, and parking fees.</p>
-        </div>
-        <div class="benefit-card">
-          <h3>Health Benefits</h3>
-          <p>Incorporate physical activity into your daily routine, improving cardiovascular health and mental wellbeing.</p>
-        </div>
-        <div class="benefit-card">
-          <h3>Environmental Impact</h3>
-          <p>Reduce your carbon footprint and contribute to cleaner air in your community.</p>
-        </div>
-        <div class="benefit-card">
-          <h3>Community Connection</h3>
-          <p>Experience your neighborhood at a human pace and connect more with your local community.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="about-section">
-      <h2>How Our Calculator Works</h2>
-      <p>Our calculator takes into account your specific transportation needs, local conditions, and personal preferences to help you understand:</p>
-
-      <ul>
-        <li>Which trips you currently make by car could reasonably be replaced by bicycle</li>
-        <li>What type of bicycle might best suit your needs</li>
-        <li>How much money you could save over time</li>
-        <li>The environmental impact of making this switch</li>
-        <li>Health benefits you might experience</li>
-      </ul>
     </section>
 
     <section class="about-section contact">
