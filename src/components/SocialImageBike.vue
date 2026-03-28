@@ -11,8 +11,8 @@
     <div class="photo-area">
       <div class="photo-frame">
         <img :src="bike.image" :alt="bike.title">
+        <div v-if="bike.electric" class="electric-badge">⚡ Electric</div>
       </div>
-      <div v-if="bike.electric" class="electric-badge">⚡ Electric</div>
     </div>
     <div class="site-brand">
       <img src="/images/icons/favicon.svg" alt="" class="site-logo">
@@ -44,7 +44,7 @@ const bike = computed(() => BikeTypes[props.type as BikeTypeId] || null);
 
   li {
     color: vars.$white;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 600;
     padding: 0.3rem 0;
 
@@ -60,13 +60,13 @@ const bike = computed(() => BikeTypes[props.type as BikeTypeId] || null);
   background-color: rgba(255, 255, 255, 0.18);
   color: vars.$white;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   padding: 0.5rem 1.25rem;
   border-radius: 50px;
 }
 
 .photo-area {
-  width: 440px;
+  width: 400px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -80,7 +80,7 @@ const bike = computed(() => BikeTypes[props.type as BikeTypeId] || null);
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transform: rotate(2deg);
+  transform: rotate(2deg) translateX(-1rem);
 
   img {
     width: 360px;
@@ -91,9 +91,10 @@ const bike = computed(() => BikeTypes[props.type as BikeTypeId] || null);
 }
 
 .electric-badge {
-  top: 2rem;
-  right: 2.5rem;
+  top: -1rem;
+  right: 1.5rem;
   font-size: 0.9rem;
   padding: 0.35rem 0.75rem;
+  border: solid 3px white;
 }
 </style>

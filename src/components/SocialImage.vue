@@ -2,7 +2,7 @@
   <div class="social-image">
     <div class="content">
       <div class="eyebrow">4 questions. No nonsense.</div>
-      <h1>Find The<br>Right Bike</h1>
+      <h1>Find The<br> Right Bike</h1>
       <div class="benefits-summary">
         <div class="benefit-item">
           <div class="benefit-icon">💰</div>
@@ -24,7 +24,8 @@
     </div>
     <div class="collage">
       <div class="photo photo-1">
-        <img src="/images/bikes/dutch-bike.jpg" alt="City bike">
+        <img src="/images/bikes/urban-arrow.jpg" alt="Family bike">
+
       </div>
       <div class="photo photo-2">
         <img src="/images/bikes/gazelle-ebike.jpg" alt="Electric bike">
@@ -33,7 +34,7 @@
         <img src="/images/bikes/tern-gsd-500.jpg" alt="Cargo bike">
       </div>
       <div class="photo photo-4">
-        <img src="/images/bikes/urban-arrow.jpg" alt="Family bike">
+        <img src="/images/bikes/dutch-bike.jpg" alt="City bike">
       </div>
     </div>
     <div class="site-brand">
@@ -57,7 +58,7 @@
 }
 
 h1 {
-  font-size: 3.5rem;
+  font-size: 4rem;
 }
 
 .benefits-summary { gap: 1rem 0.5rem; }
@@ -67,7 +68,7 @@ h1 {
   color: vars.$white;
   font-weight: 700;
   box-shadow: none;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 // 2x2 collage
@@ -108,12 +109,13 @@ h1 {
   }
   &.photo-3 {
     background: #FFBE0B;
-    transform: rotate(2deg) translate(1rem, -2rem);
+    transform: rotate(-4deg) translate(5rem, -1rem);
     z-index: 1;
+
   }
   &.photo-4 {
     background: #06D6A0;
-    transform: rotate(-3deg) translate(-1rem, 0rem);
+    transform: rotate(3deg) translate(0.5rem, -2rem);
   }
 }
 </style>

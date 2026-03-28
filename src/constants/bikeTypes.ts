@@ -46,7 +46,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     description: 'A commuter eBike is ideal for your situation. The electric assistance will help with hills, wind, or longer distances while maintaining the convenience of a standard bicycle.',
     features: [
       'Electric motor assists up to 20-28 mph',
-      'Helps overcome hills and wind resistance',
+      'Overcome hills and wind resistance',
       'Reduces sweat during commutes',
       '20-50 mile range per charge'
     ],
@@ -63,9 +63,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     similarTypes: ['cargo-ebike', 'longtail-bike', 'cargo-etrike'],
     description: 'A non-electric cargo bike will address your carrying needs. These bikes are designed to handle loads while maintaining stability and ease of use without requiring battery power.',
     features: [
-      'Front cargo box for groceries and goods',
-      'Stable frame design for carrying heavy loads',
-      'Can transport goods, groceries, or equipment',
+      'Front cargo box for people or cargo',
+      'Stable frame design for heavy loads',
       'No battery to charge or maintain'
     ],
     priceRange: '$1,000 - $2,500',
@@ -81,8 +80,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     similarTypes: ['cargo-etrike', 'longtail-ebike', 'cargo-bike'],
     description: 'A cargo eBike with front loading design is perfect for your needs. The electric assistance makes hauling cargo easier, while the bucket design is ideal for groceries and goods.',
     features: [
-      'Large front cargo area for groceries or goods',
-      'Electric assist makes carrying loads easier',
+      'Front cargo box for people or cargo',
+      'E-assist makes carrying loads easier',
       'Stable even when fully loaded',
       'Can replace a car for most errands'
     ],
@@ -99,9 +98,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     similarTypes: ['longtail-ebike', 'cargo-bike', 'cargo-ebike'],
     description: 'A non-electric longtail cargo bike is perfect for transporting people and heavy loads. With your fitness level, you can handle this sturdy bike without electric assistance while still carrying passengers or cargo.',
     features: [
-      'Extended rear deck for passengers or cargo',
       'High weight capacity (up to 550 lbs)',
       'Can carry several children',
+      'Rear deck for passengers or cargo',
       'No battery charging required'
     ],
     priceRange: '$1,800 - $2,500',
@@ -118,9 +117,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     similarTypes: ['cargo-ebike', 'cargo-etrike', 'longtail-bike', 'commuter-ebike'],
     description: 'A longtail cargo eBike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [
-      'Extended rear deck for passengers',
-      'Electric assist makes carrying passengers easier',
-      'Can accommodate child seats or passenger seating',
+      'E-assist makes carrying passengers easier',
+      'Can accommodate child seats or adult seating',
+      'Rear deck for passengers',
       'High weight capacity'
     ],
     priceRange: '$1,500 - $6,000',
@@ -137,9 +136,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     description: 'An electric trike offers maximum stability with three wheels, making it ideal ' +
       'if you have balance concerns. Electric assist makes hauling cargo or passengers effortless.',
     features: [
-      'Three-wheel design for maximum stability',
-      'Low step-through frame for easy mounting',
-      'Electric assist for hills and heavy loads',
+      'Three wheels for maximum stability',
+      'Step-through frame for easy mounting',
+      'E-assist for hills and heavy loads',
       'Large cargo capacity'
     ],
     priceRange: '$1,500 - $3,999',
@@ -155,9 +154,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     similarTypes: ['cargo-ebike', 'etrike', 'longtail-ebike', 'cargo-bike'],
     description: 'A cargo electric trike combines the stability of three wheels with a front-loading cargo area. Ideal for hauling kids, pets, or heavy loads with confidence and zero balance concerns.',
     features: [
-      'Three-wheel design for maximum stability',
+      'Three wheels for maximum stability',
       'Front cargo box for kids, pets, or goods',
-      'Electric assist for heavy loads and hills',
+      'E-assist for heavy loads and hills',
       'No balance required — safe for all abilities'
     ],
     priceRange: '$2,300 - $6,500',
