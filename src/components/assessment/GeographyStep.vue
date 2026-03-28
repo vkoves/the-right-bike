@@ -38,7 +38,7 @@
       </button>
     </div>
 
-    <div class="navigation-buttons">
+    <div class="navigation-buttons -single-row">
       <button class="btn-prev" @click="$emit('prev')">
         <span class="chevron-left"></span> Back
       </button>

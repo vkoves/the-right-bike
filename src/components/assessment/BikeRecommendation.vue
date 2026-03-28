@@ -209,6 +209,7 @@ const idealArticle = computed(() => {
   color: vars.$white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   width: fit-content;
+  z-index: 1;
 }
 
 .comparison-badge {
@@ -315,7 +316,7 @@ const idealArticle = computed(() => {
   height: 80px;
   border-radius: 8px;
   margin-right: 1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
@@ -358,13 +359,13 @@ const idealArticle = computed(() => {
     background-color: vars.$white;
     padding: 1rem;
   }
-}
 
-@media (max-width: 768px) {
   .title-row {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .result-image { margin-top: 1rem; }
 
   .result-content h3 {
     margin-right: 0;
@@ -382,8 +383,7 @@ const idealArticle = computed(() => {
     }
   }
 
-  .comparison-badge,
-  .recommendation-badge {
+  .comparison-badge {
     position: static;
     display: inline-block;
     margin-bottom: 1rem;

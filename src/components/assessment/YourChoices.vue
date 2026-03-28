@@ -48,7 +48,6 @@ const expanded = ref(false);
   margin-bottom: 1.5rem;
   border: 1px solid vars.$border-gray;
   border-radius: vars.$border-radius;
-  overflow: hidden;
 }
 
 .your-choices-toggle {
@@ -115,13 +114,13 @@ const expanded = ref(false);
   padding: 0.3rem 0.75rem;
   background-color: vars.$primary-lighter;
   color: vars.$primary-dark;
-  border: 1px solid transparent;
+  border: 1px solid vars.$primary-light;
   border-radius: 50px;
   font-size: 0.8rem;
   font-weight: 600;
   font-family: inherit;
-  cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
+  cursor: pointer;
 
   &:hover {
     background-color: vars.$lighter-gray;
@@ -131,5 +130,19 @@ const expanded = ref(false);
 
 .pill-icon {
   font-size: 0.9rem;
+}
+
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .your-choices-pills {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .choice-group {
+    display: block;
+    text-align: left;
+
+    .group-label { display: block; }
+  }
 }
 </style>

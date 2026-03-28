@@ -26,7 +26,7 @@
       </button>
     </div>
 
-    <div class="navigation-buttons">
+    <div class="navigation-buttons -single-row">
       <button class="btn-next" @click="$emit('next')" :disabled="!hasSelectedAny">
         Continue
         <span class="chevron-right"></span>

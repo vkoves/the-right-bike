@@ -152,6 +152,7 @@ h2 {
   @extend %btn-base;
   background-color: vars.$lighter-gray;
   color: vars.$light-gray;
+  padding-left: 1rem;
 
   &:hover {
     background-color: color.adjust(vars.$lighter-gray, $lightness: -5%);
@@ -163,6 +164,8 @@ h2 {
   background-color: vars.$primary;
   color: vars.$white;
   margin-left: auto;
+  padding-right: 1rem;
+
 
   &:hover {
     background-color: vars.$primary-dark;
@@ -230,12 +233,15 @@ h2 {
     gap: 1rem;
   }
 
-  .navigation-buttons {
+  .navigation-buttons { gap: vars.$spacing-md; }
+
+  .navigation-buttons:not(.-single-row) {
     flex-direction: column-reverse;
-    gap: vars.$spacing-md;
+
+    button { width: 100%; }
   }
 
-  .btn-prev, .btn-next, .btn-restart, .btn-details {
+  .btn-restart, .btn-details {
     width: 100%;
   }
 }

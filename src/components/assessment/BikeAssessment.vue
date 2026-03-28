@@ -569,6 +569,10 @@ onUnmounted(() => {
   align-items: flex-start;
 }
 
+h2 {
+  margin-top: 1rem;
+}
+
 .page-intro {
   text-align: center;
   max-width: 700px;
@@ -756,7 +760,6 @@ h2 {
   color: vars.$dark;
 }
 
-
 .gear-guide-cta {
   margin: 2rem 0;
   padding: 1.5rem;
@@ -819,7 +822,7 @@ h2 {
   }
 
   h2 {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 
   .page-intro {

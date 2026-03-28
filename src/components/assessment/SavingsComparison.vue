@@ -35,16 +35,20 @@
         </p>
         <div class="slider-row">
           <div class="slider-track-group">
-            <input
-              id="replacement-slider"
-              attr.aria-describedby="replace-subtitle"
-              type="range"
-              v-model.number="replacementPercent"
-              min="25"
-              max="100"
-              step="5"
-              class="slider-input"
-            >
+            <div class="slider-track">
+              <input
+                  id="replacement-slider"
+                  attr.aria-describedby="replace-subtitle"
+                  type="range"
+                  v-model.number="replacementPercent"
+                  :min="ReplacementMin"
+                  max="100"
+                  step="5"
+                  class="slider-input"
+                >
+              <div class="slider-fill-bar"
+                :style=" { width: (100 *  ((replacementPercent - ReplacementMin) / ReplacementRange) - 1) + '%' }"></div>
+            </div>
             <div class="slider-range">
               <span>25%</span>
               <span>100%</span>
@@ -212,6 +216,10 @@ import BikeBuyingOptions from './BikeBuyingOptions.vue';
 const EstGrowthRate = 0.07;
 const InvestmentYearsShort = 10;
 const InvestmentYearsLong = 40;
+
+const ReplacementMin = 25;
+const ReplacementRange = 100 - ReplacementMin;
+
 // a pretty rough guestimate, but you can definitely take an international vacation for this much
 const IntlVacationCost = 2_500;
 
@@ -585,6 +593,20 @@ function formatRounded(value: number) {
   flex: 1;
   min-width: 0;
   margin-top: 0.4rem;
+
+  .slider-track {
+    position: relative;
+
+    .slider-fill-bar {
+      position: absolute;
+      width: 150px;
+      height: 9px;
+      border-radius: 5px 0 0 5px;
+      top: 10px;
+      background-color: vars.$primary;
+      pointer-events: none;
+    }
+  }
 }
 
 .slider-value {
@@ -614,6 +636,7 @@ function formatRounded(value: number) {
     border-radius: 50%;
     cursor: pointer;
     box-shadow: vars.$shadow-md;
+    z-index: 10;
 
     &:hover {
       background: vars.$primary-dark;
