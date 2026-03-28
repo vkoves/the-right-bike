@@ -47,7 +47,7 @@
                   class="slider-input"
                 >
               <div class="slider-fill-bar"
-                :style=" { width: (100 *  ((replacementPercent - ReplacementMin) / ReplacementRange) - 1) + '%' }"></div>
+                :style=" { width: (98 *  ((replacementPercent - ReplacementMin) / ReplacementRange)) + '%' }"></div>
             </div>
             <div class="slider-range">
               <span>25%</span>
@@ -637,6 +637,7 @@ function formatRounded(value: number) {
     cursor: pointer;
     box-shadow: vars.$shadow-md;
     z-index: 10;
+    position: relative;
 
     &:hover {
       background: vars.$primary-dark;
