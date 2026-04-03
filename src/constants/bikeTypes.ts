@@ -34,7 +34,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'No charging required'
     ],
     priceRange: '$300 - $1,000',
-    costs: { purchase: 800, maintenance: 150, fuel: 0, insurance: 0 }
+    costs: { purchase: 800, maintenance: 150, fuel: 0, insurance: 0 },
+    showTrailerTip: true
   },
   'commuter-ebike': {
     title: 'Commuter eBike',
@@ -51,7 +52,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       '20-50 mile range per charge'
     ],
     priceRange: '$1,500 - $4,000',
-    costs: { purchase: 2500, maintenance: 250, fuel: EbikeElectricityCost, insurance: 100 }
+    costs: { purchase: 2500, maintenance: 250, fuel: EbikeElectricityCost, insurance: 100 },
+    showTrailerTip: true
   },
   'cargo-bike': {
     title: 'Classic Cargo Bike',
@@ -142,7 +144,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'Large cargo capacity'
     ],
     priceRange: '$1,500 - $3,999',
-    costs: { purchase: 2500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 }
+    costs: { purchase: 2500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 },
+    showTrailerTip: true
   },
   'cargo-etrike': {
     title: 'Cargo Electric Trike',

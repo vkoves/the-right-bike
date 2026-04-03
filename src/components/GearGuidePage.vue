@@ -36,7 +36,7 @@
     <h2 class="section-heading">Important Extras</h2>
 
     <div class="gear-grid">
-      <div v-for="item in NICE_TO_HAVE_GEAR" :key="item.id" class="gear-card">
+      <div v-for="item in NICE_TO_HAVE_GEAR" :key="item.id" :id="item.id" class="gear-card">
         <img v-if="item.image" :src="item.image" :alt="item.title" class="gear-image" :class="item.imageClass">
         <div class="gear-card-body">
           <h3>{{ item.title }}</h3>

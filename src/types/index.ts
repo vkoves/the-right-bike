@@ -22,6 +22,7 @@ export interface BikeType {
   features: string[];
   priceRange: string;
   costs: BikeCost;
+  showTrailerTip?: boolean;
 }
 
 // --- Costs (bikeCosts.ts) ---

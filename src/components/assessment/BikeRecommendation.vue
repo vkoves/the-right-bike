@@ -62,6 +62,19 @@
 
       <share-button :savings-amount="savingsAmount" />
     </div>
+
+      <div v-if="recommendationDetails.showTrailerTip" class="trailer-tip">
+        <img src="/images/gear/bike-trailer.webp" alt="Bike trailer" class="trailer-image">
+        <div class="trailer-tip-body">
+          <strong>Need To Haul More? Get A Trailer!</strong>
+          <p>
+            A trailer hitches to your bike for extra cargo capacity and can store flat.
+          </p>
+          <a href="/gear-guide#bike-trailer" target="_blank" rel="noopener" class="trailer-link">
+            See Trailer Reviews <span class="chevron-right"></span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -102,8 +115,6 @@ const idealArticle = computed(() => {
   border-radius: 12px;
   padding: 2rem;
   margin: 2rem 0;
-  display: flex;
-  flex-direction: column;
   box-shadow: vars.$shadow-sm;
   text-align: left;
   position: relative;
@@ -301,6 +312,47 @@ const idealArticle = computed(() => {
   p + p { margin-top: 1rem; }
 }
 
+.trailer-tip {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  background-color: vars.$bg-highlight;
+  border-radius: 8px;
+  box-shadow: vars.$shadow-sm;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: vars.$primary-dark;
+  overflow: hidden;
+
+  p {
+    margin: 0.5rem 0;
+  }
+}
+
+.trailer-image {
+  width: 150px;
+  flex-shrink: 0;
+  object-fit: contain;
+  align-self: stretch;
+  background-color: vars.$white;
+}
+
+.trailer-tip-body {
+  padding: 1rem 1.25rem;
+}
+
+.trailer-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+  color: vars.$primary;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .ideal-link {
   color: vars.$secondary-dark;
   text-decoration: underline;
@@ -321,9 +373,26 @@ const idealArticle = computed(() => {
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
   .recommendation-card {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 2rem;
+  }
+
+  .result-image {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 0;
+  }
+
+  .result-content {
+    grid-column: 2;
+    grid-row: 1 / -1;
+  }
+
+  .trailer-tip {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .ideal-note {
@@ -341,16 +410,6 @@ const idealArticle = computed(() => {
   .ideal-note-image {
     float: none;
     margin: auto;
-  }
-
-  .result-image {
-    flex: 0 0 40%;
-    margin-right: 2rem;
-    margin-bottom: 0;
-  }
-
-  .result-content {
-    flex: 1;
   }
 }
 
@@ -387,6 +446,15 @@ const idealArticle = computed(() => {
     position: static;
     display: inline-block;
     margin-bottom: 1rem;
+  }
+
+  .trailer-tip {
+    flex-direction: column;
+  }
+
+  .trailer-image {
+    width: 100%;
+    padding-right: 20%;
   }
 }
 </style>
