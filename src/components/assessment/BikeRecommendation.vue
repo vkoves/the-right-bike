@@ -15,9 +15,9 @@
         </p>
         <p class="ideal-note-tip">
           However, some people do store cargo bikes outside under motorcycle covers!
-          <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440" target="_blank" rel="noopener" class="ideal-link">
-            See how one cargo bike family in NYC does it.
-          </a>
+          <router-link to="/storage" class="ideal-link">
+            Learn more about bike storage options.
+          </router-link>
         </p>
       </div>
     </div>
