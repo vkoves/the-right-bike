@@ -393,6 +393,7 @@ const idealArticle = computed(() => {
   .trailer-tip {
     grid-column: 1;
     grid-row: 2;
+    align-self: start;
   }
 
   .ideal-note {
