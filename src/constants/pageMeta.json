@@ -13,6 +13,10 @@
     "maintenance": {
       "title": "Maintenance Basics",
       "description": "Learn the basics of bike maintenance - from airing up tires to lubing your chain - and find resources to go deeper."
+    },
+    "storage": {
+      "title": "Bike Storage",
+      "description": "No garage? No problem. Learn how to store your bike outdoors, indoors, or in small spaces - including tips for cargo bikes."
     }
   }
 }

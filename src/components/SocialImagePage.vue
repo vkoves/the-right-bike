@@ -30,6 +30,9 @@ const PageImages: Record<string, { image?: string; images?: string[] }> = {
   maintenance: {
     image: '/images/bike-maintenance.webp',
   },
+  storage: {
+    image: '/images/bike-storage.webp',
+  },
   'gear-guide': {
     images: [
       '/images/gear/helmet.webp',

@@ -1,6 +1,6 @@
 <template>
-  <div class="maintenance-page">
-    <img class="maint-img" src="/images/bike-maintenance.webp" alt="">
+  <div class="info-page">
+    <img class="hero-img" src="/images/bike-maintenance.webp" alt="">
 
     <h1>Maintenance Basics</h1>
 
@@ -76,63 +76,5 @@
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/scss/variables' as vars;
-
-.maintenance-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-h1 {
-  color: vars.$primary;
-  margin-bottom: 1rem;
-}
-
-.page-intro {
-  max-width: 700px;
-  font-size: 1.2rem;
-  color: vars.$text-secondary;
-}
-
-.maint-img {
-  float: right;
-  max-width: 40%;
-  margin: 1.5rem;
-  box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.7)
-}
-
-h2, p + p { margin-top: 1rem; }
-
-h2 { margin-bottom: 0.5rem; }
-
-ul {
-  margin: 1rem 0rem 1rem 1.5rem;
-
-  li + li { margin-top: 0.5rem; }
-}
-
-p, ul {
-  max-width: 50rem;
-}
-
-// Turn into cover image on mobile
-@media (max-width: #{vars.$breakpoint-mobile}) {
-  .maint-img {
-    width: 100vw;
-    max-width: none;
-    margin: -2rem -2rem -3.5rem -2rem;
-    max-height: 10rem;
-    object-fit: cover;
-    float: none;
-    filter: brightness(0.6);
-  }
-
-  h1 {
-    position: relative;
-    z-index: 1;
-    color: vars.$white;
-    text-shadow: vars.$shadow-text;
-  }
-}
+@use '../assets/scss/info-page';
 </style>

@@ -4,6 +4,7 @@ import AboutPage from '../components/AboutPage.vue'
 import BikeAssessment from '../components/assessment/BikeAssessment.vue'
 import GearGuidePage from '../components/GearGuidePage.vue'
 import MaintenancePage from '../components/MaintenancePage.vue'
+import StoragePage from '../components/StoragePage.vue'
 import SocialImage from '../components/SocialImage.vue'
 import SocialImageBike from '../components/SocialImageBike.vue'
 import SocialImagePage from '../components/SocialImagePage.vue'
@@ -46,6 +47,12 @@ const routes = [
     name: 'Maintenance',
     component: MaintenancePage,
     meta: { title: PageMeta.maintenance.title }
+  },
+  {
+    path: '/storage',
+    name: 'Storage',
+    component: StoragePage,
+    meta: { title: PageMeta.storage.title }
   },
   {
     path: '/social-image',

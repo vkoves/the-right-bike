@@ -45,6 +45,7 @@ const NavLinks = [
   { to: '/assessment', label: 'Bike Finder' },
   { to: '/gear-guide', label: 'Gear Guide' },
   { to: '/maintenance', label: 'Maintenance' },
+  { to: '/storage', label: 'Storage' },
   { to: '/about', label: 'About' },
 ];
 
