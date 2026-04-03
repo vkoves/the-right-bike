@@ -111,6 +111,12 @@ export interface AssessmentOption {
 }
 
 // --- Gear (essentialGear.ts) ---
+export interface GearLink {
+  url: string;
+  title: string;
+  source?: string;
+}
+
 export interface GearItem {
   id: string;
   image?: string;
@@ -119,10 +125,8 @@ export interface GearItem {
   emoji?: string;
   title: string;
   description: string;
-  wirecutter?: {
-    url: string;
-    title: string;
-  };
+  wirecutter?: Omit<GearLink, 'source'>;
+  links?: GearLink[];
 }
 
 // --- Your Choices summary (used for sessionStorage persistence) ---

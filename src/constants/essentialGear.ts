@@ -74,8 +74,28 @@ export const NICE_TO_HAVE_GEAR: GearItem[] = [
       'Rack-mounted panniers beat a backpack for hauling groceries, work gear, or anything heavier than a phone. They keep the weight low on the bike instead of on your shoulders, so you arrive less sweaty and more comfortable.',
     wirecutter: {
       url: 'https://www.nytimes.com/wirecutter/reviews/best-bike-rack-basket-panniers',
-      title: 'Best Bike Racks, Baskets, and Panniers',
+      title: 'Best Bike Panniers',
     },
+  },
+  {
+    id: 'bike-trailer',
+    image: '/images/gear/bike-trailer.webp',
+    imageClass: '-no-pad-left',
+    title: 'Bike Trailer',
+    description:
+      'A bike trailer lets you haul heavy or bulky loads without needing a cargo bike. Great for occasional big grocery runs, camping gear, or transporting kids — just hitch it on when you need it and store it flat when you don\'t.',
+    links: [
+      {
+        url: 'https://www.outdoorgearlab.com/topics/biking/best-bike-trailer',
+        title: 'Best Bike Trailers',
+        source: 'Outdoor Gear Lab',
+      },
+      {
+        url: 'https://www.outdoorgearlab.com/topics/biking/best-bike-cargo-trailer',
+        title: 'Best Cargo Bike Trailers',
+        source: 'Outdoor Gear Lab',
+      },
+    ],
   },
 ];
 

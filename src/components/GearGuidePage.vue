@@ -24,9 +24,10 @@
             :href="item.wirecutter?.url"
             target="_blank"
             rel="noopener"
-            class="wirecutter-link"
+            class="review-link"
           >
             {{ item.wirecutter?.title }} <span class="chevron-right"></span>
+            <span class="review-source">Wirecutter</span>
           </a>
         </div>
       </div>
@@ -41,13 +42,28 @@
           <h3>{{ item.title }}</h3>
           <p>{{ item.description }}</p>
           <a
-            :href="item.wirecutter?.url"
+            v-if="item.wirecutter"
+            :href="item.wirecutter.url"
             target="_blank"
             rel="noopener"
-            class="wirecutter-link"
+            class="review-link"
           >
-            {{ item.wirecutter?.title }} <span class="chevron-right"></span>
+            {{ item.wirecutter.title }} <span class="chevron-right"></span>
+            <span class="review-source">Wirecutter</span>
           </a>
+          <template v-if="item.links">
+            <a
+              v-for="link in item.links"
+              :key="link.url"
+              :href="link.url"
+              target="_blank"
+              rel="noopener"
+              class="review-link"
+            >
+              {{ link.title }} <span class="chevron-right"></span>
+              <span v-if="link.source" class="review-source">{{ link.source }}</span>
+            </a>
+          </template>
         </div>
       </div>
     </div>
@@ -162,7 +178,10 @@ h1 {
   flex-direction: column;
   flex: 1;
 
-  p { flex: 1; }
+  p {
+    flex: 1;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .gear-image-pair {
@@ -209,6 +228,11 @@ h1 {
   &.-extra-padding {
     padding: 2.5rem;
   }
+
+  &.-no-pad-left {
+    padding-left: 0;
+    object-fit: cover;
+  }
 }
 
 .gear-image-container {
@@ -233,16 +257,23 @@ h1 {
   }
 }
 
-.wirecutter-link {
-  display: inline-block;
+.review-link {
+  display: block;
   margin-top: 1rem;
   color: vars.$primary;
   font-weight: 600;
   text-decoration: none;
+  line-height: 1.2;
 
   &:hover {
     text-decoration: underline;
   }
+}
+
+.review-source {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 400;
 }
 
 .winter-section {

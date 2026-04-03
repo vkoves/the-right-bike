@@ -11,10 +11,11 @@ Usage="Usage: $(basename "$0") <input-file> <output-name>
 
 Arguments:
   input-file    Source image (any format ImageMagick supports)
-  output-name   Output filename without extension (saved as .webp
-                in public/images/bike-models/)
+  output-name   Output filename without extension (saved as .webp)
 
 Options:
+  --gear            Output to public/images/gear/ at 500px wide
+                    (default: public/images/bike-models/ at 1000px)
   --crop WxH+X+Y   Remove a region (e.g. a logo) by making it
                     transparent before trimming. Implies alpha.
   --fuzz N%         Trim tolerance (default: 5%)
@@ -23,17 +24,20 @@ Options:
 Examples:
   $(basename "$0") ~/Downloads/photo.jpg velotric-triker
   $(basename "$0") ~/Downloads/render.png bunch-the-original --fuzz 2%
-  $(basename "$0") ~/Downloads/logo.png my-bike --crop 1350x700+3400+0"
+  $(basename "$0") ~/Downloads/logo.png my-bike --crop 1350x700+3400+0
+  $(basename "$0") ~/Downloads/trailer.jpg bike-trailer --gear"
 
 # --- Defaults ---
 Fuzz="5%"
 CropRegion=""
 DryRun=false
+GearMode=false
 
 # --- Parse args ---
 Positional=()
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --gear)   GearMode=true; shift ;;
     --crop)   CropRegion="$2"; shift 2 ;;
     --fuzz)   Fuzz="$2"; shift 2 ;;
     --dry-run) DryRun=true; shift ;;
@@ -59,7 +63,15 @@ fi
 # Resolve output path relative to repo root
 ScriptDir="$(cd "$(dirname "$0")" && pwd)"
 RepoRoot="$(cd "$ScriptDir/.." && pwd)"
-OutputDir="$RepoRoot/public/images/bike-models"
+
+if [[ "$GearMode" == true ]]; then
+  OutputDir="$RepoRoot/public/images/gear"
+  ResizeWidth="500x"
+else
+  OutputDir="$RepoRoot/public/images/bike-models"
+  ResizeWidth="1000x"
+fi
+
 OutputFile="$OutputDir/${OutputName}.webp"
 
 if [[ -f "$OutputFile" ]]; then
@@ -89,7 +101,7 @@ if [[ -n "$CropRegion" ]]; then
 fi
 
 Cmd+=(-fuzz "$Fuzz" -trim +repage)
-Cmd+=(-resize 1000x)
+Cmd+=(-resize "$ResizeWidth")
 Cmd+=(-quality 85)
 Cmd+=("$OutputFile")
 
