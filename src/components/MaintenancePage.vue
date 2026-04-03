@@ -57,16 +57,17 @@
     </ul>
 
     <p>
-      <strong>Found an issue!</strong> If it's more than just adding air or lubing your chain, take
+      <strong>Found an issue?</strong> If it's more than just adding air or lubing your chain, take
       it in to your local bike shop!
     </p>
 
     <h2>DIY Deep Dive</h2>
 
     <p>
-      There's a lot that can go into bike maintenance if you want to do it yourself - if you do,
-      check out this great <a href="https://www.rei.com/learn/expert-advice/bike-maintenance.html"
-      target="_blank">Bike Maintenance Basics Guide from REI</a>.
+      There's a lot that can go into bike maintenance if you want to do it yourself! If that's
+      something you're interested in, check out this more in-depth
+      <a href="https://www.rei.com/learn/expert-advice/bike-maintenance.html"
+        target="_blank" rel="noopener">Bike Maintenance Basics Guide from REI</a>.
     </p>
   </div>
 </template>
@@ -107,6 +108,8 @@ h2 { margin-bottom: 0.5rem; }
 
 ul {
   margin: 1rem 0rem 1rem 1.5rem;
+
+  li + li { margin-top: 0.5rem; }
 }
 
 p, ul {
