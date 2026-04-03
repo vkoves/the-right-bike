@@ -1,0 +1,17 @@
+{
+  "siteName": "Find The Right Bike",
+  "pages": {
+    "about": {
+      "title": "About Us",
+      "description": "Learn about Find The Right Bike, an independent tool to help you discover the right bike for your needs and see how much you could save."
+    },
+    "gear-guide": {
+      "title": "Gear Guide",
+      "description": "The essential accessories every new bike rider needs - from helmets to locks to lights. Gear up for a safe and comfortable ride."
+    },
+    "maintenance": {
+      "title": "Maintenance Basics",
+      "description": "Learn the basics of bike maintenance - from airing up tires to lubing your chain - and find resources to go deeper."
+    }
+  }
+}

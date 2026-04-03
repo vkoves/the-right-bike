@@ -9,6 +9,7 @@ import SocialImageBike from '../components/SocialImageBike.vue'
 import AllBikesPage from '../components/AllBikesPage.vue'
 import AdminPage from '../components/AdminPage.vue'
 import NotFoundPage from '../components/NotFoundPage.vue'
+import { SiteName, PageMeta } from '../constants/pageMeta'
 
 const routes = [
   {
@@ -19,7 +20,8 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: AboutPage
+    component: AboutPage,
+    meta: { title: PageMeta.about.title }
   },
   {
     path: '/assessment',
@@ -35,12 +37,14 @@ const routes = [
   {
     path: '/gear-guide',
     name: 'GearGuide',
-    component: GearGuidePage
+    component: GearGuidePage,
+    meta: { title: PageMeta['gear-guide'].title }
   },
   {
     path: '/maintenance',
     name: 'Maintenance',
-    component: MaintenancePage
+    component: MaintenancePage,
+    meta: { title: PageMeta.maintenance.title }
   },
   {
     path: '/social-image',
@@ -104,6 +108,11 @@ const router = createRouter({
       })
     }
   }
+})
+
+router.afterEach((to) => {
+  const pageTitle = to.meta.title as string | undefined;
+  document.title = pageTitle ? `${pageTitle} - ${SiteName}` : SiteName;
 })
 
 export default router

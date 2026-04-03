@@ -148,6 +148,7 @@ import ResultsFooter from './ResultsFooter.vue';
 import YourChoices from './YourChoices.vue';
 import { CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes, DefaultBikeCosts } from '../../constants/bikeTypes';
+import { SiteName } from '../../constants/pageMeta';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 import BikeTypeRecommender from '../../services/BikeTypeRecommender';
 import { encodeProfile, decodeProfile } from '../../services/AssessmentForm';
@@ -185,6 +186,13 @@ watch(transportationNeeds, () => {}, { deep: true });
 watch(geography, () => {}, { deep: true });
 const recommendation = ref<BikeTypeId | ''>('');
 const idealBikeType = ref<BikeTypeId | null>(null);
+
+watch(recommendation, (bikeTypeId) => {
+  if (bikeTypeId) {
+    const bike = BikeTypes[bikeTypeId];
+    document.title = `Your Perfect Bike: ${bike.title} - ${SiteName}`;
+  }
+});
 const recommendationDetails = ref<BikeType | null>(null);
 const stickysavings = ref(0);
 const stickyCarLabel = ref('');
