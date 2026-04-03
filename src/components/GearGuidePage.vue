@@ -26,7 +26,7 @@
             rel="noopener"
             class="wirecutter-link"
           >
-            Read Wirecutter Guide &rarr;
+            {{ item.wirecutter?.title }} <span class="chevron-right"></span>
           </a>
         </div>
       </div>
@@ -46,7 +46,7 @@
             rel="noopener"
             class="wirecutter-link"
           >
-            Read Wirecutter Guide &rarr;
+            {{ item.wirecutter?.title }} <span class="chevron-right"></span>
           </a>
         </div>
       </div>
