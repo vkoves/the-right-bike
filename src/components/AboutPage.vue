@@ -1,6 +1,6 @@
 <template>
   <div class="about-container">
-    <h1>About Find The Right Bike</h1>
+    <h1>About Us</h1>
 
     <section class="about-section -two-cols">
       <div>
@@ -136,16 +136,6 @@ li {
   background-color: vars.$bg-body;
   padding: 2rem;
   border-radius: 8px;
-
-  a {
-    color: vars.$primary-dark;
-    text-decoration: none;
-    font-weight: 600;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 @media (max-width: #{vars.$breakpoint-mobile}) {

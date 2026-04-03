@@ -15,6 +15,17 @@ html {
   scroll-margin-top: 12rem;
 }
 
+// Default links to brand green and bold
+a {
+  color: vars.$primary;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .electric-badge {
   position: absolute;
   top: vars.$spacing-sm;
@@ -117,13 +128,17 @@ h1 {
   margin-bottom: vars.$spacing-md;
 
   @media (max-width: #{vars.$breakpoint-mobile}) {
-    font-size: 2rem;
+    font-size: 1.8125rem;
   }
 }
 
 h2 {
   color: vars.$primary;
   margin-bottom: vars.$spacing-md;
+
+  @media (max-width: #{vars.$breakpoint-mobile}) {
+    font-size: 1.5rem;
+  }
 }
 
 .smaller {

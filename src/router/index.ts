@@ -3,6 +3,7 @@ import HomePage from '../components/HomePage.vue'
 import AboutPage from '../components/AboutPage.vue'
 import BikeAssessment from '../components/assessment/BikeAssessment.vue'
 import GearGuidePage from '../components/GearGuidePage.vue'
+import MaintenancePage from '../components/MaintenancePage.vue'
 import SocialImage from '../components/SocialImage.vue'
 import SocialImageBike from '../components/SocialImageBike.vue'
 import AllBikesPage from '../components/AllBikesPage.vue'
@@ -35,6 +36,11 @@ const routes = [
     path: '/gear-guide',
     name: 'GearGuide',
     component: GearGuidePage
+  },
+  {
+    path: '/maintenance',
+    name: 'Maintenance',
+    component: MaintenancePage
   },
   {
     path: '/social-image',
