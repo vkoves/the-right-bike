@@ -132,7 +132,7 @@ p, ul {
     position: relative;
     z-index: 1;
     color: vars.$white;
-    text-shadow: 0.1rem 0.1rem 0.1rem black;
+    text-shadow: vars.$shadow-text;
   }
 }
 </style>

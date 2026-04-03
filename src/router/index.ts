@@ -6,6 +6,7 @@ import GearGuidePage from '../components/GearGuidePage.vue'
 import MaintenancePage from '../components/MaintenancePage.vue'
 import SocialImage from '../components/SocialImage.vue'
 import SocialImageBike from '../components/SocialImageBike.vue'
+import SocialImagePage from '../components/SocialImagePage.vue'
 import AllBikesPage from '../components/AllBikesPage.vue'
 import AdminPage from '../components/AdminPage.vue'
 import NotFoundPage from '../components/NotFoundPage.vue'
@@ -56,6 +57,13 @@ const routes = [
     path: '/social-image/:type',
     name: 'SocialImageBike',
     component: SocialImageBike,
+    meta: { bare: true },
+    props: true
+  },
+  {
+    path: '/social-image/page/:slug',
+    name: 'SocialImagePage',
+    component: SocialImagePage,
     meta: { bare: true },
     props: true
   },

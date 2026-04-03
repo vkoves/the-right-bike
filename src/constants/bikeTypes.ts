@@ -117,8 +117,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     similarTypes: ['cargo-ebike', 'cargo-etrike', 'longtail-bike', 'commuter-ebike'],
     description: 'A longtail cargo eBike is ideal for transporting people. The extended rear section provides seating for children or adults while electric assistance makes the ride effortless.',
     features: [
-      'E-assist makes carrying passengers easier',
-      'Can accommodate child seats or adult seating',
+      'E-assist for easy passenger hauling',
+      'Supports child or adult seating',
       'Rear deck for passengers',
       'High weight capacity'
     ],

@@ -68,11 +68,14 @@ dedicated social image routes. The dev server must be running first.
 
 ```bash
 yarn dev                    # start the dev server
-yarn screenshot-social      # in another terminal
+yarn screenshot-social      # in another terminal — generates all images
+yarn screenshot-social gear-guide  # just one image by slug
 ```
 
-This screenshots `/social-image` (the default card) and `/social-image/:type` for each bike
-type, saving PNGs to `public/images/`. Visit `/admin` locally to preview all social card pages.
+This screenshots `/social-image` (the default card), `/social-image/:type` for each bike
+type, and `/social-image/page/:slug` for supplementary pages, saving PNGs to
+`public/images/`. Pass a slug argument to regenerate a single image. Visit `/admin` locally
+to preview all social card pages.
 
 ## Project Structure
 

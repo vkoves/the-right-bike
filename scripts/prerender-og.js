@@ -73,7 +73,9 @@ for (const [slug, page] of Object.entries(pageMeta)) {
     title,
     description: page.description,
     url: `${BASE_URL}/${slug}`,
-    image: `${BASE_URL}/images/social.png`,
+    image: page.socialImage === false
+      ? `${BASE_URL}/images/social.png`
+      : `${BASE_URL}/images/social-${slug}.png`,
   });
 
   const dir = path.join(DIST, slug);

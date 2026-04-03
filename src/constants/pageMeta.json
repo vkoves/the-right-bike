@@ -3,7 +3,8 @@
   "pages": {
     "about": {
       "title": "About Us",
-      "description": "Learn about Find The Right Bike, an independent tool to help you discover the right bike for your needs and see how much you could save."
+      "description": "Learn about Find The Right Bike, an independent tool to help you discover the right bike for your needs and see how much you could save.",
+      "socialImage": false
     },
     "gear-guide": {
       "title": "Gear Guide",

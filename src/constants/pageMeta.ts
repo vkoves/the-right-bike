@@ -7,4 +7,4 @@
 import meta from './pageMeta.json';
 
 export const SiteName = meta.siteName;
-export const PageMeta = meta.pages;
+export const PageMeta: Record<string, { title: string; description: string }> = meta.pages;
