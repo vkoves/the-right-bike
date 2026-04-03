@@ -5,18 +5,18 @@
     <h1>Maintenance Basics</h1>
 
     <p class="page-intro">
-      Have your bike ready, or about to buy? We've got some info for you on the absolute basics o
+      Have your bike ready, or about to buy? We've got some info for you on the absolute basics of
       bike maintenance, with some places to go for extra information!
     </p>
 
     <h2>Do It Yourself Or Go To A Bike Shop?</h2>
 
     <p>
-      The very basics of keeping a bike running are airing up the tires, and keeping the chain
-      lubricated with a de-greaser and bike lube. But for repairs or tune-ups, whether it's a flat
-      or faulty shifting, you can count on a local bike shop or learn to do it yourself! We're
-      going to just cover the very basics. Jump to the very end to find a more in-depth guide for
-      DIY-ers.
+      The very basics of keeping a bike running are airing up the tires and keeping the chain
+      lubricated with bike lube. But for repairs or tune-ups, whether it's a flat or faulty
+      shifting, you can either count on a local bike shop or learn to do it yourself! We're
+      going to just cover the very basics, but jump to the very end to find a more in-depth guide
+      for DIY-ers.
     </p>
 
     <p>
@@ -25,7 +25,7 @@
         The Recyclery
       </a> or <a href="https://store.workingbikes.org" rel="noopener">Working Bikes</a> in Chicago
       that will let you learn how to fix your own bike, whether through open shop hours, paid
-      classes,or volunteering!
+      classes, or volunteering!
     </p>
 
     <h2>The ABC Bike Check - Air, Brakes, Chain!</h2>
