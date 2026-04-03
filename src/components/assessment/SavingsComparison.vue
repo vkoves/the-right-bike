@@ -7,6 +7,7 @@
       <template v-else>
         Potential Savings vs Buying A <span class="car-type-label">{{ isNew ? 'New' : 'Used' }}</span> Car
       </template>
+      <anchor-copy-button anchor="savings" />
     </h2>
     <p class="savings-intro">
       <template v-if="alreadyOwnsCar">
@@ -78,7 +79,10 @@
 
     <div class="savings-highlight">
       <div class="savings-number">
-        <h3>Your 5-Year Savings</h3>
+        <h3 id="savings-total">
+          Your 5-Year Savings
+          <anchor-copy-button anchor="savings-total" />
+        </h3>
         <div class="amount">{{ formatCurrency(savingsAmount) }}</div>
       </div>
       <div class="savings-benefits">
@@ -209,6 +213,7 @@ import { BikeTypes } from '../../constants/bikeTypes';
 import { isPlainClick } from '../../utils/navigation';
 import type { AssessmentProfile, BikeTypeId } from '../../types';
 
+import AnchorCopyButton from '../AnchorCopyButton.vue';
 import CostComparisonTable from './CostComparisonTable.vue';
 import SavingsFaqSection from './SavingsFaqSection.vue';
 import BikeBuyingOptions from './BikeBuyingOptions.vue';

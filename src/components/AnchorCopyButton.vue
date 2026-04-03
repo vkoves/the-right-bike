@@ -40,8 +40,9 @@ async function copyAnchorLink() {
   cursor: pointer;
   padding: 0.25rem;
   vertical-align: middle;
-  opacity: 0.4;
+  opacity: 0.8;
   transition: opacity 0.2s;
+  line-height: 1;
 
   &:hover,
   &.-copied {
@@ -65,8 +66,9 @@ async function copyAnchorLink() {
   padding: 0.25rem;
   position: absolute;
   border-radius: 5px;
-  top: 5%;
-  left: 120%;
+  top: 110%;
+  left: -70%;
+  width: fit-content;
   opacity: 0;
   transition: opacity 0.3s;
 
