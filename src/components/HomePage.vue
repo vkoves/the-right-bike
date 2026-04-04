@@ -422,9 +422,10 @@ h1 {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: #{vars.$breakpoint-tablet}) {
   .hero-container {
     flex-direction: column;
+    padding: 1rem 0;
   }
 
   .hero-content {
@@ -433,43 +434,19 @@ h1 {
     text-align: center;
     flex: 0 0 auto;
 
-    h1 { font-size: 2.3rem; }
+    h1 { font-size: 2rem; }
     .smaller {
       font-size: 1.5rem;
       font-weight: 600;
     }
     .subtitle {
       max-width: 18.75rem;
+      font-size: 1rem;
     }
   }
 
   .benefits-summary {
     justify-content: center;
-  }
-
-  .bike-showcase {
-    width: 100%;
-    height: 400px;
-    margin-bottom: 2rem;
-  }
-
-  .carousel-controls {
-    bottom: 50%;
-    transform: translateY(50%);
-  }
-}
-
-@media (max-width: #{vars.$breakpoint-mobile}) {
-  .hero-container {
-    padding: 1rem 0;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .subtitle {
-    font-size: 1rem;
   }
 
   .cta-button {
@@ -486,9 +463,11 @@ h1 {
   }
 
   .bike-showcase {
+    width: 100%;
     flex: none;
     height: 300px;
     margin-top: 1rem;
+    margin-bottom: 2rem;
   }
 
   .carousel-3d {
@@ -502,6 +481,8 @@ h1 {
   }
 
   .carousel-controls {
+    bottom: 50%;
+    transform: translateY(50%);
     padding: 0 1rem;
   }
 }

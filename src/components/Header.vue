@@ -41,7 +41,6 @@ const mobileMenuOpen = ref(false);
 
 /** Shared desktop mobile nav links */
 const NavLinks = [
-  { to: '/', label: 'Home' },
   { to: '/assessment', label: 'Bike Finder' },
   { to: '/gear-guide', label: 'Gear Guide' },
   { to: '/maintenance', label: 'Maintenance' },
@@ -194,7 +193,7 @@ function handleNavClick(link: { to: string; label: string }) {
   outline-color: vars.$white;
 }
 
-@media (max-width: #{vars.$breakpoint-mobile}) {
+@media (max-width: #{vars.$breakpoint-tablet}) {
   .site-header {
     padding: 0.75rem 0.5rem;
     height: auto;
@@ -206,10 +205,6 @@ function handleNavClick(link: { to: string; label: string }) {
 
   .logo-title {
     font-size: 1.1rem;
-  }
-
-  .logo-byline {
-    display: none;
   }
 
   .desktop-nav {
