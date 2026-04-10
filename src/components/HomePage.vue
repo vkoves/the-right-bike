@@ -3,7 +3,7 @@
     <div class="hero-container">
       <div class="hero-content">
         <h1>
-          <span class="nowrap">Discover Your</span>
+          <span class="nowrap">Discover Your&nbsp;</span>
           <span class="nowrap">Perfect Bike</span>
           <br>
           <span class="smaller">
