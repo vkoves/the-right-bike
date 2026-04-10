@@ -3,7 +3,9 @@
     <div class="hero-container">
       <div class="hero-content">
         <h1>
-          Discover Your Perfect Bike <br>
+          <span class="nowrap">Discover Your</span>
+          <span class="nowrap">Perfect Bike</span>
+          <br>
           <span class="smaller">
             With Just 4 Questions!
           </span>
@@ -212,6 +214,9 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   line-height: 1.2;
+
+  // Keep words in pairs, so we don't get "Discover Your Perfect \n Bike"
+  .nowrap { display: inline-block; }
 
   .smaller {
     font-size: 0.75em;
