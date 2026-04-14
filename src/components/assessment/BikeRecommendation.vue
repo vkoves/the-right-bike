@@ -2,7 +2,9 @@
   <div>
     <div v-if="alternateBikeType && allBikeTypes && allBikeTypes[alternateBikeType as BikeTypeId]" class="alternate-note">
       <h4 class="alternate-note-heading">Absolutely Can't Store Outside?</h4>
-      <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
+      <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
+      </a>
       <div class="alternate-note-body">
         <p>
           You can store a large cargo bike outside with a cover and a great lock, but if you
@@ -14,8 +16,8 @@
           instead. It's much easier to store indoors!
         </p>
         <p class="alternate-note-tip">
-          <router-link to="/storage" class="alternate-link">
-            Learn more about bike storage options.
+          <router-link to="/storage" target="_blank" class="pill-link">
+            Learn Bike Storage Tips
           </router-link>
         </p>
       </div>
@@ -295,8 +297,7 @@ const alternateArticle = computed(() => {
 }
 
 .alternate-note-tip {
-  margin-top: 0.5rem !important;
-  font-size: 0.85rem !important;
+  margin-top: 0.75rem !important;
 }
 
 .storage-tip {
@@ -364,10 +365,12 @@ const alternateArticle = computed(() => {
 .alternate-note-image {
   float: left;
   width: auto;
-  height: 80px;
+  height: 6rem;
   border-radius: 8px;
   margin-right: 1rem;
   margin-bottom: 0.25rem;
+  background-color: vars.$white;
+  padding: 0.25rem;
 }
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {

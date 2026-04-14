@@ -63,9 +63,9 @@ export const StorageOptions: Record<string, AssessmentOption> = {
     description: 'Dedicated ground-level space for bikes'
   },
   basement: {
-    label: 'Basement or a Few Steps',
+    label: 'Basement Or Up A Few Steps',
     icon: '🚪',
-    description: 'Some stairs, but manageable'
+    description: 'Some stairs, but manageable with a ramp'
   },
   'upper-floor': {
     label: 'Upper Floor',
@@ -75,6 +75,6 @@ export const StorageOptions: Record<string, AssessmentOption> = {
   outdoor: {
     label: 'Outdoor',
     icon: '🌧️',
-    description: 'Locked outside with a cover'
+    description: 'Locked outside with a cover (we can show you how)'
   }
 };
