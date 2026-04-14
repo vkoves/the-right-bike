@@ -6,20 +6,22 @@ import type { AssessmentProfile, BikeTypeId } from '../types';
  *
  * Handles two layers:
  * 1. Picks the ideal type based on needs, geography, fitness, and stability preference.
- * 2. Applies a storage downgrade when the ideal type is too bulky for upper-floor storage.
+ * 2. When the ideal type is bulky and storage is constrained (not garage/outdoor),
+ *    sets an alternateBikeType — a smaller bike the user could consider instead.
+ *    The main recommendation always stays as the ideal bike.
  *
  * Usage:
  *   const recommender = new BikeTypeRecommender(profile);
- *   recommender.bikeType       // → 'commuter-ebike'
- *   recommender.idealBikeType  // → null (or original type if storage-downgraded)
+ *   recommender.bikeType          // → 'cargo-ebike' (always the ideal)
+ *   recommender.alternateBikeType // → 'commuter-ebike' (smaller option, or null)
  */
 export default class BikeTypeRecommender {
   bikeType: BikeTypeId;
-  idealBikeType: BikeTypeId | null;
+  alternateBikeType: BikeTypeId | null;
 
   constructor(profile: AssessmentProfile) {
     this.bikeType = this._determineBikeType(profile);
-    this.idealBikeType = this._applyStorageDowngrade(profile);
+    this.alternateBikeType = this._findAlternate(profile);
   }
 
   private _determineBikeType(profile: AssessmentProfile): BikeTypeId {
@@ -59,12 +61,11 @@ export default class BikeTypeRecommender {
            fitnessLevel === 'low';
   }
 
-  private _applyStorageDowngrade(profile: AssessmentProfile): BikeTypeId | null {
+  private _findAlternate(profile: AssessmentProfile): BikeTypeId | null {
     const typeInfo = BikeTypes[this.bikeType];
-    if (profile.storage === 'upper-floor' && typeInfo.bulky && typeInfo.storageDowngrade) {
-      const ideal = this.bikeType;
-      this.bikeType = typeInfo.storageDowngrade;
-      return ideal;
+    const hasEasyStorage = profile.storage === 'garage' || profile.storage === 'outdoor';
+    if (!hasEasyStorage && typeInfo.bulky && typeInfo.storageDowngrade) {
+      return typeInfo.storageDowngrade;
     }
     return null;
   }

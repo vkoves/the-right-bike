@@ -68,8 +68,13 @@ export const StorageOptions: Record<string, AssessmentOption> = {
     description: 'Some stairs, but manageable'
   },
   'upper-floor': {
-    label: 'Upper Floor / No Storage',
+    label: 'Upper Floor',
     icon: '🪜',
-    description: 'Need to carry bike up stairs or lock outside'
+    description: 'Need to carry bike up stairs'
+  },
+  outdoor: {
+    label: 'Outdoor',
+    icon: '🌧️',
+    description: 'Locked outside with a cover'
   }
 };

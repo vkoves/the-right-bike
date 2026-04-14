@@ -160,13 +160,13 @@ describe('BikeModelRecommender', () => {
       expect(recs[0].reasons).toContain('Handles hilly terrain');
     });
 
-    it('mentions storage downgrade', () => {
+    it('mentions storage alternate', () => {
       const r = makeRecommender(makeCargoProfile({
         fitnessLevel: 'medium',
         storage: 'upper-floor'
       }));
       const recs = r.getRecommendations();
-      expect(recs[0].reasons).toContain('Compact enough for upper-floor storage');
+      expect(recs[0].reasons).toContain('Easier-to-store alternative available');
     });
 
     it('mentions commuting for solo commuter with no cargo', () => {
