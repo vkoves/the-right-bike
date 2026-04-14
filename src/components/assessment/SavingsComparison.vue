@@ -83,7 +83,7 @@
           Your 5-Year Savings
           <anchor-copy-button anchor="savings-total" />
         </h3>
-        <div class="amount">{{ formatCurrency(savingsAmount) }}</div>
+        <div class="amount">{{ Currency.format(savingsAmount) }}</div>
       </div>
       <div class="savings-benefits">
         <h4>What else you could do with this money:</h4>
@@ -92,7 +92,7 @@
             <div class="benefit-emoji">✈️</div>
             <h5>Travel</h5>
             <p>Take {{ Math.round(savingsAmount / IntlVacationCost) }} international vacations</p>
-            <p class="vacation-cost-note">at ~{{ formatCurrency(IntlVacationCost) }} per trip</p>
+            <p class="vacation-cost-note">at ~{{ Currency.format(IntlVacationCost) }} per trip</p>
           </div>
           <div class="benefit-card">
             <div class="benefit-emoji">🏠</div>
@@ -103,10 +103,10 @@
             <div class="benefit-emoji">📈</div>
             <h5>Invest</h5>
             <p>
-              Worth <strong>{{ formatRounded(savings10Year) }} in 10 years</strong> at 7% growth
+              Worth <strong>{{ Currency.formatRounded(savings10Year) }} in 10 years</strong> at 7% growth
             </p>
             <p class="long-term-growth">
-              Or <strong>{{ formatRounded(savings40Year) }} over 40 years</strong>, like in your 401k!
+              Or <strong>{{ Currency.formatRounded(savings40Year) }} over 40 years</strong>, like in your 401k!
             </p>
           </div>
         </div>
@@ -134,6 +134,21 @@
           <strong>Dealing With Tons Of Snow?</strong> Look for bikes with wider, knobby tires
            and fenders to keep salt and slush off your frame.
         </p>
+      </div>
+    </div>
+
+    <div v-if="showStorageTip" class="buying-tips">
+      <div class="buying-tips-icon">🏠</div>
+      <div class="buying-tips-content">
+        <h4>Plan Your Storage</h4>
+        <p>
+          Larger bikes like cargo bikes and longtails need a bit more thought when it comes to
+          storage. A good cover and a sturdy lock make outdoor storage totally viable, and many
+          people store cargo bikes in garages, sheds, or even hallways.
+        </p>
+        <router-link to="/storage" target="_blank" class="find-shops-btn">
+          Learn Bike Storage Tips <span class="chevron-right" aria-hidden="true"></span>
+        </router-link>
       </div>
     </div>
 
@@ -179,7 +194,7 @@
             <div class="bike-option-details">
               <div class="recommendation-pill">Your Recommendation</div>
               <h4>{{ bikeTitle }}</h4>
-              <div class="bike-price">~ {{ formatCurrency(costs.bike.purchase) }}</div>
+              <div class="bike-price">~ {{ Currency.format(costs.bike.purchase) }}</div>
             </div>
           </div>
           <router-link class="bike-option"
@@ -194,7 +209,7 @@
             </div>
             <div class="bike-option-details">
               <h4>{{ type.label }}</h4>
-              <div class="bike-price">~ {{ formatCurrency(BikeTypes[type.value as BikeTypeId].costs.purchase) }}</div>
+              <div class="bike-price">~ {{ Currency.format(BikeTypes[type.value as BikeTypeId].costs.purchase) }}</div>
             </div>
           </router-link>
         </div>
@@ -211,6 +226,8 @@ import { useRoute } from 'vue-router';
 import { CAR_COSTS } from '../../constants/bikeCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { isPlainClick } from '../../utils/navigation';
+import Currency from '../../utils/currency';
+import StorageTip from '../../services/storageTip';
 import type { AssessmentProfile, BikeTypeId } from '../../types';
 
 import AnchorCopyButton from '../AnchorCopyButton.vue';
@@ -357,8 +374,8 @@ const savingsAmount = computed(() => {
   return carTotalCost.value - bikeTotalCost.value;
 });
 
-const savings10Year = computed(() => savingsAmount.value * Math.pow(1 + EstGrowthRate, InvestmentYearsShort));
-const savings40Year = computed(() => savingsAmount.value * Math.pow(1 + EstGrowthRate, InvestmentYearsLong));
+const savings10Year = computed(() => Currency.investmentGrowth(savingsAmount.value, EstGrowthRate, InvestmentYearsShort));
+const savings40Year = computed(() => Currency.investmentGrowth(savingsAmount.value, EstGrowthRate, InvestmentYearsLong));
 
 // Emit savings and car label to parent for sticky header
 const carLabel = computed(() => {
@@ -412,6 +429,12 @@ const availableBikeTypes = computed(() => {
 // The bike type currently shown — comparison selection takes priority over the recommendation
 const displayedBikeType = computed(() => comparisonBike.value || recommendationType.value);
 
+const showStorageTip = computed(() => {
+  const bikeType = displayedBikeType.value;
+  if (!bikeType || !props.profile) return false;
+  return StorageTip.shouldShowBuyingTip(bikeType as BikeTypeId, props.profile.storage);
+});
+
 // Handle bike type change — only do in-page comparison on plain clicks;
 // let Ctrl+Click / Cmd+Click / middle-click navigate normally.
 function handleComparisonClick(event: MouseEvent, bikeType: string) {
@@ -421,28 +444,6 @@ function handleComparisonClick(event: MouseEvent, bikeType: string) {
   emit('bike-change', bikeType);
 }
 
-// Currency formatting helper
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(value);
-}
-
-// Rounds to nearest $1k below $1M, or "$X.XM" above
-function formatRounded(value: number) {
-  if (value >= 1_000_000) {
-    const millions = Math.round(value / 100_000) / 10;
-    const formatted = millions % 1 === 0 ? millions.toFixed(0) : millions.toFixed(1);
-    return '$' + formatted + ' million';
-  }
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(Math.round(value / 1000) * 1000);
-}
 </script>
 
 <style lang="scss" scoped>

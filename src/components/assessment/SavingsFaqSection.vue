@@ -39,7 +39,7 @@
       <div class="total-comparison">
         <p v-if="adjustedSavings > 0">
           Even if you spend <strong>$1,000/year</strong> on occasional rentals and ride-shares, that's still
-          <span class="highlight-amount"><strong>{{ formatCurrency(adjustedSavings) }}</strong></span>
+          <span class="highlight-amount"><strong>{{ Currency.format(adjustedSavings) }}</strong></span>
           less than the 5-year cost of car ownership!
         </p>
         <p v-else>
@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import Currency from '../../utils/currency';
 
 const props = defineProps({
   savingsAmount: { type: Number, required: true }
@@ -64,13 +65,6 @@ const adjustedSavings = computed(() => {
   return Math.floor(Math.max(0, netSavings) / 1000) * 1000;
 });
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(value);
-}
 </script>
 
 <style lang="scss" scoped>

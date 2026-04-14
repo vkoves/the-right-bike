@@ -8,23 +8,23 @@
       <div class="cost-breakdown">
         <div class="cost-item">
           <span class="cost-label">Initial Purchase</span>
-          <span class="cost-value">{{ formatCurrency(costs.bike.purchase) }}</span>
+          <span class="cost-value">{{ Currency.format(costs.bike.purchase) }}</span>
         </div>
         <div class="cost-item">
           <span class="cost-label">Annual Maintenance</span>
-          <span class="cost-value">{{ formatCurrency(costs.bike.maintenance) }}</span>
+          <span class="cost-value">{{ Currency.format(costs.bike.maintenance) }}</span>
         </div>
         <div class="cost-item">
           <span class="cost-label">Annual "Fuel" Cost</span>
-          <span class="cost-value">{{ formatCurrency(costs.bike.fuel) }}</span>
+          <span class="cost-value">{{ Currency.format(costs.bike.fuel) }}</span>
         </div>
         <div class="cost-item">
           <span class="cost-label">Annual Insurance</span>
-          <span class="cost-value">{{ formatCurrency(costs.bike.insurance) }}</span>
+          <span class="cost-value">{{ Currency.format(costs.bike.insurance) }}</span>
         </div>
         <div class="cost-item total">
           <span class="cost-label">5-Year Total Cost</span>
-          <span class="cost-value">{{ formatCurrency(bikeTotalCost) }}</span>
+          <span class="cost-value">{{ Currency.format(bikeTotalCost) }}</span>
         </div>
       </div>
     </div>
@@ -57,28 +57,28 @@
         <div class="cost-item" v-if="!alreadyOwnsCar">
           <span class="cost-label">Initial Purchase</span>
           <span class="cost-value">
-            {{ formatCurrency(isNew ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase) }}
+            {{ Currency.format(isNew ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase) }}
             <sup class="footnote-link" @click="showFootnote('purchase')">¹</sup>
           </span>
         </div>
         <div class="cost-item">
           <span class="cost-label">Annual Maintenance</span>
           <span class="cost-value">
-            {{ formatCurrency(costs.car.maintenance * (alreadyOwnsCar ? 1 - replacementPercent / 100 : 1)) }}
+            {{ Currency.format(costs.car.maintenance * (alreadyOwnsCar ? 1 - replacementPercent / 100 : 1)) }}
             <sup class="footnote-link" @click="showFootnote('maintenance')">{{ alreadyOwnsCar ? '¹' : '²' }}</sup>
           </span>
           <span v-if="alreadyOwnsCar" class="cost-saving">
-            Save {{ formatCurrency(maintenanceSaving) }}/yr
+            Save {{ Currency.format(maintenanceSaving) }}/yr
           </span>
         </div>
         <div class="cost-item">
           <span class="cost-label">Annual Fuel Cost</span>
           <span class="cost-value">
-            {{ formatCurrency(costs.car.fuel * (alreadyOwnsCar ? 1 - replacementPercent / 100 : 1)) }}
+            {{ Currency.format(costs.car.fuel * (alreadyOwnsCar ? 1 - replacementPercent / 100 : 1)) }}
             <sup class="footnote-link" @click="showFootnote('fuel')">{{ alreadyOwnsCar ? '²' : '³' }}</sup>
           </span>
           <span v-if="alreadyOwnsCar" class="cost-saving">
-            Save {{ formatCurrency(fuelSaving) }}/yr
+            Save {{ Currency.format(fuelSaving) }}/yr
           </span>
         </div>
         <div class="cost-item">
@@ -86,20 +86,20 @@
             {{ alreadyOwnsCar ? 'Mileage-Based Insurance' : 'Annual Insurance' }}
           </span>
           <span class="cost-value">
-            {{ formatCurrency(alreadyOwnsCar ? mileageInsuranceAnnual : costs.car.insurance) }}
+            {{ Currency.format(alreadyOwnsCar ? mileageInsuranceAnnual : costs.car.insurance) }}
             <sup class="footnote-link" @click="showFootnote('insurance')">{{ alreadyOwnsCar ? '³' : '⁴' }}</sup>
           </span>
           <span v-if="alreadyOwnsCar" class="cost-saving">
-            Save {{ formatCurrency(insuranceSaving) }}/yr
+            Save {{ Currency.format(insuranceSaving) }}/yr
           </span>
         </div>
         <div class="cost-item total">
           <span class="cost-label">5-Year Total Cost</span>
-          <span class="cost-value">{{ formatCurrency(carTotalCost) }}</span>
+          <span class="cost-value">{{ Currency.format(carTotalCost) }}</span>
         </div>
         <div v-if="alreadyOwnsCar" class="cost-item total savings-total">
           <span class="cost-label">5-Year Savings</span>
-          <span class="cost-value">{{ formatCurrency(totalAnnualSaving * 5) }}</span>
+          <span class="cost-value">{{ Currency.format(totalAnnualSaving * 5) }}</span>
         </div>
       </div>
     </div>
@@ -113,8 +113,8 @@
     </div>
     <div class="footnote-content">
       <div class="footnote" v-if="activeFootnote === 'purchase' || activeFootnote === 'all'">
-        <p v-if="!isNew"><strong>¹ Used car purchase price:</strong> {{ formatCurrency(CAR_COSTS.usedPurchase) }} average (Cox Automotive, {{ CAR_COSTS.usedPurchaseUpdatedAt }})</p>
-        <p v-else><strong>¹ New car purchase price:</strong> {{ formatCurrency(CAR_COSTS.purchase) }} average (Cox Automotive, {{ CAR_COSTS.purchaseUpdatedAt }})</p>
+        <p v-if="!isNew"><strong>¹ Used car purchase price:</strong> {{ Currency.format(CAR_COSTS.usedPurchase) }} average (Cox Automotive, {{ CAR_COSTS.usedPurchaseUpdatedAt }})</p>
+        <p v-else><strong>¹ New car purchase price:</strong> {{ Currency.format(CAR_COSTS.purchase) }} average (Cox Automotive, {{ CAR_COSTS.purchaseUpdatedAt }})</p>
         <p class="source-link">
           <a :href="isNew ? carCostSources.purchaseSource : carCostSources.usedPurchaseSource" target="_blank">
             Source: Cox Automotive ({{ isNew ? CAR_COSTS.purchaseUpdatedAt : CAR_COSTS.usedPurchaseUpdatedAt }})
@@ -150,7 +150,7 @@
           </p>
         </template>
         <template v-else>
-          <p><strong>⁴ Insurance costs:</strong> {{ formatCurrency(CAR_COSTS.insurance) }}/year average ({{ CAR_COSTS.insuranceUpdatedAt }})</p>
+          <p><strong>⁴ Insurance costs:</strong> {{ Currency.format(CAR_COSTS.insurance) }}/year average ({{ CAR_COSTS.insuranceUpdatedAt }})</p>
           <p class="source-link">
             <a :href="carCostSources.insuranceSource" target="_blank">
               Source: NerdWallet ({{ CAR_COSTS.insuranceUpdatedAt }})
@@ -165,6 +165,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { CAR_COSTS } from '../../constants/bikeCosts';
+import Currency from '../../utils/currency';
 
 const props = defineProps({
   bikeTitle: { type: String, required: true },
@@ -198,13 +199,6 @@ function showFootnote(type: string) {
   showFootnotes.value = true;
 }
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(value);
-}
 
 // Per-line annual savings when in "already owns" mode
 const scale = computed(() => props.replacementPercent / 100);

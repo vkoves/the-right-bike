@@ -94,7 +94,7 @@ describe('AssessmentForm decoding', () => {
   });
 
   it('returns null for invalid storage digit', () => {
-    expect(decodeProfile('1000001103')).toBeNull();
+    expect(decodeProfile('1000001109')).toBeNull();
   });
 
   it('returns null for empty string', () => {

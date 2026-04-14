@@ -57,7 +57,7 @@
             <span class="sticky-bike">{{ recommendationDetails.title }}</span>
             <span class="sticky-separator">vs</span>
             <span class="sticky-car">{{ stickyCarLabel }}</span>
-            <span class="sticky-savings">{{ formatCurrency(stickysavings) }} savings</span>
+            <span class="sticky-savings">{{ Currency.format(stickysavings) }} savings</span>
           </div>
 
           <div class="top-row">
@@ -152,6 +152,7 @@ import { SiteName } from '../../constants/pageMeta';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 import BikeTypeRecommender from '../../services/BikeTypeRecommender';
 import { encodeProfile, decodeProfile } from '../../services/AssessmentForm';
+import Currency from '../../utils/currency';
 import type { AssessmentProfile, BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
 
 const props = defineProps({
@@ -461,13 +462,6 @@ onBeforeRouteUpdate((to) => {
   }
 });
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(value);
-}
 
 // Initialize based on route param /bike/:type (need to be after all functions are defined)
 onMounted(() => {

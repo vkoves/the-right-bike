@@ -17,7 +17,7 @@ import type { AssessmentProfile, FitnessLevel, StorageType } from '../types';
  */
 
 const FitnessValues: FitnessLevel[] = ['low', 'medium', 'high'];
-const StorageValues: StorageType[] = ['garage', 'basement', 'upper-floor'];
+const StorageValues: StorageType[] = ['garage', 'basement', 'upper-floor', 'outdoor'];
 
 export function encodeProfile(profile: AssessmentProfile): string {
   const { transportationNeeds: t, geography: g } = profile;
