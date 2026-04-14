@@ -144,7 +144,8 @@
         <p>
           Larger bikes like cargo bikes and longtails need a bit more thought when it comes to
           storage. A good cover and a sturdy lock make outdoor storage totally viable, and many
-          people store cargo bikes in garages, sheds, or even hallways.
+          people store cargo bikes in garages, sheds, or even hallways. Some owners also add a GPS
+          tracker, motorcycle alarm, or bike-specific insurance for extra peace of mind.
         </p>
         <router-link to="/storage" target="_blank" class="find-shops-btn">
           Learn Bike Storage Tips <span class="chevron-right" aria-hidden="true"></span>

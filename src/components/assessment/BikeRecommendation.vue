@@ -7,8 +7,9 @@
       </a>
       <div class="alternate-note-body">
         <p>
-          You can store a large cargo bike outside with a cover and a great lock, but if you
-          absolutely can't, check out
+          You can store a large cargo bike outside with a cover and a great lock — some
+          owners also add a GPS tracker, motorcycle alarm, or bike-specific insurance for
+          extra peace of mind. But if you absolutely can't store outside, check out
           {{ alternateArticle }}
           <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" class="alternate-link">
             <strong>{{ allBikeTypes[alternateBikeType as BikeTypeId].title }}</strong>

@@ -22,25 +22,30 @@
     </p>
 
     <ul>
-      <li><strong>A heavy-duty lock</strong> - a U-lock or chain lock rated against angle grinders (see our
-        <router-link to="/gear-guide">Gear Guide</router-link>)</li>
-      <li><strong>A weather cover</strong> - motorcycle covers work great for cargo bikes and keep
-        rain, sun, and dust off</li>
-      <li><strong>A visible, well-lit spot</strong> - thieves prefer to work unobserved</li>
+      <li>
+        <strong>A Heavy-Duty Lock</strong> - a U-lock or chain lock rated against angle grinders (see our
+        <router-link to="/gear-guide">Gear Guide</router-link>)
+      </li>
+      <li>
+        <strong>A Weather Cover</strong> - motorcycle covers work great for cargo bikes and keep
+        rain, sun, and dust off, and make it blend in and look less valuable
+      </li>
+      <li>
+        <strong>A Visible, Well-Lit Spot</strong> - thieves prefer to work unobserved - so a well-lit
+        spot can really help
+      </li>
+      <li>
+        <strong>A GPS Tracker</strong> - a hidden tracker like an AirTag can help recover a
+        stolen bike (see <a href="https://www.nytimes.com/wirecutter/reviews/best-bluetooth-tracker/"
+        target="_blank" rel="noopener">Wirecutter's Bluetooth tracker guide</a>)
+      </li>
     </ul>
 
     <p>
-      For a deep dive on outdoor parking options, including tips on short-stop locking, check out
+      For a deep dive on outdoor parking options, including tips on locking during short stops,
+      check out
       <a href="https://bunchbike.com/blogs/the-bunch-blog/how-should-i-lock-up-my-bike"
         target="_blank" rel="noopener">Bunch Bike's guide on how to lock up your bike</a>.
-    </p>
-
-    <h2>Outdoor Storage For Cargo Bikes</h2>
-
-    <p>
-      Cargo bikes are too big for most apartments, but that doesn't mean you need a garage.
-      Plenty of families store cargo bikes in alleys, on patios, or on sidewalks with a
-      good lock and a cover.
     </p>
 
     <p>
@@ -48,6 +53,23 @@
       <a href="https://youtu.be/r-fWnbTkuaQ?si=92wLmDFhAng-eSo3&t=440"
         target="_blank" rel="noopener">a great video with tips from her professional
         background in criminology</a> on keeping your bike safe outside.
+    </p>
+
+    <h2>Theft Protection &amp; Insurance</h2>
+
+    <p>
+      Beyond a good lock, some owners add extra layers of protection. A motorcycle alarm
+      can deter opportunistic thieves, and a hidden GPS tracker like an AirTag can help
+      recover a stolen bike.
+    </p>
+
+    <p>
+      Bike-specific insurance is also worth considering, especially for pricier cargo bikes
+      and eBikes. It can cover theft, damage, and liability, giving you peace of mind whether
+      you store indoors or out. See
+      <a href="https://www.cyclingweekly.com/news/latest-news/everything-you-need-to-know-about-e-bike-insurance-483684"
+        target="_blank" rel="noopener">Cycling Weekly's eBike insurance guide</a>
+      for a good overview of what's available.
     </p>
 
     <h2>Indoor Storage</h2>
