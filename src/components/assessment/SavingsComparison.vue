@@ -1,5 +1,6 @@
 <template>
-  <div class="savings-section">
+  <div>
+    <div class="savings-section">
     <h2 class="savings-heading" id="savings">
       <template v-if="alreadyOwnsCar">
         Potential Savings by Going Car-Lite
@@ -111,6 +112,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
 
     <savings-faq-section v-if="!alreadyOwnsCar" :savings-amount="savingsAmount" />

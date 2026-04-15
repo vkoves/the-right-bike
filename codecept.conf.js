@@ -7,6 +7,8 @@ exports.config = {
       url: 'http://localhost:5173',
       show: !process.env.HEADLESS,
       waitForNavigation: 'networkidle',
+      // 2x scale reduces subpixel antialiasing noise in visual tests
+      deviceScaleFactor: 2,
     },
     VisualTesting: {
       require: './tests/e2e/PlaywrightVisualTesting.js',
