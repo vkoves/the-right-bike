@@ -57,16 +57,32 @@ Scenario('Recommendation - mobile', async ({ I }) => {
   I.dontSeeVisualChanges('recommendation-mobile', { element: '.bike-recommendation' });
 });
 
-Scenario('Savings overview - desktop', async ({ I }) => {
+Scenario('Savings overview (own car, 80%) - desktop', async ({ I }) => {
   I.resizeWindow(DesktopSize.width, DesktopSize.height);
   goToCargoEbikeResult(I);
-  I.dontSeeVisualChanges('savings-overview-desktop', { element: '.savings-section' });
+  I.click('I Already Own A Car');
+  I.waitForText('How much of your driving would you replace with biking?');
+  I.executeScript(() => {
+    const slider = document.querySelector('#replacement-slider') as HTMLInputElement;
+    slider.value = '80';
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  I.see('80%', '.slider-value');
+  I.dontSeeVisualChanges('savings-overview-own-car-desktop', { element: '.savings-section' });
 });
 
-Scenario('Savings overview - mobile', async ({ I }) => {
+Scenario('Savings overview (own car, 80%) - mobile', async ({ I }) => {
   I.resizeWindow(MobileSize.width, MobileSize.height);
   goToCargoEbikeResult(I);
-  I.dontSeeVisualChanges('savings-overview-mobile', { element: '.savings-section' });
+  I.click('I Already Own A Car');
+  I.waitForText('How much of your driving would you replace with biking?');
+  I.executeScript(() => {
+    const slider = document.querySelector('#replacement-slider') as HTMLInputElement;
+    slider.value = '80';
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  I.see('80%', '.slider-value');
+  I.dontSeeVisualChanges('savings-overview-own-car-mobile', { element: '.savings-section' });
 });
 
 Scenario('Buying options - desktop', async ({ I }) => {

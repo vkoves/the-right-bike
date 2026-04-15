@@ -96,6 +96,9 @@ End-to-end tests use **CodeceptJS** with **Playwright** (headless Chromium). The
 yarn dev                  # start the dev server in one terminal
 yarn test:e2e             # run E2E tests headless
 yarn test:e2e:ui          # run with a visible browser (useful for debugging)
+
+# Run a single test by matching its scenario name
+HEADLESS=true npx codeceptjs run --steps --grep "Regular Bicycle"
 ```
 
 The E2E suite covers the most common assessment flows (regular bike, commuter eBike, cargo eBike, longtail eBike, and cargo eTrike).
