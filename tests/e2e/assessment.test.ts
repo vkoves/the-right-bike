@@ -1,4 +1,5 @@
 const { runAssessment } = require('./helpers');
+const { Recommendation, Savings } = require('./selectors');
 const { CAR_COSTS } = require('../../src/constants/bikeCosts.ts');
 const { BikeTypes } = require('../../src/constants/bikeTypes.ts');
 const Currency = require('../../src/utils/currency.ts').default;
@@ -8,41 +9,57 @@ const ComparisonYears = 5;
 Feature('Assessment - Common Bike Recommendations');
 
 Scenario('recommends a Regular Bicycle for solo flat commuting at high fitness', ({ I }) => {
+  const bike = BikeTypes['regular-bike'];
   runAssessment(I, ['Solo Commuting'], 'Mostly Flat', 'High', 'Garage or Shed');
-  I.see('Regular Bicycle', 'h3');
+
+  I.see(bike.title, Recommendation.Title);
+  I.see(bike.priceRange);
+  I.see(bike.features[0]); // Lightweight and maneuverable
+  I.dontSeeElement(Recommendation.ElectricBadge);
+  I.see('trailer', Recommendation.TrailerTip);
 });
 
 Scenario('recommends a Commuter eBike for solo hilly commuting at medium fitness', ({ I }) => {
+  const bike = BikeTypes['commuter-ebike'];
   runAssessment(I, ['Solo Commuting'], 'Hilly', 'Medium', 'Garage or Shed');
-  I.see('Commuter eBike', 'h3');
+
+  I.see(bike.title, Recommendation.Title);
+  I.see(bike.priceRange);
+  I.see(bike.features[0]); // Electric motor assists up to 20-28 mph
+  I.see('Electric', Recommendation.ElectricBadge);
+  I.see('trailer', Recommendation.TrailerTip);
 });
 
 Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain', ({ I }) => {
+  const bike = BikeTypes['cargo-ebike'];
   runAssessment(I, ['Heavy Cargo / Pets'], 'Mostly Flat', 'Medium', 'Garage or Shed');
-  I.see('Front-Loader Cargo eBike', 'h3');
+
+  I.see(bike.title, Recommendation.Title);
+  I.see(bike.priceRange);
+  I.see(bike.features[0]); // Front cargo box for people or cargo
+  I.see('Electric', Recommendation.ElectricBadge);
 
   // Verify default savings heading (new car comparison)
-  I.see('Potential Savings vs Buying A', '.savings-heading');
+  I.see('Potential Savings vs Buying A', Savings.Heading);
 
   // Toggle "I Already Own A Car" and set replacement to 80%
   const ReplacementPercent = 80;
   I.click('I Already Own A Car');
   I.waitForText('How much of your driving would you replace with biking?');
-  I.executeScript((pct: number) => {
-    const slider = document.querySelector('#replacement-slider') as HTMLInputElement;
+  I.executeScript((sel: string, pct: number) => {
+    const slider = document.querySelector(sel) as HTMLInputElement;
     slider.value = String(pct);
     slider.dispatchEvent(new Event('input', { bubbles: true }));
-  }, ReplacementPercent);
-  I.see(`${ReplacementPercent}%`, '.slider-value');
+  }, Savings.ReplacementSlider, ReplacementPercent);
+  I.see(`${ReplacementPercent}%`, Savings.SliderValue);
 
   // Verify heading and car column title
-  I.see('Potential Savings by Going Car-Lite', '.savings-heading');
-  I.see(`With ${ReplacementPercent}% Less Use`, '.car-subtitle');
+  I.see('Potential Savings by Going Car-Lite', Savings.Heading);
+  I.see(`With ${ReplacementPercent}% Less Use`, Savings.CarSubtitle);
 
   // Compute expected savings from actual constants
   const scale = ReplacementPercent / 100;
   const remainingScale = 1 - scale;
-  const bikeCosts = BikeTypes['cargo-ebike'].costs;
 
   // Per-line annual savings (unrounded, matching the app's computed properties)
   const maintenanceSaving = CAR_COSTS.maintenance * scale;                       // $720
@@ -59,13 +76,13 @@ Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain'
   // N-year savings line in the cost table
   const totalAnnualSaving = maintenanceSaving + fuelSaving + insuranceSaving;
   const totalSaving = totalAnnualSaving * ComparisonYears;                       // ~$21,642.50
-  I.see(Currency.format(totalSaving), '.savings-total');
+  I.see(Currency.format(totalSaving), Savings.SavingsTotalRow);
 
   // Overall savings: full car running costs minus reduced car costs, minus bike cost
-  const bikeTotalCost = bikeCosts.purchase
-    + (bikeCosts.maintenance * ComparisonYears)
-    + (bikeCosts.fuel * ComparisonYears)
-    + (bikeCosts.insurance * ComparisonYears);
+  const bikeTotalCost = bike.costs.purchase
+    + (bike.costs.maintenance * ComparisonYears)
+    + (bike.costs.fuel * ComparisonYears)
+    + (bike.costs.insurance * ComparisonYears);
   const fullCarRunning = (CAR_COSTS.maintenance * ComparisonYears)
     + (CAR_COSTS.fuel * ComparisonYears)
     + (CAR_COSTS.insurance * ComparisonYears);
@@ -73,17 +90,35 @@ Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain'
     + (CAR_COSTS.fuel * ComparisonYears * remainingScale)
     + (mileageInsurance * ComparisonYears);
   const overallSavings = (fullCarRunning - carTotalCost) - bikeTotalCost;        // ~$14,467.50
-  I.see(Currency.format(overallSavings), '.amount');
+  I.see(Currency.format(overallSavings), Savings.Amount);
 });
 
 Scenario('recommends a Longtail Cargo eBike for transporting kids on hilly terrain', ({ I }) => {
+  const bike = BikeTypes['longtail-ebike'];
   runAssessment(I, ['Transporting Kids'], 'Hilly', 'Medium', 'Garage or Shed');
-  I.see('Longtail Cargo eBike', 'h3');
+
+  I.see(bike.title, Recommendation.Title);
+  I.see(bike.priceRange);
+  I.see(bike.features[0]); // E-assist for easy passenger hauling
+  I.see('Electric', Recommendation.ElectricBadge);
+
+  // Verify savings are shown with the correct bike cost
+  I.see('Your 5-Year Savings', Savings.SavingsTotal);
+  I.see(bike.priceRange);
 });
 
 Scenario('recommends a Cargo Electric Trike when stability is preferred with cargo needs', ({ I }) => {
+  const bike = BikeTypes['cargo-etrike'];
   runAssessment(I, ['Heavy Cargo / Pets'], 'Mostly Flat', 'Medium', 'Garage or Shed', {
     prefersStability: true,
   });
-  I.see('Cargo Electric Trike', 'h3');
+
+  I.see(bike.title, Recommendation.Title);
+  I.see(bike.priceRange);
+  I.see(bike.features[0]); // Three wheels for maximum stability
+  I.see(bike.features[3]); // No balance required — safe for all abilities
+  I.see('Electric', Recommendation.ElectricBadge);
+
+  // Verify savings are shown with the correct bike cost
+  I.see('Your 5-Year Savings', Savings.SavingsTotal);
 });
