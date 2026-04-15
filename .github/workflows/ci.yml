@@ -7,7 +7,9 @@ on:
     branches: [main]
 
 jobs:
-  check:
+  # Typechecks, runs unit tests, and builds the production bundle
+  lint-test-build:
+    name: Typecheck, Unit Tests & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,13 +24,15 @@ jobs:
       - name: Typecheck
         run: yarn typecheck
 
-      - name: Tests
+      - name: Unit tests
         run: yarn vitest run
 
       - name: Build
         run: yarn build
 
+  # Runs CodeceptJS + Playwright E2E tests against a production build
   e2e:
+    name: E2E Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,18 +44,22 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
+      # Playwright needs a real browser binary + OS-level libs (--with-deps)
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
 
       - name: Build
         run: yarn build
 
+      # Start the Vite preview server in the background, wait for it to be
+      # ready, then run the headless E2E suite against it
       - name: Run E2E tests
         run: |
           npx vite preview --port 5173 &
           npx wait-on http://localhost:5173 --timeout 30000
           yarn test:e2e
 
+      # On failure, upload screenshots/logs so we can debug without re-running
       - name: Upload E2E artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
