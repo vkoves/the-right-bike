@@ -1,4 +1,4 @@
-const { runAssessment } = require('./helpers');
+const { runAssessment, enableOwnCarMode } = require('./helpers');
 const { Recommendation, Savings } = require('./selectors');
 const { CarCosts } = require('../../src/constants/vehicleCosts.ts');
 const { BikeTypes } = require('../../src/constants/bikeTypes.ts');
@@ -44,14 +44,7 @@ Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain'
 
   // Toggle "I Already Own A Car" and set replacement to 80%
   const ReplacementPercent = 80;
-  I.click('I Already Own A Car');
-  I.waitForText('How much of your driving would you replace with biking?');
-  I.executeScript(({ sel, pct }: { sel: string; pct: number }) => {
-    const slider = document.querySelector(sel) as HTMLInputElement;
-    slider.value = String(pct);
-    slider.dispatchEvent(new Event('input', { bubbles: true }));
-  }, { sel: Savings.ReplacementSlider, pct: ReplacementPercent });
-  I.see(`${ReplacementPercent}%`, Savings.SliderValue);
+  enableOwnCarMode(I, ReplacementPercent);
 
   // Verify heading and car column title
   I.see('Potential Savings by Going Car-Lite', Savings.Heading);

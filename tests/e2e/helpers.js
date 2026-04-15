@@ -41,4 +41,28 @@ function runAssessment(I, needs, geo, fitness, storage, options = {}) {
   I.waitForText('Your Recommended Bike Type');
 }
 
-module.exports = { runAssessment };
+const { Savings } = require('./selectors');
+
+/**
+ * Toggles "I Already Own A Car" and sets the driving replacement percentage.
+ *
+ * @param {CodeceptJS.I} I
+ * @param {number} percent - replacement percentage (e.g. 80)
+ */
+function enableOwnCarMode(I, percent) {
+  I.click('I Already Own A Car');
+  I.waitForText('How much of your driving would you replace with biking?');
+
+  // Set the range input directly via executeScript because CodeceptJS's
+  // fillField doesn't work reliably with range inputs. Args are bundled
+  // into one object because executeScript only supports a single argument.
+  I.executeScript(({ sel, pct }) => {
+    const slider = document.querySelector(sel);
+    slider.value = String(pct);
+    slider.dispatchEvent(new Event('input', { bubbles: true }));
+  }, { sel: Savings.ReplacementSlider, pct: percent });
+
+  I.see(`${percent}%`, Savings.SliderValue);
+}
+
+module.exports = { runAssessment, enableOwnCarMode };
