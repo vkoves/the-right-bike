@@ -32,7 +32,7 @@
       </div>
     <div class="result-content">
       <div class="title-row">
-        <h3>Regular Bicycle</h3>
+        <h3>{{ recommendationDetails.title }}</h3>
       </div>
 
       <p class="result-description">{{ recommendationDetails.description }}</p>
