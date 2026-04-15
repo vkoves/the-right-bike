@@ -5,15 +5,6 @@ Feature('Visual Regression Tests');
 const DesktopSize = { width: 1280, height: 900 };
 const MobileSize = { width: 375, height: 812 };
 
-// Lock to a system font so visual baselines are identical across environments.
-function lockFont(I: CodeceptJS.I) {
-  I.executeScript(() => {
-    const style = document.createElement('style');
-    style.textContent = '* { font-family: Arial, Helvetica, sans-serif !important; }';
-    document.head.appendChild(style);
-  });
-}
-
 // Hide the sticky site header so it doesn't overlay element screenshots.
 function hideStickyHeader(I: CodeceptJS.I) {
   I.executeScript(() => {
@@ -28,7 +19,7 @@ function goToCargoEbikeResult(I: CodeceptJS.I) {
   runAssessment(I, ['Heavy Cargo / Pets'], 'Mostly Flat', 'Medium', 'Basement Or Up A Few Steps');
   I.see('Front-Loader Cargo eBike', 'h3');
   I.waitForText("Absolutely Can't Store Outside?");
-  lockFont(I);
+
   hideStickyHeader(I);
   // Wait for the 300ms fade-in transition to complete
   I.wait(0.5);
@@ -40,7 +31,7 @@ Scenario('Homepage - desktop', async ({ I }) => {
   I.resizeWindow(DesktopSize.width, DesktopSize.height);
   I.amOnPage('/');
   I.waitForText('Find Your Perfect Bike');
-  lockFont(I);
+
   I.dontSeeVisualChanges('homepage-desktop');
 });
 
@@ -48,7 +39,7 @@ Scenario('Homepage - mobile', async ({ I }) => {
   I.resizeWindow(MobileSize.width, MobileSize.height);
   I.amOnPage('/');
   I.waitForText('Find Your Perfect Bike');
-  lockFont(I);
+
   I.dontSeeVisualChanges('homepage-mobile');
 });
 
