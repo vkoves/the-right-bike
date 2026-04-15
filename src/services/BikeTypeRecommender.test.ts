@@ -140,50 +140,68 @@ describe('BikeTypeRecommender', () => {
     });
   });
 
-  describe('storage downgrade', () => {
-    it('downgrades cargo-ebike to commuter-ebike for upper-floor storage', () => {
+  describe('storage alternate', () => {
+    it('suggests commuter-ebike as alternate for cargo-ebike with upper-floor storage', () => {
       const r = new BikeTypeRecommender(makeCargoProfile({
         fitnessLevel: 'medium',
         storage: 'upper-floor'
       }));
-      expect(r.bikeType).toBe('commuter-ebike');
-      expect(r.idealBikeType).toBe('cargo-ebike');
+      expect(r.bikeType).toBe('cargo-ebike');
+      expect(r.alternateBikeType).toBe('commuter-ebike');
     });
 
-    it('downgrades longtail-ebike to commuter-ebike for upper-floor storage', () => {
+    it('suggests commuter-ebike as alternate for longtail-ebike with upper-floor storage', () => {
       const r = new BikeTypeRecommender(makeLongtailProfile({
         fitnessLevel: 'medium',
         storage: 'upper-floor'
       }));
-      expect(r.bikeType).toBe('commuter-ebike');
-      expect(r.idealBikeType).toBe('longtail-ebike');
+      expect(r.bikeType).toBe('longtail-ebike');
+      expect(r.alternateBikeType).toBe('commuter-ebike');
     });
 
-    it('downgrades cargo-bike to regular-bike for upper-floor storage', () => {
+    it('suggests regular-bike as alternate for cargo-bike with upper-floor storage', () => {
       const r = new BikeTypeRecommender(makeCargoProfile({
         fitnessLevel: 'high',
         storage: 'upper-floor'
       }));
-      expect(r.bikeType).toBe('regular-bike');
-      expect(r.idealBikeType).toBe('cargo-bike');
+      expect(r.bikeType).toBe('cargo-bike');
+      expect(r.alternateBikeType).toBe('regular-bike');
     });
 
-    it('does not downgrade for garage storage', () => {
+    it('suggests alternate for basement storage', () => {
+      const r = new BikeTypeRecommender(makeCargoProfile({
+        fitnessLevel: 'medium',
+        storage: 'basement'
+      }));
+      expect(r.bikeType).toBe('cargo-ebike');
+      expect(r.alternateBikeType).toBe('commuter-ebike');
+    });
+
+    it('does not suggest alternate for garage storage', () => {
       const r = new BikeTypeRecommender(makeCargoProfile({
         fitnessLevel: 'medium',
         storage: 'garage'
       }));
       expect(r.bikeType).toBe('cargo-ebike');
-      expect(r.idealBikeType).toBeNull();
+      expect(r.alternateBikeType).toBeNull();
     });
 
-    it('does not downgrade non-bulky types for upper-floor', () => {
+    it('does not suggest alternate for outdoor storage', () => {
+      const r = new BikeTypeRecommender(makeCargoProfile({
+        fitnessLevel: 'medium',
+        storage: 'outdoor'
+      }));
+      expect(r.bikeType).toBe('cargo-ebike');
+      expect(r.alternateBikeType).toBeNull();
+    });
+
+    it('does not suggest alternate for non-bulky types with upper-floor', () => {
       const r = new BikeTypeRecommender(makeProfile({
         fitnessLevel: 'medium',
         storage: 'upper-floor'
       }));
       expect(r.bikeType).toBe('regular-bike');
-      expect(r.idealBikeType).toBeNull();
+      expect(r.alternateBikeType).toBeNull();
     });
   });
 });

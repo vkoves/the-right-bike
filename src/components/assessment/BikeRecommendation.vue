@@ -1,22 +1,24 @@
 <template>
   <div>
-    <div v-if="idealBikeType && allBikeTypes && allBikeTypes[idealBikeType as BikeTypeId]" class="ideal-note">
-      <h4 class="ideal-note-heading">Your Ideal Bike Might Be Too Hard To Store</h4>
-      <img :src="allBikeTypes[idealBikeType as BikeTypeId].image" :alt="allBikeTypes[idealBikeType as BikeTypeId].title" class="ideal-note-image">
-      <div class="ideal-note-body">
+    <div v-if="alternateBikeType && allBikeTypes && allBikeTypes[alternateBikeType as BikeTypeId]" class="alternate-note">
+      <h4 class="alternate-note-heading">Absolutely Can't Store Outside?</h4>
+      <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+        <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
+      </a>
+      <div class="alternate-note-body">
         <p>
-          {{ idealArticle }}
-          <a :href="'/bike/' + idealBikeType" target="_blank" rel="noopener" class="ideal-link">
-            <strong>{{ allBikeTypes[idealBikeType as BikeTypeId].title }}</strong>
+          You can store a large cargo bike outside with a cover and a great lock — some
+          owners also add a GPS tracker, motorcycle alarm, or bike-specific insurance for
+          extra peace of mind. But if you absolutely can't store outside, check out
+          {{ alternateArticle }}
+          <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" class="alternate-link">
+            <strong>{{ allBikeTypes[alternateBikeType as BikeTypeId].title }}</strong>
           </a>
-          would be the ideal fit for your needs, but based on your storage situation
-          <strong>we've recommended a more practical option below.</strong>
-          Keep it in mind if your storage changes down the road!
+          instead. It's much easier to store indoors!
         </p>
-        <p class="ideal-note-tip">
-          However, some people do store cargo bikes outside under motorcycle covers!
-          <router-link to="/storage" class="ideal-link">
-            Learn more about bike storage options.
+        <p class="alternate-note-tip">
+          <router-link to="/storage" target="_blank" class="pill-link">
+            Learn Bike Storage Tips
           </router-link>
         </p>
       </div>
@@ -87,22 +89,22 @@ import type { BikeType, BikeTypeId } from '../../types';
 const props = withDefaults(defineProps<{
   recommendationDetails: BikeType;
   allBikeTypes?: Record<BikeTypeId, BikeType> | null;
-  idealBikeType?: string | null;
+  alternateBikeType?: string | null;
   storageConstrained?: boolean;
   recommendedBikeType?: string;
   savingsAmount?: number;
 }>(), {
   allBikeTypes: null,
-  idealBikeType: null,
+  alternateBikeType: null,
   storageConstrained: false,
   recommendedBikeType: '',
   savingsAmount: 0
 });
 
-const idealArticle = computed(() => {
-  if (!props.idealBikeType || !props.allBikeTypes?.[props.idealBikeType as BikeTypeId]) return 'A';
-  const title = props.allBikeTypes[props.idealBikeType as BikeTypeId].title;
-  return /^[aeiou]/i.test(title) ? 'An' : 'A';
+const alternateArticle = computed(() => {
+  if (!props.alternateBikeType || !props.allBikeTypes?.[props.alternateBikeType as BikeTypeId]) return 'a';
+  const title = props.allBikeTypes[props.alternateBikeType as BikeTypeId].title;
+  return /^[aeiou]/i.test(title) ? 'an' : 'a';
 });
 </script>
 
@@ -268,7 +270,7 @@ const idealArticle = computed(() => {
   font-size: 0.8rem;
 }
 
-.ideal-note {
+.alternate-note {
   background-color: vars.$secondary-light;
   border-radius: 8px;
   padding: 1rem 1.5rem;
@@ -284,20 +286,19 @@ const idealArticle = computed(() => {
   }
 }
 
-.ideal-note-heading {
+.alternate-note-heading {
   color: vars.$secondary-dark;
   font-size: 1rem;
   margin-bottom: 1rem;
 }
 
-.ideal-note-body {
+.alternate-note-body {
   flex: 1;
   min-width: 0;
 }
 
-.ideal-note-tip {
-  margin-top: 0.5rem !important;
-  font-size: 0.85rem !important;
+.alternate-note-tip {
+  margin-top: 0.75rem !important;
 }
 
 .storage-tip {
@@ -353,7 +354,7 @@ const idealArticle = computed(() => {
   }
 }
 
-.ideal-link {
+.alternate-link {
   color: vars.$secondary-dark;
   text-decoration: underline;
 
@@ -362,13 +363,15 @@ const idealArticle = computed(() => {
   }
 }
 
-.ideal-note-image {
+.alternate-note-image {
   float: left;
   width: auto;
-  height: 80px;
+  height: 6rem;
   border-radius: 8px;
   margin-right: 1rem;
   margin-bottom: 0.25rem;
+  background-color: vars.$white;
+  padding: 0.25rem;
 }
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
@@ -396,7 +399,7 @@ const idealArticle = computed(() => {
     align-self: start;
   }
 
-  .ideal-note {
+  .alternate-note {
     display: flex;
     align-items: flex-start;
     gap: 0 1.5rem;
@@ -404,11 +407,11 @@ const idealArticle = computed(() => {
     justify-content: center;
   }
 
-  .ideal-note-heading {
+  .alternate-note-heading {
     width: 100%;
   }
 
-  .ideal-note-image {
+  .alternate-note-image {
     float: none;
     margin: auto;
   }

@@ -210,6 +210,22 @@ button {
   }
 }
 
+.pill-link {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background-color: vars.$secondary;
+  color: vars.$white;
+  border-radius: vars.$border-radius-lg;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: vars.$secondary-dark;
+    text-decoration: none;
+  }
+}
+
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .hide-mobile {
     display: none;

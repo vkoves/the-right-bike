@@ -220,11 +220,11 @@ export default class BikeModelRecommender {
       reasons.push('No motor needed at your fitness level');
     }
 
-    const { idealBikeType } = new BikeTypeRecommender(this.profile);
-    if (idealBikeType) {
-      reasons.push('Compact enough for upper-floor storage');
+    const { alternateBikeType } = new BikeTypeRecommender(this.profile);
+    if (alternateBikeType) {
+      reasons.push('Easier-to-store alternative available');
     }
-    if (storage === 'garage') reasons.push('Plenty of storage space available');
+    if (storage === 'garage' || storage === 'outdoor') reasons.push('Plenty of storage space available');
     if (storage === 'upper-floor') reasons.push('Lightweight options prioritized for carrying upstairs');
     if (geography.hilly) reasons.push('Single-speed bikes excluded — not suited for hills');
 

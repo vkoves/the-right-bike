@@ -57,7 +57,7 @@
             <span class="sticky-bike">{{ recommendationDetails.title }}</span>
             <span class="sticky-separator">vs</span>
             <span class="sticky-car">{{ stickyCarLabel }}</span>
-            <span class="sticky-savings">{{ formatCurrency(stickysavings) }} savings</span>
+            <span class="sticky-savings">{{ Currency.format(stickysavings) }} savings</span>
           </div>
 
           <div class="top-row">
@@ -77,8 +77,8 @@
           <bike-recommendation
             :recommendation-details="recommendationDetails"
             :all-bike-types="bikeTypeDetails"
-            :ideal-bike-type="idealBikeType"
-            :storage-constrained="storage === 'upper-floor' || idealBikeType !== null"
+            :alternate-bike-type="alternateBikeType"
+            :storage-constrained="alternateBikeType !== null"
             :recommended-bike-type="recommendation"
             :savings-amount="stickysavings"
             @bike-change="handleBikeChange"
@@ -152,6 +152,7 @@ import { SiteName } from '../../constants/pageMeta';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
 import BikeTypeRecommender from '../../services/BikeTypeRecommender';
 import { encodeProfile, decodeProfile } from '../../services/AssessmentForm';
+import Currency from '../../utils/currency';
 import type { AssessmentProfile, BikeTypeId, BikeType, TransportationNeeds, Geography, FitnessLevel, StorageType, ChoiceGroup, CostComparison } from '../../types';
 
 const props = defineProps({
@@ -185,7 +186,7 @@ const prefersStability = ref(false);
 watch(transportationNeeds, () => {}, { deep: true });
 watch(geography, () => {}, { deep: true });
 const recommendation = ref<BikeTypeId | ''>('');
-const idealBikeType = ref<BikeTypeId | null>(null);
+const alternateBikeType = ref<BikeTypeId | null>(null);
 
 watch(recommendation, (bikeTypeId) => {
   if (bikeTypeId) {
@@ -343,7 +344,7 @@ function calculateRecommendation() {
   });
 
   recommendation.value = typeRecommender.bikeType;
-  idealBikeType.value = typeRecommender.idealBikeType;
+  alternateBikeType.value = typeRecommender.alternateBikeType;
 
   // Set recommendation details
   setRecommendationDetails();
@@ -381,7 +382,7 @@ function setRecommendationDetails() {
 
 // Handle bike change from the dropdown
 function handleBikeChange(bikeType: BikeTypeId | null) {
-  idealBikeType.value = null;
+  alternateBikeType.value = null;
 
   if (!bikeType) {
     // Restore original bike costs and details for the recommended bike
@@ -404,7 +405,7 @@ function handleBikeChange(bikeType: BikeTypeId | null) {
 // Function to update URL with bike recommendation
 function updateUrlWithRecommendation(bikeType: BikeTypeId) {
   const query: Record<string, string> = {};
-  if (idealBikeType.value) query.ideal = idealBikeType.value;
+  if (alternateBikeType.value) query.ideal = alternateBikeType.value;
   if (assessmentProfile.value) query.form = encodeProfile(assessmentProfile.value);
   router.replace({ name: 'BikeResult', params: { type: bikeType }, query });
 }
@@ -432,7 +433,7 @@ function restartAssessment() {
   fitnessLevel.value = '';
   prefersStability.value = false;
   recommendation.value = '';
-  idealBikeType.value = null;
+  alternateBikeType.value = null;
 
   clearChoicesFromSession();
 
@@ -450,7 +451,7 @@ onBeforeRouteUpdate((to) => {
     fitnessLevel.value = '';
     prefersStability.value = false;
     recommendation.value = '';
-    idealBikeType.value = null;
+    alternateBikeType.value = null;
     showStickyHeader.value = false;
     stickysavings.value = 0;
     stickyCarLabel.value = '';
@@ -461,13 +462,6 @@ onBeforeRouteUpdate((to) => {
   }
 });
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0
-  }).format(value);
-}
 
 // Initialize based on route param /bike/:type (need to be after all functions are defined)
 onMounted(() => {
@@ -481,7 +475,7 @@ onMounted(() => {
     // Restore ideal bike type from query param if present
     const idealParam = route.query.ideal;
     if (typeof idealParam === 'string' && Object.keys(bikeTypeDetails).includes(idealParam)) {
-      idealBikeType.value = idealParam as BikeTypeId;
+      alternateBikeType.value = idealParam as BikeTypeId;
     }
 
     // Restore profile from query param, falling back to session storage

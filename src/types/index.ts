@@ -73,7 +73,7 @@ export interface Geography {
 }
 
 export type FitnessLevel = 'low' | 'medium' | 'high';
-export type StorageType = 'garage' | 'basement' | 'upper-floor';
+export type StorageType = 'garage' | 'basement' | 'upper-floor' | 'outdoor';
 
 export interface AssessmentProfile {
   transportationNeeds: TransportationNeeds;
