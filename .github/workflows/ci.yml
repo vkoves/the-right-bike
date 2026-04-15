@@ -37,8 +37,9 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     if: >-
-      !contains(github.event.head_commit.message || '', '[skip-e2e]')
-      && !contains(github.event.pull_request.title || '', '[skip-e2e]')
+      (github.event_name == 'push' && !contains(github.event.commits[0].message, '[skip-e2e]'))
+      || (github.event_name == 'pull_request' && !contains(github.event.pull_request.title, '[skip-e2e]'))
+      || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
 
