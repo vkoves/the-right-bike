@@ -50,9 +50,24 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      # Playwright needs a real browser binary + OS-level libs (--with-deps)
+      # Cache Playwright browsers (keyed by playwright version in yarn.lock)
+      - name: Get Playwright version
+        id: pw-version
+        run: echo "version=$(npx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
+        id: pw-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.pw-version.outputs.version }}
+
+      # Install browser binary (skipped on cache hit) + OS-level libs (always needed)
       - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+
+      - name: Install Playwright OS deps
+        run: npx playwright install-deps chromium
 
       - name: Build
         run: yarn build
