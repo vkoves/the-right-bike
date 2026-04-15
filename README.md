@@ -26,7 +26,7 @@ A web app that helps people figure out if a bike could replace some of their car
 
 ### Prerequisites
 
-- Node.js (v16 or newer)
+- Node.js 22 (use `nvm use` to pick up the `.nvmrc`)
 - yarn
 
 ### Installation
@@ -76,6 +76,29 @@ This screenshots `/social-image` (the default card), `/social-image/:type` for e
 type, and `/social-image/page/:slug` for supplementary pages, saving PNGs to
 `public/images/`. Pass a slug argument to regenerate a single image. Visit `/admin` locally
 to preview all social card pages.
+
+## Testing
+
+### Unit Tests
+
+Unit tests use **Vitest** and cover services and utilities:
+
+```bash
+yarn test            # watch mode
+yarn vitest run      # single run
+```
+
+### E2E Tests
+
+End-to-end tests use **CodeceptJS** with **Playwright** (headless Chromium). They require the dev server to be running:
+
+```bash
+yarn dev                  # start the dev server in one terminal
+yarn test:e2e             # run E2E tests headless
+yarn test:e2e:ui          # run with a visible browser (useful for debugging)
+```
+
+The E2E suite covers the most common assessment flows (regular bike, commuter eBike, cargo eBike, longtail eBike, and cargo eTrike).
 
 ## Project Structure
 

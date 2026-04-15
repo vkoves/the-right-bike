@@ -14,7 +14,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: yarn
 
       - run: yarn install --frozen-lockfile
@@ -27,3 +27,34 @@ jobs:
 
       - name: Build
         run: yarn build
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Build
+        run: yarn build
+
+      - name: Run E2E tests
+        run: |
+          npx vite preview --port 5173 &
+          npx wait-on http://localhost:5173 --timeout 30000
+          yarn test:e2e
+
+      - name: Upload E2E artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-output
+          path: tests/e2e/output/
