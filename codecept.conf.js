@@ -9,6 +9,14 @@ exports.config = {
       waitForNavigation: 'networkidle',
       // 2x scale reduces subpixel antialiasing noise in visual tests
       deviceScaleFactor: 2,
+      // Force consistent font rendering across environments (local vs CI)
+      chromium: {
+        args: [
+          '--font-render-hinting=none',
+          '--disable-lcd-text',
+          '--disable-font-subpixel-positioning',
+        ],
+      },
     },
     VisualTesting: {
       require: './tests/e2e/PlaywrightVisualTesting.js',
