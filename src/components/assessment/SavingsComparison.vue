@@ -916,6 +916,7 @@ function handleComparisonClick(event: MouseEvent, bikeType: string) {
   }
 
   .amount {
+    visibility: hidden;
     font-size: 3.5rem;
     font-weight: 800;
     color: vars.$primary-light;

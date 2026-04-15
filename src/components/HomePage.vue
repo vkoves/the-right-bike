@@ -517,6 +517,7 @@ h1 {
 
 /* Bike Gallery Section */
 .bike-gallery-section {
+  display: none;
   padding: 4rem 2rem;
   background-color: vars.$white;
   text-align: center;
