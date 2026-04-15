@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bike-recommendation">
     <div v-if="alternateBikeType && allBikeTypes && allBikeTypes[alternateBikeType as BikeTypeId]" class="alternate-note">
       <h4 class="alternate-note-heading">Absolutely Can't Store Outside?</h4>
       <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">

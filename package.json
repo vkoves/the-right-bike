@@ -9,6 +9,9 @@
     "preview": "vite preview",
     "screenshot-social": "node scripts/screenshot-social.js",
     "test": "vitest",
+    "test:e2e": "HEADLESS=true npx codeceptjs run --steps",
+    "test:e2e:ui": "npx codeceptjs run --steps",
+    "test:e2e:visual-update": "UPDATE_VISUALS=1 HEADLESS=true npx codeceptjs run --steps --grep Visual && npx pngquant --force --ext .png --quality 65-80 tests/e2e/visual-baselines/*.png",
     "typecheck": "vue-tsc --noEmit"
   },
   "repository": {
@@ -25,6 +28,9 @@
   "bugs": {
     "url": "https://github.com/vkoves/the-right-bike/issues"
   },
+  "engines": {
+    "node": ">=22 <23"
+  },
   "homepage": "https://github.com/vkoves/the-right-bike#readme",
   "dependencies": {
     "@vitejs/plugin-vue": "^5.2.3",
@@ -33,10 +39,15 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "codeceptjs": "^3.7.8",
+    "codeceptjs-visual-testing": "^1.0.1",
+    "playwright": "^1.59.1",
+    "pngquant-bin": "^9.0.0",
     "puppeteer": "^24.40.0",
     "sass": "^1.86.3",
     "typescript": "^6.0.2",
     "vitest": "^2",
-    "vue-tsc": "^3.2.6"
+    "vue-tsc": "^3.2.6",
+    "wait-on": "^9.0.5"
   }
 }
