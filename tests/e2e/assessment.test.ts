@@ -46,11 +46,11 @@ Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain'
   const ReplacementPercent = 80;
   I.click('I Already Own A Car');
   I.waitForText('How much of your driving would you replace with biking?');
-  I.executeScript((sel: string, pct: number) => {
+  I.executeScript(({ sel, pct }: { sel: string; pct: number }) => {
     const slider = document.querySelector(sel) as HTMLInputElement;
     slider.value = String(pct);
     slider.dispatchEvent(new Event('input', { bubbles: true }));
-  }, Savings.ReplacementSlider, ReplacementPercent);
+  }, { sel: Savings.ReplacementSlider, pct: ReplacementPercent });
   I.see(`${ReplacementPercent}%`, Savings.SliderValue);
 
   // Verify heading and car column title

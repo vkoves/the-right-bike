@@ -2,7 +2,7 @@
 
 const Recommendation = {
   Title: 'h3',
-  ElectricBadge: '.electric-badge',
+  ElectricBadge: '.recommendation-card .electric-badge',
   TrailerTip: '.trailer-tip',
   Container: '.bike-recommendation',
 };

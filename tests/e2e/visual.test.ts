@@ -64,11 +64,11 @@ Scenario('Savings overview (own car, 80%) - desktop', async ({ I }) => {
   I.click('I Already Own A Car');
   I.waitForText('How much of your driving would you replace with biking?');
 
-  I.executeScript((sel: string) => {
+  I.executeScript(({ sel, pct }: { sel: string; pct: number }) => {
     const slider = document.querySelector(sel) as HTMLInputElement;
-    slider.value = '80';
+    slider.value = String(pct);
     slider.dispatchEvent(new Event('input', { bubbles: true }));
-  }, Savings.ReplacementSlider);
+  }, { sel: Savings.ReplacementSlider, pct: 80 });
 
   I.see('80%', Savings.SliderValue);
   I.dontSeeVisualChanges('savings-overview-own-car-desktop', { element: Savings.Section });
@@ -79,11 +79,11 @@ Scenario('Savings overview (own car, 80%) - mobile', async ({ I }) => {
   goToCargoEbikeResult(I);
   I.click('I Already Own A Car');
   I.waitForText('How much of your driving would you replace with biking?');
-  I.executeScript((sel: string) => {
+  I.executeScript(({ sel, pct }: { sel: string; pct: number }) => {
     const slider = document.querySelector(sel) as HTMLInputElement;
-    slider.value = '80';
+    slider.value = String(pct);
     slider.dispatchEvent(new Event('input', { bubbles: true }));
-  }, Savings.ReplacementSlider);
+  }, { sel: Savings.ReplacementSlider, pct: 80 });
   I.see('80%', Savings.SliderValue);
   I.dontSeeVisualChanges('savings-overview-own-car-mobile', { element: Savings.Section });
 });
