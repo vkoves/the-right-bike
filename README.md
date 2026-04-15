@@ -103,6 +103,19 @@ The E2E suite covers the most common assessment flows (regular bike, commuter eB
 E2E tests also run in CI on every push and PR. To skip them, add `[skip-e2e]` to your
 commit message. You can also trigger them manually from the **Actions** tab on GitHub.
 
+### Visual Regression Tests
+
+Visual tests use [codeceptjs-visual-testing](https://github.com/Watercycle/codeceptjs-visual-testing)
+to compare screenshots against committed baselines. They run as part of the E2E suite.
+
+To update baselines after intentional UI changes:
+
+```bash
+yarn test:e2e:visual-update
+```
+
+Review the updated images in `tests/e2e/visual-baselines/` and commit them.
+
 ## Project Structure
 
 ```
