@@ -100,6 +100,9 @@ yarn test:e2e:ui          # run with a visible browser (useful for debugging)
 
 The E2E suite covers the most common assessment flows (regular bike, commuter eBike, cargo eBike, longtail eBike, and cargo eTrike).
 
+E2E tests also run in CI on every push and PR. To skip them, add `[skip-e2e]` to your
+commit message. You can also trigger them manually from the **Actions** tab on GitHub.
+
 ## Project Structure
 
 ```
