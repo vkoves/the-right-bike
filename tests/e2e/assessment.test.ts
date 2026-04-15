@@ -1,6 +1,6 @@
 const { runAssessment } = require('./helpers');
 const { Recommendation, Savings } = require('./selectors');
-const { CAR_COSTS } = require('../../src/constants/bikeCosts.ts');
+const { CarCosts } = require('../../src/constants/vehicleCosts.ts');
 const { BikeTypes } = require('../../src/constants/bikeTypes.ts');
 const Currency = require('../../src/utils/currency.ts').default;
 
@@ -62,11 +62,11 @@ Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain'
   const remainingScale = 1 - scale;
 
   // Per-line annual savings (unrounded, matching the app's computed properties)
-  const maintenanceSaving = CAR_COSTS.maintenance * scale;                       // $720
-  const fuelSaving = CAR_COSTS.fuel * scale;                                     // $2,000
-  const mileageInsurance = CAR_COSTS.mileageInsuranceBase
-    + (CAR_COSTS.averageAnnualMiles * remainingScale * CAR_COSTS.mileageInsurancePerMile);
-  const insuranceSaving = CAR_COSTS.insurance - mileageInsurance;                // ~$1,608.50
+  const maintenanceSaving = CarCosts.maintenance * scale;                       // $720
+  const fuelSaving = CarCosts.fuel * scale;                                     // $2,000
+  const mileageInsurance = CarCosts.mileageInsuranceBase
+    + (CarCosts.averageAnnualMiles * remainingScale * CarCosts.mileageInsurancePerMile);
+  const insuranceSaving = CarCosts.insurance - mileageInsurance;                // ~$1,608.50
 
   // Currency.format rounds at display time, matching the app's behavior
   I.see(`Save ${Currency.format(maintenanceSaving)}/yr`);
@@ -83,11 +83,11 @@ Scenario('recommends a Front-Loader Cargo eBike for heavy cargo on flat terrain'
     + (bike.costs.maintenance * ComparisonYears)
     + (bike.costs.fuel * ComparisonYears)
     + (bike.costs.insurance * ComparisonYears);
-  const fullCarRunning = (CAR_COSTS.maintenance * ComparisonYears)
-    + (CAR_COSTS.fuel * ComparisonYears)
-    + (CAR_COSTS.insurance * ComparisonYears);
-  const carTotalCost = (CAR_COSTS.maintenance * ComparisonYears * remainingScale)
-    + (CAR_COSTS.fuel * ComparisonYears * remainingScale)
+  const fullCarRunning = (CarCosts.maintenance * ComparisonYears)
+    + (CarCosts.fuel * ComparisonYears)
+    + (CarCosts.insurance * ComparisonYears);
+  const carTotalCost = (CarCosts.maintenance * ComparisonYears * remainingScale)
+    + (CarCosts.fuel * ComparisonYears * remainingScale)
     + (mileageInsurance * ComparisonYears);
   const overallSavings = (fullCarRunning - carTotalCost) - bikeTotalCost;        // ~$14,467.50
   I.see(Currency.format(overallSavings), Savings.Amount);

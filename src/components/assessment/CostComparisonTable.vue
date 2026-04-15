@@ -57,7 +57,7 @@
         <div class="cost-item" v-if="!alreadyOwnsCar">
           <span class="cost-label">Initial Purchase</span>
           <span class="cost-value">
-            {{ Currency.format(isNew ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase) }}
+            {{ Currency.format(isNew ? CarCosts.purchase : CarCosts.usedPurchase) }}
             <sup class="footnote-link" @click="showFootnote('purchase')">¹</sup>
           </span>
         </div>
@@ -113,11 +113,11 @@
     </div>
     <div class="footnote-content">
       <div class="footnote" v-if="activeFootnote === 'purchase' || activeFootnote === 'all'">
-        <p v-if="!isNew"><strong>¹ Used car purchase price:</strong> {{ Currency.format(CAR_COSTS.usedPurchase) }} average (Cox Automotive, {{ CAR_COSTS.usedPurchaseUpdatedAt }})</p>
-        <p v-else><strong>¹ New car purchase price:</strong> {{ Currency.format(CAR_COSTS.purchase) }} average (Cox Automotive, {{ CAR_COSTS.purchaseUpdatedAt }})</p>
+        <p v-if="!isNew"><strong>¹ Used car purchase price:</strong> {{ Currency.format(CarCosts.usedPurchase) }} average (Cox Automotive, {{ CarCosts.usedPurchaseUpdatedAt }})</p>
+        <p v-else><strong>¹ New car purchase price:</strong> {{ Currency.format(CarCosts.purchase) }} average (Cox Automotive, {{ CarCosts.purchaseUpdatedAt }})</p>
         <p class="source-link">
           <a :href="isNew ? carCostSources.purchaseSource : carCostSources.usedPurchaseSource" target="_blank">
-            Source: Cox Automotive ({{ isNew ? CAR_COSTS.purchaseUpdatedAt : CAR_COSTS.usedPurchaseUpdatedAt }})
+            Source: Cox Automotive ({{ isNew ? CarCosts.purchaseUpdatedAt : CarCosts.usedPurchaseUpdatedAt }})
           </a>
         </p>
       </div>
@@ -150,10 +150,10 @@
           </p>
         </template>
         <template v-else>
-          <p><strong>⁴ Insurance costs:</strong> {{ Currency.format(CAR_COSTS.insurance) }}/year average ({{ CAR_COSTS.insuranceUpdatedAt }})</p>
+          <p><strong>⁴ Insurance costs:</strong> {{ Currency.format(CarCosts.insurance) }}/year average ({{ CarCosts.insuranceUpdatedAt }})</p>
           <p class="source-link">
             <a :href="carCostSources.insuranceSource" target="_blank">
-              Source: NerdWallet ({{ CAR_COSTS.insuranceUpdatedAt }})
+              Source: NerdWallet ({{ CarCosts.insuranceUpdatedAt }})
             </a>
           </p>
         </template>
@@ -164,7 +164,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { CAR_COSTS } from '../../constants/bikeCosts';
+import { CarCosts } from '../../constants/vehicleCosts';
 import Currency from '../../utils/currency';
 
 const props = defineProps({
@@ -183,12 +183,12 @@ const props = defineProps({
 const emit = defineEmits(['car-type-change']);
 
 const carCostSources = {
-  purchaseSource: CAR_COSTS.purchaseSource,
-  usedPurchaseSource: CAR_COSTS.usedPurchaseSource,
-  maintenanceSource: CAR_COSTS.maintenanceSource,
-  fuelSource: CAR_COSTS.fuelSource,
-  insuranceSource: CAR_COSTS.insuranceSource,
-  mileageInsuranceSource: CAR_COSTS.mileageInsuranceSource,
+  purchaseSource: CarCosts.purchaseSource,
+  usedPurchaseSource: CarCosts.usedPurchaseSource,
+  maintenanceSource: CarCosts.maintenanceSource,
+  fuelSource: CarCosts.fuelSource,
+  insuranceSource: CarCosts.insuranceSource,
+  mileageInsuranceSource: CarCosts.mileageInsuranceSource,
 };
 
 const showFootnotes = ref(false);

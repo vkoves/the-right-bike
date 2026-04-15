@@ -3,10 +3,10 @@
  * All values are in USD and represent annual costs unless otherwise specified
  */
 
-import type { CarCosts } from '../types';
+import type { CarCostsConfig } from '../types';
 
 // Base costs for different vehicle types with source URLs
-export const CAR_COSTS: CarCosts = {
+export const CarCosts: CarCostsConfig = {
   // Initial purchase price average for a new car
   purchase: 49000,
   purchaseSource: "https://www.coxautoinc.com/insights/feb-2026-atp-report/",

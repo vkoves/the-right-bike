@@ -12,7 +12,7 @@ If the same data is needed in more than one place, extract it to a shared consta
 
 Examples of what this means in practice:
 - Bike type metadata lives in `src/constants/bikeTypes.js` — do not re-declare it in components
-- Bike cost data lives in `src/constants/bikeCosts.js` — same rule
+- Vehicle cost data lives in `src/constants/vehicleCosts.ts` — same rule
 - If you find yourself copy-pasting a data structure, stop and extract it first
 
 ### No inline styles

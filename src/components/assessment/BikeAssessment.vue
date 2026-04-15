@@ -146,7 +146,7 @@ import BikeRecommendation from './BikeRecommendation.vue';
 import SavingsComparison from './SavingsComparison.vue';
 import ResultsFooter from './ResultsFooter.vue';
 import YourChoices from './YourChoices.vue';
-import { CAR_COSTS } from '../../constants/bikeCosts';
+import { CarCosts } from '../../constants/vehicleCosts';
 import { BikeTypes, DefaultBikeCosts } from '../../constants/bikeTypes';
 import { SiteName } from '../../constants/pageMeta';
 import { TransportationNeedOptions, GeographyOptions, FitnessOptions, StorageOptions } from '../../constants/assessmentOptions';
@@ -210,10 +210,10 @@ const costs: CostComparison = reactive({
     insurance: DefaultBikeCosts.insurance
   },
   car: {
-    purchase: CAR_COSTS.purchase,
-    maintenance: CAR_COSTS.maintenance,
-    fuel: CAR_COSTS.fuel,
-    insurance: CAR_COSTS.insurance
+    purchase: CarCosts.purchase,
+    maintenance: CarCosts.maintenance,
+    fuel: CarCosts.fuel,
+    insurance: CarCosts.insurance
   }
 });
 

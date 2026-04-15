@@ -226,7 +226,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { CAR_COSTS } from '../../constants/bikeCosts';
+import { CarCosts } from '../../constants/vehicleCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { isPlainClick } from '../../utils/navigation';
 import Currency from '../../utils/currency';
@@ -342,8 +342,8 @@ const bikeTotalCost = computed(() => {
 // Annual mileage-based insurance: base rate + per-mile charge for remaining driving
 const mileageInsuranceAnnual = computed(() => {
   const remainingDriving = 1 - replacementPercent.value / 100;
-  const milesKept = CAR_COSTS.averageAnnualMiles * remainingDriving;
-  return CAR_COSTS.mileageInsuranceBase + (milesKept * CAR_COSTS.mileageInsurancePerMile);
+  const milesKept = CarCosts.averageAnnualMiles * remainingDriving;
+  return CarCosts.mileageInsuranceBase + (milesKept * CarCosts.mileageInsurancePerMile);
 });
 
 const carTotalCost = computed(() => {
@@ -355,7 +355,7 @@ const carTotalCost = computed(() => {
            (props.costs.car.fuel * 5 * remainingScale) +
            (mileageInsuranceAnnual.value * 5);
   }
-  const purchase = isNew.value ? CAR_COSTS.purchase : CAR_COSTS.usedPurchase;
+  const purchase = isNew.value ? CarCosts.purchase : CarCosts.usedPurchase;
   return purchase +
          (props.costs.car.maintenance * 5) +
          (props.costs.car.fuel * 5) +

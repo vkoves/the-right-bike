@@ -25,7 +25,7 @@ export interface BikeType {
   showTrailerTip?: boolean;
 }
 
-// --- Costs (bikeCosts.ts) ---
+// --- Costs (vehicleCosts.ts) ---
 export interface BikeCost {
   purchase: number;
   maintenance: number;
@@ -33,7 +33,7 @@ export interface BikeCost {
   insurance: number;
 }
 
-export interface CarCosts {
+export interface CarCostsConfig {
   purchase: number;
   purchaseSource: string;
   purchaseUpdatedAt: string;
