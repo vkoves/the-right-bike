@@ -73,8 +73,8 @@ export const StorageOptions: Record<string, AssessmentOption> = {
     description: 'Need to carry bike up stairs'
   },
   outdoor: {
-    label: 'Outdoor',
-    icon: '🌧️',
+    label: 'Outdoors',
+    icon: '☀️',
     description: 'Locked outside with a cover (we can show you how)'
   }
 };

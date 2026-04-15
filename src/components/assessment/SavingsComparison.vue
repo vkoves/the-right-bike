@@ -150,7 +150,7 @@
           tracker, motorcycle alarm, or bike-specific insurance for extra peace of mind.
         </p>
         <router-link to="/storage" target="_blank" class="find-shops-btn">
-          Learn Bike Storage Tips <span class="chevron-right" aria-hidden="true"></span>
+          Bike Storage Tips <span class="chevron-right" aria-hidden="true"></span>
         </router-link>
       </div>
     </div>
@@ -173,7 +173,7 @@
           rel="noopener"
           class="find-shops-btn"
         >
-          Search Bike Shops Near You <span class="chevron-right" aria-hidden="true"></span>
+          Bike Shops Near You <span class="chevron-right" aria-hidden="true"></span>
         </a>
       </div>
     </div>

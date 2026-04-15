@@ -1,15 +1,20 @@
 <template>
   <div class="bike-recommendation">
     <div v-if="alternateBikeType && allBikeTypes && allBikeTypes[alternateBikeType as BikeTypeId]" class="alternate-note">
-      <h4 class="alternate-note-heading">Absolutely Can't Store Outside?</h4>
+      <h4 class="alternate-note-heading">Prefer Indoor Storage?</h4>
       <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
         <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
       </a>
       <div class="alternate-note-body">
         <p>
-          You can store a large cargo bike outside with a cover and a great lock — some
-          owners also add a GPS tracker, motorcycle alarm, or bike-specific insurance for
-          extra peace of mind. But if you absolutely can't store outside, check out
+          <strong>For your situation, we're recommending a {{ recommendationDetails.title }} and
+          storing it outside</strong>, with a cover
+          and a great lock, which makes it the easiest to choose a bike for most of your trips!
+          Some owners also add a GPS tracker, motorcycle alarm, or bike-specific insurance for extra
+          peace of mind.
+        </p>
+        <p>
+          But if you prefer to store indoors, check out
           {{ alternateArticle }}
           <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" class="alternate-link">
             <strong>{{ allBikeTypes[alternateBikeType as BikeTypeId].title }}</strong>
@@ -18,7 +23,7 @@
         </p>
         <p class="alternate-note-tip">
           <router-link to="/storage" target="_blank" class="pill-link">
-            Learn Bike Storage Tips
+            Bike Storage Tips
           </router-link>
         </p>
       </div>
@@ -295,6 +300,8 @@ const alternateArticle = computed(() => {
 .alternate-note-body {
   flex: 1;
   min-width: 0;
+
+  p + p { margin-top: 0.5rem; }
 }
 
 .alternate-note-tip {
