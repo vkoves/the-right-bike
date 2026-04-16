@@ -21,12 +21,12 @@
           <span class="alternate-note-img-wrap -mobile">
             <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
           </span>
-          But if you prefer to store indoors, check out
+          But if you prefer to store indoors, you could check out
           {{ alternateArticle }}
           <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" class="alternate-link">
             <strong>{{ allBikeTypes[alternateBikeType as BikeTypeId].title }}</strong>
           </a>
-          instead. It's much easier to store indoors!
+          instead. They are lighter and easier to bring inside!
         </p>
         <p class="alternate-note-tip">
           <router-link to="/storage" target="_blank" class="pill-link">
