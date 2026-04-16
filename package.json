@@ -11,6 +11,7 @@
     "test": "vitest",
     "test:e2e": "HEADLESS=true npx codeceptjs run --steps",
     "test:e2e:ui": "npx codeceptjs run --steps",
+    "test:e2e:visual": "HEADLESS=true npx codeceptjs run --steps --grep Visual",
     "test:e2e:visual-update": "UPDATE_VISUALS=1 HEADLESS=true npx codeceptjs run --steps --grep Visual && npx pngquant --force --ext .png --quality 65-80 tests/e2e/visual-baselines/*.png",
     "typecheck": "vue-tsc --noEmit"
   },

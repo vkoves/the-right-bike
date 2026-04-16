@@ -1,24 +1,36 @@
 <template>
   <div class="bike-recommendation">
     <div v-if="alternateBikeType && allBikeTypes && allBikeTypes[alternateBikeType as BikeTypeId]" class="alternate-note">
-      <h4 class="alternate-note-heading">Absolutely Can't Store Outside?</h4>
-      <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">
+      <h4 class="alternate-note-heading">We've Found The Right Bike For You - And You Can Store It Outside!</h4>
+      <div class="alternate-note-img-wrap">
+        <img :src="recommendationDetails.image" :alt="recommendationDetails.title" class="alternate-note-image">
+      </div>
+      <div class="alternate-note-img-wrap alternate-note-img-alt -desktop">
         <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
-      </a>
+      </div>
       <div class="alternate-note-body">
         <p>
-          You can store a large cargo bike outside with a cover and a great lock — some
-          owners also add a GPS tracker, motorcycle alarm, or bike-specific insurance for
-          extra peace of mind. But if you absolutely can't store outside, check out
+          <strong>For your situation, we're recommending
+          {{ recommendedArticle }} {{ recommendationDetails.title }} and
+          storing it outside</strong>, with a cover
+          and a great lock, which makes it the easiest to choose a bike for most of your trips!
+          Some owners also add a GPS tracker, motorcycle alarm, or bike-specific insurance for extra
+          peace of mind.
+        </p>
+        <p>
+          <span class="alternate-note-img-wrap -mobile">
+            <img :src="allBikeTypes[alternateBikeType as BikeTypeId].image" :alt="allBikeTypes[alternateBikeType as BikeTypeId].title" class="alternate-note-image">
+          </span>
+          But if you prefer to store indoors, you could check out
           {{ alternateArticle }}
           <a :href="'/bike/' + alternateBikeType" target="_blank" rel="noopener" class="alternate-link">
             <strong>{{ allBikeTypes[alternateBikeType as BikeTypeId].title }}</strong>
           </a>
-          instead. It's much easier to store indoors!
+          instead. They are lighter and easier to bring inside!
         </p>
         <p class="alternate-note-tip">
           <router-link to="/storage" target="_blank" class="pill-link">
-            Learn Bike Storage Tips
+            Bike Storage Tips
           </router-link>
         </p>
       </div>
@@ -84,6 +96,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import ShareButton from './ShareButton.vue';
+import { indefiniteArticle } from '../../utils/grammar';
 import type { BikeType, BikeTypeId } from '../../types';
 
 const props = withDefaults(defineProps<{
@@ -101,10 +114,13 @@ const props = withDefaults(defineProps<{
   savingsAmount: 0
 });
 
+const recommendedArticle = computed(() => {
+  return indefiniteArticle(props.recommendationDetails.title);
+});
+
 const alternateArticle = computed(() => {
   if (!props.alternateBikeType || !props.allBikeTypes?.[props.alternateBikeType as BikeTypeId]) return 'a';
-  const title = props.allBikeTypes[props.alternateBikeType as BikeTypeId].title;
-  return /^[aeiou]/i.test(title) ? 'an' : 'a';
+  return indefiniteArticle(props.allBikeTypes[props.alternateBikeType as BikeTypeId].title);
 });
 </script>
 
@@ -290,11 +306,27 @@ const alternateArticle = computed(() => {
   color: vars.$secondary-dark;
   font-size: 1rem;
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+.alternate-note-img-wrap {
+  float: left;
+  margin-right: 1rem;
+  margin-bottom: 0.25rem;
+  background-color: vars.$white;
+  border-radius: 8px;
+  padding: 0.25rem;
+  overflow: hidden;
+
+  &.-desktop { display: none; }
+  &.-mobile { float: right; margin-right: 0; margin-left: 0.75rem; }
 }
 
 .alternate-note-body {
   flex: 1;
   min-width: 0;
+
+  p + p { margin-top: 0.5rem; }
 }
 
 .alternate-note-tip {
@@ -364,14 +396,16 @@ const alternateArticle = computed(() => {
 }
 
 .alternate-note-image {
-  float: left;
+  height: 4rem;
   width: auto;
-  height: 6rem;
-  border-radius: 8px;
-  margin-right: 1rem;
-  margin-bottom: 0.25rem;
-  background-color: vars.$white;
-  padding: 0.25rem;
+}
+
+.-mobile .alternate-note-image {
+  height: 3rem;
+}
+
+.-mobile {
+  margin-top: 1rem;
 }
 
 @media (min-width: #{vars.$breakpoint-mobile-up}) {
@@ -404,16 +438,39 @@ const alternateArticle = computed(() => {
     align-items: flex-start;
     gap: 0 1.5rem;
     flex-wrap: wrap;
-    justify-content: center;
   }
 
   .alternate-note-heading {
     width: 100%;
   }
 
-  .alternate-note-image {
+  .alternate-note-img-wrap {
     float: none;
-    margin: auto;
+    flex-shrink: 0;
+    margin-right: 0;
+    order: 0;
+
+    &.-desktop { display: block; }
+    &.-mobile { display: none; }
+  }
+
+  .alternate-note-body {
+    order: 1;
+    flex: 1;
+  }
+
+  .alternate-note-img-alt {
+    order: 2;
+    align-self: flex-end;
+    margin-bottom: 3rem;
+  }
+
+  .alternate-note-image {
+    height: 6rem;
+  }
+
+  .alternate-note-img-alt .alternate-note-image {
+    height: 4rem;
   }
 }
 

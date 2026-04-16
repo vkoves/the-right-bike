@@ -96,6 +96,7 @@ End-to-end tests use **CodeceptJS** with **Playwright** (headless Chromium). The
 yarn dev                  # start the dev server in one terminal
 yarn test:e2e             # run E2E tests headless
 yarn test:e2e:ui          # run with a visible browser (useful for debugging)
+yarn test:e2e:visual      # run only visual regression tests headless
 
 # Run a single test by matching its scenario name
 HEADLESS=true npx codeceptjs run --steps --grep "Regular Bicycle"

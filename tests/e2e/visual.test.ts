@@ -19,7 +19,7 @@ function hideStickyHeader(I: CodeceptJS.I) {
 function goToCargoEbikeResult(I: CodeceptJS.I) {
   runAssessment(I, ['Heavy Cargo / Pets'], 'Mostly Flat', 'Medium', 'Basement Or Up A Few Steps');
   I.see('Front-Loader Cargo eBike', Recommendation.Title);
-  I.waitForText("Absolutely Can't Store Outside?");
+  I.waitForText("We've Found The Right Bike For You - And You Can Store It Outside!");
 
   hideStickyHeader(I);
   // Wait for the 300ms fade-in transition to complete
