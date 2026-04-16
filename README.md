@@ -90,7 +90,15 @@ yarn vitest run      # single run
 
 ### E2E Tests
 
-End-to-end tests use **CodeceptJS** with **Playwright** (headless Chromium). They require the dev server to be running:
+End-to-end tests use **CodeceptJS** with **Playwright** (headless Chromium). They require the dev server to be running.
+
+**First-time setup:** install the Playwright browser binary:
+
+```bash
+npx playwright install chromium
+```
+
+Then, in two terminals:
 
 ```bash
 yarn dev                  # start the dev server in one terminal
