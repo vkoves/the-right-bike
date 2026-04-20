@@ -7,39 +7,9 @@
     <div class="ad-body">
       <div class="content">
         <div class="content-title">Find The<br>Right Bike</div>
-        <div class="benefits-summary">
-          <div class="benefit-item">
-            <div class="benefit-icon">💰</div>
-            <div>Save Thousands</div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">🌍</div>
-            <div>Reduce Emissions</div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">⏱️</div>
-            <div>Get Back Time</div>
-          </div>
-          <div class="benefit-item">
-            <div class="benefit-icon">❤️</div>
-            <div>Improve Your Health</div>
-          </div>
-        </div>
+        <SocialImageBenefits />
       </div>
-      <div class="collage">
-        <div class="photo photo-1">
-          <img src="/images/bikes/urban-arrow.jpg" alt="Family bike">
-        </div>
-        <div class="photo photo-2">
-          <img src="/images/bikes/gazelle-ebike.jpg" alt="Electric bike">
-        </div>
-        <div class="photo photo-3">
-          <img src="/images/bikes/tern-gsd-500.jpg" alt="Cargo bike">
-        </div>
-        <div class="photo photo-4">
-          <img src="/images/bikes/dutch-bike.jpg" alt="City bike">
-        </div>
-      </div>
+      <SocialImageCollage />
     </div>
     <div class="cta-row">
       <div class="cta-button">Find The Bike For You</div>
@@ -52,6 +22,11 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import SocialImageCollage from './SocialImageCollage.vue'
+import SocialImageBenefits from './SocialImageBenefits.vue'
+</script>
 
 <style lang="scss" scoped>
 @use '../assets/scss/variables' as vars;
@@ -80,7 +55,6 @@
   }
 }
 
-
 h1 {
   font-size: 4rem;
 }
@@ -100,6 +74,14 @@ h1 {
   padding: 1.5rem 2rem;
   flex-basis: 60%;
   flex-shrink: 0;
+}
+
+.content-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: vars.$white;
+  line-height: 1.1;
+  margin: 0 0 1.5rem;
 }
 
 .cta-row {
@@ -131,50 +113,13 @@ h1 {
   position: static;
 }
 
-// 2x2 collage
-.collage {
-  width: 550px;
+:deep(.collage) {
   height: 450px;
-  flex-shrink: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 1rem;
   padding: 0rem 2rem 0rem 0.5rem;
-  align-items: center;
-  justify-items: center;
   margin-left: -8rem;
 }
 
-.photo {
-  padding: 8px;
-  border-radius: 5px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-  width: max-content;
-
-  img {
-    height: 180px;
-    width: auto;
-    display: block;
-    border-radius: 2px;
-  }
-
-  &.photo-1 {
-    background: #E63946;
-    transform: rotate(-4deg) translate(0rem, -0.25rem);
-  }
-  &.photo-2 {
-    background: #3A86FF;
-    transform: rotate(3deg) translate(-2rem, 0.5rem);
-  }
-  &.photo-3 {
-    background: #FFBE0B;
-    transform: rotate(-4deg) translate(5rem, -1rem);
-    z-index: 1;
-  }
-  &.photo-4 {
-    background: #06D6A0;
-    transform: rotate(3deg) translate(0.5rem, -2rem);
-  }
+:deep(.photo img) {
+  height: 180px;
 }
 </style>
