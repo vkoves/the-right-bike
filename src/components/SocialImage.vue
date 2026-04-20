@@ -61,16 +61,6 @@ h1 {
   font-size: 4rem;
 }
 
-.benefits-summary { gap: 1rem 0.5rem; }
-
-.benefit-item {
-  background-color: rgba(255, 255, 255, 0.18);
-  color: vars.$white;
-  font-weight: 700;
-  box-shadow: none;
-  font-size: 1.25rem;
-}
-
 // 2x2 collage
 .collage {
   width: 550px;
