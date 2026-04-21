@@ -12,7 +12,7 @@
       <SocialImageCollage />
     </div>
     <div class="cta-row">
-      <div class="cta-button">Find The Bike For You</div>
+      <div class="cta-button">Take The Quiz</div>
     </div>
     <div class="ad-footer">
       <div class="site-brand">
