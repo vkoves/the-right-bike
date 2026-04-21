@@ -1,3 +1,10 @@
+<script setup lang="ts">
+/**
+ * Four benefit pills (Save Thousands, Reduce Emissions, Get Back Time, Improve Your Health)
+ * styled for use in social image components.
+ */
+</script>
+
 <template>
   <div class="benefits-summary">
     <div class="benefit-item">

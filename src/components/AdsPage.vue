@@ -2,20 +2,34 @@
   <div class="ads-page">
     <h1>Ads</h1>
 
-    <section class="ad-preview">
+    <section v-for="ad in Ads" :key="ad.slug" class="ad-preview">
       <div class="ad-meta">
-        <h2><router-link to="/ads/square">Square Ad</router-link></h2>
-        <p><code>1000 &times; 800px</code></p>
+        <h2><router-link :to="`/ads/${ad.slug}`">{{ ad.name }}</router-link></h2>
+        <p><code>{{ ad.width }} &times; {{ ad.height }}px</code></p>
+        <AdDownloadButton :target="adRefs[ad.slug]" :filename="adFilename(ad)" />
       </div>
       <div class="ad-frame">
-        <AdSquare />
+        <div :ref="el => setAdRef(ad.slug, el)">
+          <component :is="ad.component" />
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import AdSquare from './AdSquare.vue'
+/**
+ * Index page for ad previews at /ads. Shows each ad at native size with a download button.
+ */
+import { ref } from 'vue'
+import AdDownloadButton from './AdDownloadButton.vue'
+import { Ads, adFilename } from '../constants/ads'
+
+const adRefs = ref<Record<string, HTMLElement | null>>({})
+
+function setAdRef(slug: string, el: unknown) {
+  adRefs.value[slug] = (el as HTMLElement | null)?.querySelector<HTMLElement>('.social-image') ?? null
+}
 </script>
 
 <style lang="scss" scoped>

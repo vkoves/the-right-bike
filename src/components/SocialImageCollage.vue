@@ -1,3 +1,10 @@
+<script setup lang="ts">
+/**
+ * 2×2 photo collage shared by social image components.
+ * Parents control sizing via :deep(.collage) and :deep(.photo img).
+ */
+</script>
+
 <template>
   <div class="collage">
     <div class="photo photo-1">

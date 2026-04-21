@@ -32,5 +32,8 @@ Instead, check for modifier keys and only call `event.preventDefault()` on plain
 ### Constants use PascalCase
 **Use PascalCase for constants** (e.g. `StickyHeaderPxOffset`, `EstGrowthRate`), not SCREAMING_SNAKE_CASE.
 
+### Component docblocks
+**Every component must have a concise docblock** in its `<script setup>` block describing what it does. Props and emits must each have a `@prop` / `@emit` line. One sentence for the component; one line per input/output.
+
 ### No hardcoded selectors in E2E tests
 **Never use raw CSS selectors in E2E test files.** All selectors must live in `tests/e2e/selectors.js`, organized by component/section. Import and reference them by name. This includes selectors passed into `executeScript` — pass them as arguments rather than hardcoding inside the browser function.

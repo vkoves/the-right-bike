@@ -24,6 +24,10 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * 1000×800px square ad for Streetsblog and similar outlets.
+ * Rendered bare at /ads/square for screenshot capture; previewed at /ads.
+ */
 import SocialImageCollage from './SocialImageCollage.vue'
 import SocialImageBenefits from './SocialImageBenefits.vue'
 </script>
@@ -52,6 +56,7 @@ import SocialImageBenefits from './SocialImageBenefits.vue'
   .eyebrow {
     color: vars.$white;
     font-size: 1.5rem;
+    margin-bottom: 0rem;
   }
 }
 
@@ -88,7 +93,7 @@ h1 {
   flex-shrink: 0;
   display: flex;
   justify-content: center;
-  padding: 0.75rem 2rem;
+  margin-top: 0.5rem;
 }
 
 .cta-button {
