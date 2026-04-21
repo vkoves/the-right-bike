@@ -37,7 +37,8 @@
 .photo {
   padding: 8px;
   border-radius: 5px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  // drop-shadow instead of box-shadow: html2canvas doesn't render box-shadow on transformed elements
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
   width: max-content;
 
   img {

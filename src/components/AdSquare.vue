@@ -50,7 +50,7 @@ import SocialImageBenefits from './SocialImageBenefits.vue'
 
   h1 {
     font-size: 3.75rem;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 
   .eyebrow {
@@ -60,14 +60,9 @@ import SocialImageBenefits from './SocialImageBenefits.vue'
   }
 }
 
-h1 {
-  font-size: 4rem;
-}
-
 .ad-body {
   display: flex;
   align-items: center;
-  overflow: hidden;
   padding: 1rem 0;
 }
 
@@ -78,11 +73,12 @@ h1 {
   justify-content: center;
   padding: 1.5rem 2rem;
   flex-basis: 60%;
+  max-width: 60%;
   flex-shrink: 0;
 }
 
 .content-title {
-  font-size: 4rem;
+  font-size: 5.25rem;
   font-weight: 700;
   color: vars.$white;
   line-height: 1.1;
@@ -92,17 +88,18 @@ h1 {
 .cta-row {
   flex-shrink: 0;
   display: flex;
-  justify-content: center;
-  margin-top: 0.5rem;
-}
+  justify-content: flex-start;
+  padding: 0 2rem;
+  margin-top: 1.5rem;
 
-.cta-button {
-  background-color: vars.$white;
-  color: vars.$primary;
-  font-weight: 700;
-  font-size: 1.75rem;
-  padding: 0.9rem 2.5rem;
-  border-radius: 50px;
+  .cta-button {
+    background-color: vars.$white;
+    color: vars.$primary;
+    font-weight: 700;
+    font-size: 2.25rem;
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+  }
 }
 
 .ad-footer {
@@ -119,9 +116,27 @@ h1 {
 }
 
 :deep(.collage) {
-  height: 450px;
-  padding: 0rem 2rem 0rem 0.5rem;
-  margin-left: -8rem;
+  position: absolute;
+  right: 0;
+  top: 10rem;
+  height: 600px;
+  width: 500px;
+  margin-bottom: -2rem;
+  grid-template-columns: 1fr;
+  gap: 0;
+  overflow: hidden;
+
+  .photo-1 {
+    transform: rotate(-4deg) translate(0rem, 0.5rem)
+  }
+
+  .photo-2 {
+    transform: rotate(3deg) translate(-2rem, -0.5rem)
+  }
+
+  .photo-4 {
+    display: none;
+  }
 }
 
 :deep(.photo img) {
