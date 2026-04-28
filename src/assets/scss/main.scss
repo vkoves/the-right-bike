@@ -141,6 +141,15 @@ h2 {
   }
 }
 
+code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875em;
+  background-color: vars.$lighter-gray;
+  color: vars.$text-body;
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+}
+
 .smaller {
   font-size: 0.8125em;
 }

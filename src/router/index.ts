@@ -8,6 +8,8 @@ import StoragePage from '../components/StoragePage.vue'
 import SocialImage from '../components/SocialImage.vue'
 import SocialImageBike from '../components/SocialImageBike.vue'
 import SocialImagePage from '../components/SocialImagePage.vue'
+import AdSquare from '../components/AdSquare.vue'
+import AdsPage from '../components/AdsPage.vue'
 import AllBikesPage from '../components/AllBikesPage.vue'
 import AdminPage from '../components/AdminPage.vue'
 import NotFoundPage from '../components/NotFoundPage.vue'
@@ -73,6 +75,17 @@ const routes = [
     component: SocialImagePage,
     meta: { bare: true },
     props: true
+  },
+  {
+    path: '/ads',
+    name: 'AdsPage',
+    component: AdsPage
+  },
+  {
+    path: '/ads/square',
+    name: 'AdSquare',
+    component: AdSquare,
+    meta: { bare: true }
   },
   {
     path: '/bikes',
