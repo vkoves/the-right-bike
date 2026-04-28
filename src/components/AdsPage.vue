@@ -1,14 +1,14 @@
 <template>
-  <div class="ads-page">
+  <div class="creatives-page">
     <h1>Ads</h1>
 
-    <section v-for="ad in Ads" :key="ad.slug" class="ad-preview">
-      <div class="ad-meta">
+    <section v-for="ad in Ads" :key="ad.slug" class="creative-preview">
+      <div class="creative-meta">
         <h2><router-link :to="`/ads/${ad.slug}`">{{ ad.name }}</router-link></h2>
         <p><code>{{ ad.width }} &times; {{ ad.height }}px</code></p>
         <AdDownloadButton :target="adRefs[ad.slug]" :filename="adFilename(ad)" />
       </div>
-      <div class="ad-frame">
+      <div class="creative-frame">
         <div :ref="el => setAdRef(ad.slug, el)">
           <component :is="ad.component" />
         </div>
@@ -35,7 +35,7 @@ function setAdRef(slug: string, el: unknown) {
 <style lang="scss" scoped>
 @use '../assets/scss/variables' as vars;
 
-.ads-page {
+.creatives-page {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
@@ -46,7 +46,7 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
-.ad-preview {
+.creative-preview {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -57,13 +57,13 @@ h2 {
   color: vars.$primary;
 }
 
-.ad-meta {
+.creative-meta {
   display: flex;
   align-items: baseline;
   gap: 1rem;
 }
 
-.ad-frame {
+.creative-frame {
   overflow-x: auto;
 }
 </style>

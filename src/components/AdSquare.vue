@@ -1,10 +1,10 @@
 <template>
   <div class="social-image">
-    <div class="ad-header">
+    <div class="promo-header">
       <div class="eyebrow">Car payments. Gas Prices. Insurance.</div>
       <h1>There's a Better Way.</h1> <!-- Consider "What If You Had One Less Car."-->
     </div>
-    <div class="ad-body">
+    <div class="promo-body">
       <div class="content">
         <div class="content-title">Find The<br>Right Bike</div>
         <SocialImageBenefits />
@@ -14,7 +14,7 @@
     <div class="cta-row">
       <div class="cta-button">Take The Quiz</div>
     </div>
-    <div class="ad-footer">
+    <div class="promo-footer">
       <div class="site-brand">
         <img src="/images/icons/favicon.svg" alt="" class="site-logo">
         www.findtheright.bike
@@ -42,7 +42,7 @@ import SocialImageBenefits from './SocialImageBenefits.vue'
   align-items: stretch;
 }
 
-.ad-header {
+.promo-header {
   flex-shrink: 0;
   text-align: center;
   padding: 1.5rem 2rem 0.75rem;
@@ -60,7 +60,7 @@ import SocialImageBenefits from './SocialImageBenefits.vue'
   }
 }
 
-.ad-body {
+.promo-body {
   display: flex;
   align-items: center;
   padding: 1rem 0;
@@ -102,7 +102,7 @@ import SocialImageBenefits from './SocialImageBenefits.vue'
   }
 }
 
-.ad-footer {
+.promo-footer {
   flex-shrink: 0;
   display: flex;
   align-items: center;
