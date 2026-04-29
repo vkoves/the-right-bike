@@ -129,8 +129,16 @@ $chicago-blue: #41B6E6;
 
   .stories-img-row { padding-bottom: 2rem; }
 
+  .stories-imgs {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0 1rem 0.5rem 1.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .stories-imgs img {
     height: 9rem;
+    flex-shrink: 0;
     border-radius: 0.5rem;
   }
 }
