@@ -35,5 +35,14 @@ Instead, check for modifier keys and only call `event.preventDefault()` on plain
 ### Component docblocks
 **Every component must have a concise docblock** in its `<script setup>` block describing what it does. Props and emits must each have a `@prop` / `@emit` line. One sentence for the component; one line per input/output.
 
+### No magic strings or numbers
+**Never use magic strings or numbers inline in code.** Any string key, numeric threshold, or repeated
+literal must be extracted to a named constant and imported where needed.
+
+Examples of what this means in practice:
+- URL query param keys like `'car'` or `'replace'` belong in a constants object, not scattered as string literals
+- Numeric thresholds like min/max values should be named constants, not raw numbers in conditions
+- If you find yourself writing the same string or number in more than one place, stop and extract it first
+
 ### No hardcoded selectors in E2E tests
 **Never use raw CSS selectors in E2E test files.** All selectors must live in `tests/e2e/selectors.js`, organized by component/section. Import and reference them by name. This includes selectors passed into `executeScript` — pass them as arguments rather than hardcoding inside the browser function.
