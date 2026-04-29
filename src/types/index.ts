@@ -23,6 +23,8 @@ export interface BikeType {
   priceRange: string;
   costs: BikeCost;
   showTrailerTip?: boolean;
+  alsoConsiderTypes?: BikeTypeId[];
+  alsoConsiderNote?: string;
 }
 
 // --- Costs (vehicleCosts.ts) ---

@@ -70,7 +70,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'No battery to charge or maintain'
     ],
     priceRange: '$1,000 - $2,500',
-    costs: { purchase: 1800, maintenance: 200, fuel: 0, insurance: 100 }
+    costs: { purchase: 1800, maintenance: 200, fuel: 0, insurance: 100 },
+    alsoConsiderTypes: ['longtail-bike', 'cargo-etrike'],
+    alsoConsiderNote: 'Prefer a rear deck for passengers, or want three wheels for stability? Check out these related options!'
   },
   'cargo-ebike': {
     title: 'Front-Loader Cargo eBike',
@@ -88,7 +90,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'Can replace a car for most errands'
     ],
     priceRange: '$3,000 - $6,000',
-    costs: { purchase: 4500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 }
+    costs: { purchase: 4500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 },
+    alsoConsiderTypes: ['longtail-ebike', 'cargo-etrike'],
+    alsoConsiderNote: 'Prefer a rear deck for passengers, or want three wheels for stability? Check out these related options!'
   },
   'longtail-bike': {
     title: 'Longtail Cargo Bike',
@@ -107,7 +111,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     ],
     priceRange: '$1,800 - $2,500',
     // Based on Yuba Mundo Lux ($1,999)
-    costs: { purchase: 2000, maintenance: 250, fuel: 0, insurance: 100 }
+    costs: { purchase: 2000, maintenance: 250, fuel: 0, insurance: 100 },
+    alsoConsiderTypes: ['cargo-bike', 'cargo-etrike'],
+    alsoConsiderNote: 'Need a front box for bulky cargo and kids, or prefer three-wheel stability?'
   },
   'longtail-ebike': {
     title: 'Longtail Cargo eBike',
@@ -125,7 +131,9 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'High weight capacity'
     ],
     priceRange: '$1,500 - $6,000',
-    costs: { purchase: 3500, maintenance: 400, fuel: EbikeElectricityCost, insurance: 200 }
+    costs: { purchase: 3500, maintenance: 400, fuel: EbikeElectricityCost, insurance: 200 },
+    alsoConsiderTypes: ['cargo-ebike', 'cargo-etrike'],
+    alsoConsiderNote: 'Need a front box for bulky cargo and kids, or prefer three-wheel stability?'
   },
   'etrike': {
     title: 'Electric Trike',
