@@ -84,6 +84,39 @@ describe('BikeTypeRecommender', () => {
       expect(r.bikeType).toBe('cargo-ebike');
     });
 
+    it('recommends cargo-ebike for cargo + kids (front-loader handles both)', () => {
+      const r = new BikeTypeRecommender(makeProfile({
+        transportationNeeds: {
+          soloCommuting: false, cargo: true,
+          transportingKids: true, transportingAdults: false
+        },
+        fitnessLevel: 'medium'
+      }));
+      expect(r.bikeType).toBe('cargo-ebike');
+    });
+
+    it('recommends cargo-bike for cargo + kids, high fitness, flat', () => {
+      const r = new BikeTypeRecommender(makeProfile({
+        transportationNeeds: {
+          soloCommuting: false, cargo: true,
+          transportingKids: true, transportingAdults: false
+        },
+        fitnessLevel: 'high'
+      }));
+      expect(r.bikeType).toBe('cargo-bike');
+    });
+
+    it('recommends cargo-ebike for cargo + adults (front-loader)', () => {
+      const r = new BikeTypeRecommender(makeProfile({
+        transportationNeeds: {
+          soloCommuting: false, cargo: true,
+          transportingKids: false, transportingAdults: true
+        },
+        fitnessLevel: 'medium'
+      }));
+      expect(r.bikeType).toBe('cargo-ebike');
+    });
+
     it('recommends longtail-bike for transporting kids, high fitness, flat', () => {
       const r = new BikeTypeRecommender(makeLongtailProfile({ fitnessLevel: 'high' }));
       expect(r.bikeType).toBe('longtail-bike');

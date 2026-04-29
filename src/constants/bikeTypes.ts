@@ -21,7 +21,7 @@ export const DefaultBikeCosts: BikeCost = {
 export const BikeTypes: Record<BikeTypeId, BikeType> = {
   'regular-bike': {
     title: 'Regular Bicycle',
-    label: 'Regular Bicycle',
+    shortTitle: 'Regular Bike',
     image: '/images/bikes/dutch-bike.jpg',
     electric: false,
     bulky: false,
@@ -39,7 +39,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
   },
   'commuter-ebike': {
     title: 'Commuter eBike',
-    label: 'Commuter eBike',
+    shortTitle: 'Commuter eBike',
     image: '/images/bikes/gazelle-ebike.jpg',
     electric: true,
     bulky: false,
@@ -57,7 +57,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
   },
   'cargo-bike': {
     title: 'Classic Cargo Bike',
-    label: 'Non-Electric Cargo Bike',
+    shortTitle: 'Classic Cargo Bike',
     image: '/images/bikes/bakfiets-classic-long.jpg',
     electric: false,
     bulky: true,
@@ -70,11 +70,13 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'No battery to charge or maintain'
     ],
     priceRange: '$1,000 - $2,500',
-    costs: { purchase: 1800, maintenance: 200, fuel: 0, insurance: 100 }
+    costs: { purchase: 1800, maintenance: 200, fuel: 0, insurance: 100 },
+    alsoConsiderTypes: ['longtail-bike', 'cargo-etrike'],
+    alsoConsiderNote: 'Prefer a rear deck for passengers, or want three wheels for stability? Check out these related options!'
   },
   'cargo-ebike': {
     title: 'Front-Loader Cargo eBike',
-    label: 'Cargo eBike',
+    shortTitle: 'Front-Loader eBike',
     image: '/images/bikes/urban-arrow.jpg',
     electric: true,
     bulky: true,
@@ -88,11 +90,13 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'Can replace a car for most errands'
     ],
     priceRange: '$3,000 - $6,000',
-    costs: { purchase: 4500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 }
+    costs: { purchase: 4500, maintenance: 350, fuel: EbikeElectricityCost, insurance: 150 },
+    alsoConsiderTypes: ['longtail-ebike', 'cargo-etrike'],
+    alsoConsiderNote: 'Prefer a rear deck for passengers, or want three wheels for stability? Check out these related options!'
   },
   'longtail-bike': {
     title: 'Longtail Cargo Bike',
-    label: 'Non-Electric Longtail Bike',
+    shortTitle: 'Longtail Bike',
     image: '/images/bikes/yuba-mundo.jpg',
     electric: false,
     bulky: true,
@@ -107,11 +111,13 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
     ],
     priceRange: '$1,800 - $2,500',
     // Based on Yuba Mundo Lux ($1,999)
-    costs: { purchase: 2000, maintenance: 250, fuel: 0, insurance: 100 }
+    costs: { purchase: 2000, maintenance: 250, fuel: 0, insurance: 100 },
+    alsoConsiderTypes: ['cargo-bike', 'cargo-etrike'],
+    alsoConsiderNote: 'Need a front box for bulky cargo and kids, or prefer three-wheel stability?'
   },
   'longtail-ebike': {
     title: 'Longtail Cargo eBike',
-    label: 'Longtail Cargo eBike',
+    shortTitle: 'Longtail eBike',
     image: '/images/bikes/tern-gsd-500.jpg',
     electric: true,
     bulky: true,
@@ -125,11 +131,13 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'High weight capacity'
     ],
     priceRange: '$1,500 - $6,000',
-    costs: { purchase: 3500, maintenance: 400, fuel: EbikeElectricityCost, insurance: 200 }
+    costs: { purchase: 3500, maintenance: 400, fuel: EbikeElectricityCost, insurance: 200 },
+    alsoConsiderTypes: ['cargo-ebike', 'cargo-etrike'],
+    alsoConsiderNote: 'Need a front box for bulky cargo and kids, or prefer three-wheel stability?'
   },
   'etrike': {
     title: 'Electric Trike',
-    label: 'Electric Trike',
+    shortTitle: 'Electric Trike',
     image: '/images/bikes/etrike.webp',
     electric: true,
     bulky: true,
@@ -149,7 +157,7 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
   },
   'cargo-etrike': {
     title: 'Cargo Electric Trike',
-    label: 'Cargo Electric Trike',
+    shortTitle: 'Cargo Trike',
     image: '/images/bikes/cargo-etrike.webp',
     electric: true,
     bulky: true,
@@ -163,6 +171,8 @@ export const BikeTypes: Record<BikeTypeId, BikeType> = {
       'No balance required — safe for all abilities'
     ],
     priceRange: '$2,300 - $6,500',
-    costs: { purchase: 5000, maintenance: 400, fuel: EbikeElectricityCost, insurance: 150 }
+    costs: { purchase: 5000, maintenance: 400, fuel: EbikeElectricityCost, insurance: 150 },
+    alsoConsiderTypes: ['cargo-ebike', 'longtail-ebike'],
+    alsoConsiderNote: 'Prefer two wheels? A front-loader or longtail eBike offers similar cargo capacity.'
   }
 };

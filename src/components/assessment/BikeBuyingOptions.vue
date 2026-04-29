@@ -30,7 +30,7 @@
       class="view-all-btn"
       @click="showAll = true"
     >
-      View All {{ BikeTypes[bikeType as BikeTypeId]?.label }} Models
+      View All {{ BikeTypes[bikeType as BikeTypeId]?.shortTitle }} Models
     </button>
   </div>
 </template>

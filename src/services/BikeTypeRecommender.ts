@@ -38,7 +38,10 @@ export default class BikeTypeRecommender {
     const needsAssistance = this._needsAssistance(profile, needsCargo);
 
     if (needsCargo) {
-      if (transportationNeeds.transportingKids || transportationNeeds.transportingAdults) {
+      // Long tail for people transport only; any combo with bulk cargo → front-loader.
+      const preferLongtail = (transportationNeeds.transportingKids || transportationNeeds.transportingAdults) &&
+                             !transportationNeeds.cargo;
+      if (preferLongtail) {
         return needsAssistance ? 'longtail-ebike' : 'longtail-bike';
       }
       return needsAssistance ? 'cargo-ebike' : 'cargo-bike';

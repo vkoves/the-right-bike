@@ -79,13 +79,37 @@
 
       <div v-if="recommendationDetails.showTrailerTip" class="trailer-tip">
         <img src="/images/gear/bike-trailer.webp" alt="Bike trailer" class="trailer-image">
-        <div class="trailer-tip-body">
+        <div class="tip-body">
           <strong>Need To Haul More? Get A Trailer!</strong>
           <p>
             A trailer hitches to your bike for extra cargo capacity and can store flat.
           </p>
-          <a href="/gear-guide#bike-trailer" target="_blank" rel="noopener" class="trailer-link">
+          <a href="/gear-guide#bike-trailer" target="_blank" rel="noopener" class="tip-link">
             See Trailer Reviews <span class="chevron-right"></span>
+          </a>
+        </div>
+      </div>
+
+      <div v-if="alsoConsiderDetails.length" class="also-consider-tip">
+        <div class="tip-body">
+          <strong>Some Alternatives to Consider</strong>
+          <p>{{ recommendationDetails.alsoConsiderNote }}</p>
+        </div>
+        <div class="also-consider-images">
+          <a
+            v-for="item in alsoConsiderDetails"
+            :key="item.id"
+            :href="'/bike/' + item.id"
+            target="_blank"
+            rel="noopener"
+            class="also-consider-image-link"
+          >
+            <span class="also-consider-label">{{ item.details.shortTitle }}</span>
+            <img
+              :src="item.details.image"
+              :alt="item.details.title"
+              class="also-consider-image"
+            >
           </a>
         </div>
       </div>
@@ -94,6 +118,16 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Displays the recommended bike type with supporting panels for storage alternatives,
+ * trailer upsell, and the "also consider" sibling cargo type.
+ * @prop recommendationDetails - Metadata for the recommended bike type.
+ * @prop allBikeTypes - Full bike type map, used for alternate and also-consider lookups.
+ * @prop alternateBikeType - Smaller storage-friendly alternative type ID, or null.
+ * @prop storageConstrained - Whether the user has difficult indoor storage.
+ * @prop recommendedBikeType - ID of the recommended type (for storage tip copy).
+ * @prop savingsAmount - Annual savings figure passed to the share button.
+ */
 import { computed } from 'vue';
 import ShareButton from './ShareButton.vue';
 import { indefiniteArticle } from '../../utils/grammar';
@@ -121,6 +155,13 @@ const recommendedArticle = computed(() => {
 const alternateArticle = computed(() => {
   if (!props.alternateBikeType || !props.allBikeTypes?.[props.alternateBikeType as BikeTypeId]) return 'a';
   return indefiniteArticle(props.allBikeTypes[props.alternateBikeType as BikeTypeId].title);
+});
+
+const alsoConsiderDetails = computed((): Array<{ id: BikeTypeId; details: BikeType }> => {
+  if (!props.allBikeTypes || !props.recommendationDetails.alsoConsiderTypes) return [];
+  return props.recommendationDetails.alsoConsiderTypes
+    .filter(id => !!props.allBikeTypes![id])
+    .map(id => ({ id, details: props.allBikeTypes![id] }));
 });
 </script>
 
@@ -345,14 +386,15 @@ const alternateArticle = computed(() => {
   p + p { margin-top: 1rem; }
 }
 
-.trailer-tip {
+.trailer-tip,
+.also-consider-tip {
   margin-top: 1.5rem;
   display: flex;
   align-items: flex-start;
   background-color: vars.$bg-highlight;
   border-radius: 8px;
   box-shadow: vars.$shadow-sm;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: vars.$primary-dark;
   overflow: hidden;
@@ -370,11 +412,54 @@ const alternateArticle = computed(() => {
   background-color: vars.$white;
 }
 
-.trailer-tip-body {
-  padding: 1rem 1.25rem;
+.also-consider-tip {
+  flex-direction: column;
+
+  p { margin-bottom: 0; }
 }
 
-.trailer-link {
+.also-consider-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  background-color: vars.$white;
+}
+
+.also-consider-image-link {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  text-decoration: none;
+
+  &:hover .also-consider-image {
+    opacity: 0.85;
+  }
+}
+
+.also-consider-label {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: vars.$primary;
+  padding: 0.5rem 0.5rem 0;
+}
+
+.also-consider-image {
+  width: 100%;
+  object-fit: contain;
+  padding: 0.5rem 1rem;
+  transition: opacity 0.15s ease;
+}
+
+.tip-body {
+  padding: 1rem 1.25rem;
+
+  .tip-link {
+    display: block;
+  }
+}
+
+.tip-link {
   display: inline-block;
   margin-top: 0.25rem;
   color: vars.$primary;
@@ -427,7 +512,8 @@ const alternateArticle = computed(() => {
     grid-row: 1 / -1;
   }
 
-  .trailer-tip {
+  .trailer-tip,
+  .also-consider-tip {
     grid-column: 1;
     grid-row: 2;
     align-self: start;
