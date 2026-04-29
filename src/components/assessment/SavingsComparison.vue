@@ -230,6 +230,7 @@ import { CarCosts } from '../../constants/vehicleCosts';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { isPlainClick } from '../../utils/navigation';
 import Currency from '../../utils/currency';
+import { parseSavingsParams, applySavingsParams, CarMode } from '../../utils/savingsParams';
 import StorageTip from '../../services/storageTip';
 import type { AssessmentProfile, BikeTypeId } from '../../types';
 
@@ -282,14 +283,18 @@ const emit = defineEmits(['bike-change', 'update:savings', 'update:carLabel']);
 
 const route = useRoute();
 
-// State for new vs used car toggle
-const isNew = ref(true);
-
-// State for "already own a car" mode — initialize from query params
-const alreadyOwnsCar = ref('own' in route.query);
-const replacementPercent = ref(
-  route.query.replace ? Math.min(100, Math.max(25, parseInt(route.query.replace as string, 10) || 50)) : 50
+// Initialize all car-mode state from query params
+const { carMode: initialCarMode, replacementPercent: initialReplace } = parseSavingsParams(
+  route.query as Record<string, string | undefined>
 );
+const isNew = ref(initialCarMode !== CarMode.Used);
+const alreadyOwnsCar = ref(initialCarMode === CarMode.Own);
+const replacementPercent = ref(initialReplace);
+
+const carMode = computed((): CarMode => {
+  if (alreadyOwnsCar.value) return CarMode.Own;
+  return isNew.value ? CarMode.New : CarMode.Used;
+});
 
 // Interpolate slider color from grey (#727272) at 25% to green (#298653) at 100%
 const sliderColor = computed(() => {
@@ -300,20 +305,12 @@ const sliderColor = computed(() => {
   return `rgb(${r}, ${g}, ${b})`;
 });
 
-// Sync query params when ownership/replacement changes — use history API
+// Sync query params when car mode or replacement % changes — use history API
 // directly to avoid triggering Vue Router's route update cycle, which can
 // cause unexpected remounts.
-watch([alreadyOwnsCar, replacementPercent], ([owns, percent]) => {
-  const query = new URLSearchParams(window.location.search);
-  if (owns) {
-    query.set('own', '');
-    query.set('replace', String(percent));
-  } else {
-    query.delete('own');
-    query.delete('replace');
-  }
-  const qs = query.toString();
-  const newUrl = window.location.pathname + (qs ? `?${qs}` : '');
+watch([carMode, replacementPercent], ([mode, percent]) => {
+  const qs = applySavingsParams(window.location.search, { carMode: mode, replacementPercent: percent });
+  const newUrl = window.location.pathname + (qs.toString() ? `?${qs}` : '');
   window.history.replaceState(history.state, '', newUrl);
 });
 

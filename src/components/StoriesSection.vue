@@ -9,14 +9,14 @@
     </div>
     <div class="stories-img-row">
       <div class="stories-imgs">
-        <a href="https://chiwho.bike/interviews/17" target="_blank" rel="noopener">
-          <img src="/images/stories/post17.webp" alt="A man stands in front of an orange long-tail bike with two of his kids sitting on the bike, on an autumn day">
-        </a>
-        <a href="https://chiwho.bike/interviews/12" target="_blank" rel="noopener">
-          <img src="/images/stories/post12.webp" alt="A man stands smiling in a park holding his bike, wearing a grey shirt that says Bike City">
+        <a href="https://chiwho.bike/interviews/52" target="_blank" rel="noopener">
+          <img src="/images/stories/post52.webp" alt="A man smiles wide sitting on his Bunch trike, with his two daughters in the front. The man is wearing light blue pants, white sneakers, and a grey jacket, and has short black hair and light brown skin. His bike is a Black bunch trike with a wooden front box.">
         </a>
         <a href="https://chiwho.bike/interviews/18" target="_blank" rel="noopener">
           <img src="/images/stories/post18.webp" alt="An older man stands smiling with his black ebike in front of Chicago's 606 trail">
+        </a>
+        <a href="https://chiwho.bike/interviews/43" target="_blank" rel="noopener">
+          <img src="/images/stories/post43.webp" alt="A woman stands smiling wide with a bright blue bike on some grass, with a flowering tree behind her. The woman is wearing a black t-shirt, blue jeans, and green sneakers, and has shoulder length brown hair, and light skin. Her bike is a light blue ebike with a Tern logo visible, and has a child seat and helmet on the back, with a front rack with a canvas tote on it.">
         </a>
         <a href="https://chiwho.bike/interviews/15" target="_blank" rel="noopener">
           <img src="/images/stories/post15.webp" alt="A woman stands smiling looking down at her two young children in a bucket cargo bike in a downtown plaza">
@@ -129,8 +129,16 @@ $chicago-blue: #41B6E6;
 
   .stories-img-row { padding-bottom: 2rem; }
 
+  .stories-imgs {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0 1rem 0.5rem 1.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .stories-imgs img {
     height: 9rem;
+    flex-shrink: 0;
     border-radius: 0.5rem;
   }
 }
