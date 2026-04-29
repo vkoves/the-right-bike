@@ -416,7 +416,7 @@ const availableBikeTypes = computed(() => {
     .filter(([key]) => key !== currentType)
     .map(([key, value]) => ({
       value: key,
-      label: value.label || value.title
+      label: value.shortTitle || value.title
     }))
     .sort((a, b) => {
       const aIndex = similarTypes.indexOf(a.value as BikeTypeId);

@@ -11,19 +11,28 @@ export type BikeTypeId =
 
 // --- Bike Type metadata (bikeTypes.ts) ---
 export interface BikeType {
+  /** Full display name shown in headings and the recommendation card (e.g. "Front-Loader Cargo eBike"). */
   title: string;
-  label: string;
+  /** Condensed name for space-constrained UI — dropdowns, labels, "Also Consider" tiles (e.g. "Front-Loader eBike"). */
+  shortTitle: string;
   image: string;
   electric: boolean;
+  /** True for large bikes that are hard to store indoors (cargo, longtail, trike). Triggers the storage-alternate flow. */
   bulky: boolean;
+  /** Smaller bike to suggest when storage is constrained (e.g. commuter-ebike as a fallback for cargo-ebike). */
   storageDowngrade?: BikeTypeId;
+  /** Related types shown in comparison UI. Order is significant — first entry is the primary alternative. */
   similarTypes?: BikeTypeId[];
+  /** Recommendation-page body copy, written in second person ("A cargo eBike is perfect for your needs…"). */
   description: string;
   features: string[];
   priceRange: string;
   costs: BikeCost;
+  /** Show the "Need To Haul More? Get A Trailer!" panel below the recommendation image. */
   showTrailerTip?: boolean;
+  /** Sibling types shown in the "Also Consider" panel. Typically the people-vs-cargo counterpart plus a trike option. */
   alsoConsiderTypes?: BikeTypeId[];
+  /** One-sentence prompt explaining why a user might prefer one of the alsoConsiderTypes. */
   alsoConsiderNote?: string;
 }
 

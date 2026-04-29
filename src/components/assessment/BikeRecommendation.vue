@@ -92,7 +92,7 @@
 
       <div v-if="alsoConsiderDetails.length" class="also-consider-tip">
         <div class="tip-body">
-          <strong>Also Consider</strong>
+          <strong>Some Alternatives to Consider</strong>
           <p>{{ recommendationDetails.alsoConsiderNote }}</p>
         </div>
         <div class="also-consider-images">
@@ -104,7 +104,7 @@
             rel="noopener"
             class="also-consider-image-link"
           >
-            <span class="also-consider-label">{{ item.details.title }}</span>
+            <span class="also-consider-label">{{ item.details.shortTitle }}</span>
             <img
               :src="item.details.image"
               :alt="item.details.title"
@@ -394,7 +394,7 @@ const alsoConsiderDetails = computed((): Array<{ id: BikeTypeId; details: BikeTy
   background-color: vars.$bg-highlight;
   border-radius: 8px;
   box-shadow: vars.$shadow-sm;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: vars.$primary-dark;
   overflow: hidden;
@@ -414,6 +414,8 @@ const alsoConsiderDetails = computed((): Array<{ id: BikeTypeId; details: BikeTy
 
 .also-consider-tip {
   flex-direction: column;
+
+  p { margin-bottom: 0; }
 }
 
 .also-consider-images {
@@ -445,7 +447,7 @@ const alsoConsiderDetails = computed((): Array<{ id: BikeTypeId; details: BikeTy
 .also-consider-image {
   width: 100%;
   object-fit: contain;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   transition: opacity 0.15s ease;
 }
 
