@@ -10,6 +10,7 @@ import SocialImageBike from '../components/SocialImageBike.vue'
 import SocialImagePage from '../components/SocialImagePage.vue'
 import AdSquare from '../components/AdSquare.vue'
 import AdsPage from '../components/AdsPage.vue'
+import ShopsPage from '../components/ShopsPage.vue'
 import AllBikesPage from '../components/AllBikesPage.vue'
 import AdminPage from '../components/AdminPage.vue'
 import NotFoundPage from '../components/NotFoundPage.vue'
@@ -55,6 +56,12 @@ const routes = [
     name: 'Storage',
     component: StoragePage,
     meta: { title: PageMeta.storage.title }
+  },
+  {
+    path: '/shops',
+    name: 'Shops',
+    component: ShopsPage,
+    meta: { title: PageMeta.shops.title }
   },
   {
     path: '/social-image',

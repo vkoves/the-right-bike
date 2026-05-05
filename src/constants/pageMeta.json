@@ -17,6 +17,10 @@
     "storage": {
       "title": "Bike Storage",
       "description": "No garage? No problem. Learn how to store your bike outdoors, indoors, or in small spaces - including tips for cargo bikes."
+    },
+    "shops": {
+      "title": "Bike Shops",
+      "description": "Find local bike shops where you can browse and buy bikes in person, including used and refurbished options."
     }
   }
 }
