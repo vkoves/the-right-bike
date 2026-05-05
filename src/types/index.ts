@@ -148,6 +148,8 @@ export interface BikeShop {
   city: string;
   state: string;
   zip: string;
+  lat: number;
+  lng: number;
   phone: string;
   website: string;
   description: string;
