@@ -141,6 +141,24 @@ export interface GearItem {
   links?: GearLink[];
 }
 
+// --- Bike Shops (bike-shops.json) ---
+export interface BikeShop {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  lat: number;
+  lng: number;
+  phone: string;
+  website: string;
+  description: string;
+  avgPrice: number;
+  bikeTypes: BikeTypeId[];
+  notes: string;
+  logo: string;
+}
+
 // --- Your Choices summary (used for sessionStorage persistence) ---
 export interface ChoicePill {
   icon: string;

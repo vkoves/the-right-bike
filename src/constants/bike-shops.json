@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Working Bikes",
+    "address": "2434 S. Western Ave",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60608",
+    "lat": 41.8437,
+    "lng": -87.6861,
+    "phone": "773-847-5440",
+    "website": "https://www.workingbikes.org",
+    "description": "We carry a wide range of used and refurbished bicycles.",
+    "avgPrice": 280,
+    "bikeTypes": ["regular-bike"],
+    "notes": "",
+    "logo": "/bike-shops/working-bikes-logo.png"
+  }
+]

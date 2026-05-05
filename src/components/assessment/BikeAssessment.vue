@@ -84,6 +84,11 @@
             @bike-change="handleBikeChange"
           />
 
+          <bike-shop-finder
+            v-if="recommendation"
+            :recommended-bike-type="recommendation"
+          />
+
           <nav class="results-jump-links" aria-label="Jump to section">
             <div class="jump-label">Quick Links</div>
 
@@ -143,6 +148,7 @@ import StorageStep from './StorageStep.vue';
 import GeographyStep from './GeographyStep.vue';
 import FitnessStep from './FitnessStep.vue';
 import BikeRecommendation from './BikeRecommendation.vue';
+import BikeShopFinder from './BikeShopFinder.vue';
 import SavingsComparison from './SavingsComparison.vue';
 import ResultsFooter from './ResultsFooter.vue';
 import YourChoices from './YourChoices.vue';
