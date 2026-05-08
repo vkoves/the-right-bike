@@ -47,7 +47,7 @@ function stripProtocol(url: string): string {
 
 .result-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 1rem;
   background: vars.$bg-card;
   border: 1px solid vars.$border-light;
@@ -71,6 +71,7 @@ function stripProtocol(url: string): string {
 .card-body {
   flex: 1;
   min-width: 0;
+  text-align: left;
 }
 
 .name-row {

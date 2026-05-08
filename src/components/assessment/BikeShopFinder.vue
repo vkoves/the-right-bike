@@ -117,7 +117,9 @@ h3 {
 .zip-form {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .sr-only {
