@@ -78,7 +78,7 @@ function findShops() {
 
   const coords = ChicagoZipCodes[zipInput.value];
   if (!coords) {
-    errorMessage.value = "We don't have data for that ZIP code. This tool currently covers Chicago-area ZIP codes.";
+    errorMessage.value = "We don't have data for that ZIP code! Make sure that zipcode is in the Chicago-area.";
     return;
   }
 
