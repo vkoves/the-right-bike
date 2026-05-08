@@ -1,6 +1,6 @@
 <template>
   <section class="shop-finder" id="shop-finder">
-    <h3>In Chicago? We Can Help You Find a Bike Shop!</h3>
+    <h3>In Chicago? We Can Help You Find a Bike Shop! <anchor-copy-button anchor="shop-finder" /></h3>
     <p class="finder-intro">
       Enter your ZIP code to see nearby shops — we'll highlight any that carry a
       <strong>{{ bikeShortTitle }}</strong>.
@@ -39,15 +39,18 @@
 <script setup lang="ts">
 /**
  * Looks up the user's Chicago ZIP code and lists bike shops sorted by distance,
- * highlighting shops that carry the recommended bike type.
+ * highlighting shops that carry the recommended bike type. Persists the ZIP in
+ * a query param so the results can be shared via the anchor copy button.
  * @prop recommendedBikeType - The BikeTypeId from the assessment result.
  */
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import shopsData from '../../constants/bike-shops.json';
 import { BikeTypes } from '../../constants/bikeTypes';
 import { ChicagoZipCodes } from '../../constants/chicagoZipCodes';
 import { haversineDistanceMi } from '../../utils/distance';
 import BikeShopResultCard from './BikeShopResultCard.vue';
+import AnchorCopyButton from '../AnchorCopyButton.vue';
 import type { BikeShop, BikeTypeId } from '../../types';
 
 const props = defineProps({
@@ -59,8 +62,10 @@ export interface ShopWithDistance extends BikeShop {
   carriesType: boolean;
 }
 
+const ZipQueryParam = 'zip';
 const ZipPattern = /^\d{5}$/;
 
+const route = useRoute();
 const shops = shopsData as BikeShop[];
 
 const zipInput = ref('');
@@ -89,7 +94,20 @@ function findShops() {
       carriesType: shop.bikeTypes.includes(props.recommendedBikeType)
     }))
     .sort((a, b) => a.distanceMi - b.distanceMi);
+
+  const qs = new URLSearchParams(window.location.search);
+  qs.set(ZipQueryParam, zipInput.value);
+  window.history.replaceState(history.state, '', `${window.location.pathname}?${qs}`);
 }
+
+onMounted(() => {
+  const zip = route.query[ZipQueryParam];
+
+  if (typeof zip === 'string' && ZipPattern.test(zip)) {
+    zipInput.value = zip;
+    findShops();
+  }
+});
 </script>
 
 <style lang="scss" scoped>
