@@ -15,6 +15,14 @@
 
     <p class="shop-description">{{ shop.description }}</p>
 
+    <div class="bike-types">
+      <div>Sells Bike Types</div>
+
+      <span v-for="type in shop.bikeTypes" :key="type" class="bike-type-tag">
+        {{ BikeTypes[type]?.shortTitle ?? type }}
+      </span>
+    </div>
+
     <p class="avg-price">Avg. price: <strong>${{ shop.avgPrice }}</strong></p>
 
     <div class="shop-links">
@@ -33,6 +41,7 @@
  * @prop bikeShortTitle - Display name of the recommended bike type for the badge.
  */
 import type { ShopWithDistance } from './BikeShopFinder.vue';
+import { BikeTypes } from '../../constants/bikeTypes';
 
 defineProps({
   shop: { type: Object as () => ShopWithDistance, required: true },
@@ -54,6 +63,7 @@ function stripProtocol(url: string): string {
     "logo header      distance"
     "logo address     address"
     "logo description description"
+    "logo bike-types  bike-types"
     "logo avg-price   avg-price"
     "logo links       links";
   column-gap: 1rem;
@@ -84,7 +94,7 @@ function stripProtocol(url: string): string {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0 0.5rem;
 }
 
 .shop-name {
@@ -124,6 +134,29 @@ function stripProtocol(url: string): string {
   color: vars.$text-muted;
 }
 
+.bike-types {
+  grid-area: bike-types;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0;
+
+  div {
+    width: 100%;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+.bike-type-tag {
+  background: vars.$bg-bike-type;
+  color: vars.$primary-dark;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: vars.$border-radius-sm;
+}
+
 .avg-price {
   grid-area: avg-price;
   margin: 0.35rem 0 0.5rem;
@@ -157,9 +190,12 @@ function stripProtocol(url: string): string {
       "logo distance"
       "address     address"
       "description description"
+      "bike-types  bike-types"
       "avg-price   avg-price"
       "links       links";
   }
+
+  .carries-badge { margin-bottom: 0.25rem; }
 
   .address { margin-top: 1rem; }
 
