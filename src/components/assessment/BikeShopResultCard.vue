@@ -2,24 +2,26 @@
   <li class="result-card" :class="{ '-carries-type': shop.carriesType }">
     <img :src="shop.logo" :alt="`${shop.name} logo`" class="shop-logo">
 
-    <div class="card-body">
-      <div class="name-row">
-        <span class="shop-name">{{ shop.name }}</span>
-        <span v-if="shop.carriesType" class="carries-badge">Carries {{ bikeShortTitle }}</span>
-      </div>
+    <div class="shop-header">
+      <span class="shop-name">{{ shop.name }}</span>
+      <span v-if="shop.carriesType" class="carries-badge">Carries {{ bikeShortTitle }}</span>
+    </div>
 
-      <span class="distance">{{ shop.distanceMi.toFixed(1) }} mi away</span>
+    <span class="distance">{{ shop.distanceMi.toFixed(1) }} mi away</span>
 
-      <p class="address">
-        {{ shop.address }}, {{ shop.city }}, {{ shop.state }} {{ shop.zip }}
-      </p>
+    <p class="address">
+      {{ shop.address }}, {{ shop.city }}, {{ shop.state }} {{ shop.zip }}
+    </p>
 
-      <div class="shop-links">
-        <a :href="`tel:${shop.phone}`" class="shop-link">{{ shop.phone }}</a>
-        <a :href="shop.website" target="_blank" rel="noopener" class="shop-link">
-          {{ stripProtocol(shop.website) }}
-        </a>
-      </div>
+    <p class="shop-description">{{ shop.description }}</p>
+
+    <p class="avg-price">Avg. price: <strong>${{ shop.avgPrice }}</strong></p>
+
+    <div class="shop-links">
+      <a :href="`tel:${shop.phone}`" class="shop-link">{{ shop.phone }}</a>
+      <a :href="shop.website" target="_blank" rel="noopener" class="shop-link">
+        {{ stripProtocol(shop.website) }}
+      </a>
     </div>
   </li>
 </template>
@@ -46,13 +48,21 @@ function stripProtocol(url: string): string {
 @use '../../assets/scss/variables' as vars;
 
 .result-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto;
+  grid-template-areas:
+    "logo header      distance"
+    "logo address     address"
+    "logo description description"
+    "logo avg-price   avg-price"
+    "logo links       links";
+  column-gap: 1rem;
+  align-items: start;
   background: vars.$bg-card;
   border: 1px solid vars.$border-light;
   border-radius: vars.$border-radius-sm;
   padding: 1rem;
+  text-align: left;
 
   &.-carries-type {
     border-color: vars.$primary;
@@ -61,28 +71,24 @@ function stripProtocol(url: string): string {
 }
 
 .shop-logo {
+  grid-area: logo;
+  align-self: center;
   width: 3.5rem;
   height: 3.5rem;
   object-fit: contain;
-  flex-shrink: 0;
   border-radius: vars.$border-radius-sm;
 }
 
-.card-body {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-}
-
-.name-row {
+.shop-header {
+  grid-area: header;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.2rem;
 }
 
 .shop-name {
+  font-size: 1.1rem;
   font-weight: 700;
   color: vars.$text-dark;
 }
@@ -97,20 +103,39 @@ function stripProtocol(url: string): string {
 }
 
 .distance {
+  grid-area: distance;
   font-size: 0.85rem;
   font-weight: 600;
   color: vars.$text-secondary;
+  white-space: nowrap;
 }
 
 .address {
-  margin: 0.25rem 0 0.5rem;
+  grid-area: address;
+  margin: 0.25rem 0 0;
   font-size: 0.9rem;
   color: vars.$text-muted;
 }
 
+.shop-description {
+  grid-area: description;
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: vars.$text-muted;
+}
+
+.avg-price {
+  grid-area: avg-price;
+  margin: 0.35rem 0 0.5rem;
+  font-size: 0.85rem;
+  color: vars.$text-secondary;
+  font-weight: 600;
+}
+
 .shop-links {
+  grid-area: links;
   display: flex;
-  gap: 1rem;
+  gap: 0.25rem 1rem;
   flex-wrap: wrap;
 }
 
@@ -121,6 +146,25 @@ function stripProtocol(url: string): string {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+@media (max-width: #{vars.$breakpoint-mobile}) {
+  .result-card {
+    grid-template-columns: 3.5rem 1fr;
+    grid-template-areas:
+      "logo header"
+      "logo distance"
+      "address     address"
+      "description description"
+      "avg-price   avg-price"
+      "links       links";
+  }
+
+  .address { margin-top: 1rem; }
+
+  .shop-logo {
+    align-self: start;
   }
 }
 </style>
