@@ -113,10 +113,15 @@
             :all-bike-types="bikeTypeDetails"
             :selected-bike-type="recommendation"
             :profile="assessmentProfile"
-            @bike-change="handleBikeChange"
+            :comparison-bike="comparisonBike"
             @update:savings="stickysavings = $event"
             @update:car-label="stickyCarLabel = $event"
             key="savings-component"
+          />
+
+          <bike-shop-finder
+            v-if="recommendation"
+            :recommended-bike-type="recommendation"
           />
 
           <div class="gear-guide-cta">
@@ -127,6 +132,17 @@
               View Essential Gear Guide
             </router-link>
           </div>
+
+          <bike-type-comparison-grid
+            v-if="recommendation"
+            :bike-title="recommendationDetails.title"
+            :bike-image="recommendationDetails.image"
+            :costs="costs"
+            :selected-bike-type="recommendation"
+            :all-bike-types="bikeTypeDetails"
+            :comparison-bike="comparisonBike"
+            @bike-change="handleComparisonBikeChange"
+          />
 
           <results-footer @restart="restartAssessment" />
         </div>
@@ -143,7 +159,9 @@ import StorageStep from './StorageStep.vue';
 import GeographyStep from './GeographyStep.vue';
 import FitnessStep from './FitnessStep.vue';
 import BikeRecommendation from './BikeRecommendation.vue';
+import BikeShopFinder from './BikeShopFinder.vue';
 import SavingsComparison from './SavingsComparison.vue';
+import BikeTypeComparisonGrid from './BikeTypeComparisonGrid.vue';
 import ResultsFooter from './ResultsFooter.vue';
 import YourChoices from './YourChoices.vue';
 import { CarCosts } from '../../constants/vehicleCosts';
@@ -187,6 +205,7 @@ watch(transportationNeeds, () => {}, { deep: true });
 watch(geography, () => {}, { deep: true });
 const recommendation = ref<BikeTypeId | ''>('');
 const alternateBikeType = ref<BikeTypeId | null>(null);
+const comparisonBike = ref('');
 
 watch(recommendation, (bikeTypeId) => {
   if (bikeTypeId) {
@@ -400,6 +419,16 @@ function handleBikeChange(bikeType: BikeTypeId | null) {
 
   // Update URL with the new bike selection
   updateUrlWithRecommendation(bikeType);
+}
+
+// Reset comparison when the base recommendation changes (e.g. URL navigation)
+watch(recommendation, (newType, oldType) => {
+  if (oldType && newType !== oldType) comparisonBike.value = '';
+});
+
+function handleComparisonBikeChange(bikeType: BikeTypeId) {
+  comparisonBike.value = bikeType;
+  handleBikeChange(bikeType);
 }
 
 // Function to update URL with bike recommendation
