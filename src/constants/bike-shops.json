@@ -14,5 +14,21 @@
     "bikeTypes": ["regular-bike"],
     "notes": "",
     "logo": "/bike-shops/working-bikes-logo.png"
+  },
+  {
+    "name": "Ciclo Urbano",
+    "address": "2459 W Division St",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60622",
+    "lat": 41.9028,
+    "lng": -87.6881,
+    "phone": "773-772-4870",
+    "website": "https://westtownbikes.org/ciclo-urbano",
+    "description": "Ciclo Urbano is the full service sales shop of non-profit community bike organization West Town Bikes. We carry new and used bikes, parts & accessories and service all makes and models of bikes.",
+    "avgPrice": 280,
+    "bikeTypes": ["regular-bike"],
+    "notes": "",
+    "logo": "/bike-shops/ciclo-urbano-logo.webp"
   }
 ]
