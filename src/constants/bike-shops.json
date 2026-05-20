@@ -16,8 +16,24 @@
     "logo": "/bike-shops/working-bikes-logo.png"
   },
   {
+    "name": "Offbeat Bikes",
+    "address": "3101 W. Diversey Ave",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60647",
+    "lat": 41.931947,
+    "lng": -87.705126,
+    "phone": "872-274-2453",
+    "website": "https://www.offbeatbikes.com",
+    "description": "Offbeat Bikes is an independent cargo and electric bike shop in Logan Square. We specialize in bikes for everyday life, whether it's kids, groceries, a breezy commute, or a joyride by the lake. We believe life is better by bike, and we have the experience to prove it. Offering new bike sales, expert service, short and long-term rentals, used bike marketplace, European-inspired accessories, and the friendliest team you'll find anywhere.",
+    "avgPrice": 1000,
+    "bikeTypes": ["commuter-ebike", "cargo-ebike", "longtail-ebike"],
+    "notes": "",
+    "logo": "/bike-shops/offbeat-logo-black.svg"
+  },
+  {
     "name": "Ciclo Urbano",
-    "address": "2459 W Division St",
+    "address": "2459 W. Division St",
     "city": "Chicago",
     "state": "IL",
     "zip": "60622",
