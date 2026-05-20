@@ -199,5 +199,8 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  max-height: 32rem;
+  padding: 0.5rem;
+  overflow: auto;
 }
 </style>
