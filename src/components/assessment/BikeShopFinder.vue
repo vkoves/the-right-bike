@@ -93,7 +93,15 @@ function findShops() {
       distanceMi: haversineDistanceMi(coords.lat, coords.lng, shop.lat, shop.lng),
       carriesType: shop.bikeTypes.includes(props.recommendedBikeType)
     }))
-    .sort((a, b) => a.distanceMi - b.distanceMi);
+    .sort((a, b) => {
+      // Give 100 points to nearby shops, then up to 50 points for shops 0 miles away
+      const aScore = (a.carriesType ? 100 : 0) + (50 - a.distanceMi);
+      const bScore = (b.carriesType ? 100 : 0 ) + (50 - b.distanceMi);
+
+
+      // a.distanceMi - b.distanceMi
+      return bScore - aScore;
+  });
 
   const qs = new URLSearchParams(window.location.search);
   qs.set(ZipQueryParam, zipInput.value);
