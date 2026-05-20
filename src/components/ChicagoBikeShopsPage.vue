@@ -20,8 +20,8 @@
 
         <dl class="shop-details">
           <div class="detail-row">
-            <dt>Avg. Price</dt>
-            <dd>${{ shop.avgPrice }}</dd>
+            <dt>Starting Price</dt>
+            <dd>${{ shop.startPrice }}</dd>
           </div>
           <div class="detail-row">
             <dt>Phone</dt>

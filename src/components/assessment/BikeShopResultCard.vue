@@ -23,7 +23,7 @@
       </span>
     </div>
 
-    <p class="avg-price">Avg. price: <strong>${{ shop.avgPrice }}</strong></p>
+    <p class="start-price">Starting Price: <strong>${{ shop.startPrice }}</strong></p>
 
     <div class="shop-links">
       <a :href="`tel:${shop.phone}`" class="shop-link">{{ shop.phone }}</a>
@@ -64,7 +64,7 @@ function stripProtocol(url: string): string {
     "logo address     address"
     "logo description description"
     "logo bike-types  bike-types"
-    "logo avg-price   avg-price"
+    "logo start-price   start-price"
     "logo links       links";
   column-gap: 1rem;
   align-items: start;
@@ -157,8 +157,8 @@ function stripProtocol(url: string): string {
   border-radius: vars.$border-radius-sm;
 }
 
-.avg-price {
-  grid-area: avg-price;
+.start-price {
+  grid-area: start-price;
   margin: 0.35rem 0 0.5rem;
   font-size: 0.85rem;
   color: vars.$text-secondary;
@@ -191,7 +191,7 @@ function stripProtocol(url: string): string {
       "address     address"
       "description description"
       "bike-types  bike-types"
-      "avg-price   avg-price"
+      "start-price   start-price"
       "links       links";
   }
 

@@ -10,7 +10,7 @@
     "phone": "773-847-5440",
     "website": "https://www.workingbikes.org",
     "description": "Working Bikes is a non-profit that takes donated bikes and refurbishes them, giving them a new life. They carry a wide range of used and refurbished bicycles.",
-    "avgPrice": 280,
+    "startPrice": 280,
     "bikeTypes": ["regular-bike"],
     "notes": "",
     "logo": "/bike-shops/working-bikes-logo.png"
@@ -26,7 +26,7 @@
     "phone": "872-274-2453",
     "website": "https://www.offbeatbikes.com",
     "description": "Offbeat Bikes is an independent cargo and electric bike shop in Logan Square. We specialize in bikes for everyday life, whether it's kids, groceries, a breezy commute, or a joyride by the lake. We believe life is better by bike, and we have the experience to prove it. Offering new bike sales, expert service, short and long-term rentals, used bike marketplace, European-inspired accessories, and the friendliest team you'll find anywhere.",
-    "avgPrice": 1000,
+    "startPrice": 1000,
     "bikeTypes": ["commuter-ebike", "cargo-ebike", "longtail-ebike"],
     "notes": "",
     "logo": "/bike-shops/offbeat-logo-black.svg"
@@ -42,7 +42,7 @@
     "phone": "773-772-4870",
     "website": "https://westtownbikes.org/ciclo-urbano",
     "description": "Ciclo Urbano is the full service sales shop of non-profit community bike organization West Town Bikes. We carry new and used bikes, parts & accessories and service all makes and models of bikes.",
-    "avgPrice": 280,
+    "startPrice": 280,
     "bikeTypes": ["regular-bike"],
     "notes": "",
     "logo": "/bike-shops/ciclo-urbano-logo.webp"
