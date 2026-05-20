@@ -4,7 +4,7 @@
 
     <div class="shop-header">
       <span class="shop-name">{{ shop.name }}</span>
-      <span v-if="shop.carriesType" class="carries-badge">Carries {{ bikeShortTitle }}</span>
+      <span v-if="shop.carriesType" class="carries-badge">Carries {{ bikeShortTitle }}s</span>
     </div>
 
     <span class="distance">{{ shop.distanceMi.toFixed(1) }} mi away</span>
@@ -13,17 +13,15 @@
       {{ shop.address }}, {{ shop.city }}, {{ shop.state }} {{ shop.zip }}
     </p>
 
-    <p class="shop-description">{{ shop.description }}</p>
-
     <div class="bike-types">
-      <div>Sells Bike Types</div>
-
       <span v-for="type in shop.bikeTypes" :key="type" class="bike-type-tag">
-        {{ BikeTypes[type]?.shortTitle ?? type }}
+        {{ BikeTypes[type]?.shortTitle ?? type }}s
       </span>
     </div>
 
-    <p class="avg-price">Avg. price: <strong>${{ shop.avgPrice }}</strong></p>
+    <p class="shop-description">{{ shop.description }}</p>
+
+    <p class="start-price">Starting Price: <strong>${{ shop.startPrice }}</strong></p>
 
     <div class="shop-links">
       <a :href="`tel:${shop.phone}`" class="shop-link">{{ shop.phone }}</a>
@@ -62,9 +60,9 @@ function stripProtocol(url: string): string {
   grid-template-areas:
     "logo header      distance"
     "logo address     address"
-    "logo description description"
     "logo bike-types  bike-types"
-    "logo avg-price   avg-price"
+    "logo description description"
+    "logo start-price   start-price"
     "logo links       links";
   column-gap: 1rem;
   align-items: start;
@@ -122,9 +120,10 @@ function stripProtocol(url: string): string {
 
 .address {
   grid-area: address;
-  margin: 0.25rem 0 0;
+  margin: 0.125rem 0 0.25rem;
   font-size: 0.9rem;
   color: vars.$text-muted;
+  font-weight: 600;
 }
 
 .shop-description {
@@ -139,7 +138,7 @@ function stripProtocol(url: string): string {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
 
   div {
     width: 100%;
@@ -157,8 +156,8 @@ function stripProtocol(url: string): string {
   border-radius: vars.$border-radius-sm;
 }
 
-.avg-price {
-  grid-area: avg-price;
+.start-price {
+  grid-area: start-price;
   margin: 0.35rem 0 0.5rem;
   font-size: 0.85rem;
   color: vars.$text-secondary;
@@ -189,15 +188,15 @@ function stripProtocol(url: string): string {
       "logo header"
       "logo distance"
       "address     address"
-      "description description"
       "bike-types  bike-types"
-      "avg-price   avg-price"
+      "description description"
+      "start-price   start-price"
       "links       links";
   }
 
   .carries-badge { margin-bottom: 0.25rem; }
 
-  .address { margin-top: 1rem; }
+  .address { margin-top: 0.5rem; }
 
   .shop-logo {
     align-self: start;

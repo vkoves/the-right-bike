@@ -153,7 +153,7 @@ export interface BikeShop {
   phone: string;
   website: string;
   description: string;
-  avgPrice: number;
+  startPrice: number;
   bikeTypes: BikeTypeId[];
   notes: string;
   logo: string;
