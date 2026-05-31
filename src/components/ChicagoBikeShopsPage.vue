@@ -21,7 +21,7 @@
         <dl class="shop-details">
           <div class="detail-row">
             <dt>Starting Price</dt>
-            <dd>${{ shop.startPrice }}</dd>
+            <dd>${{ shop.startPrice.toLocaleString() }}</dd>
           </div>
           <div class="detail-row">
             <dt>Phone</dt>

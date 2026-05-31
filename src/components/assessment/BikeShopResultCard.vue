@@ -21,7 +21,7 @@
 
     <p class="shop-description">{{ shop.description }}</p>
 
-    <p class="start-price">Starting Price: <strong>${{ shop.startPrice }}</strong></p>
+    <p class="start-price">Starting Price: <strong>${{ shop.startPrice.toLocaleString() }}</strong></p>
 
     <div class="shop-links">
       <a :href="`tel:${shop.phone}`" class="shop-link">{{ shop.phone }}</a>
