@@ -56,7 +56,7 @@ function stripProtocol(url: string): string {
 
 .result-card {
   display: grid;
-  grid-template-columns: 3.5rem 1fr auto;
+  grid-template-columns: auto 1fr auto;
   grid-template-areas:
     "logo header      distance"
     "logo address     address"
@@ -81,8 +81,8 @@ function stripProtocol(url: string): string {
 .shop-logo {
   grid-area: logo;
   align-self: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 4rem;
+  height: auto;
   object-fit: contain;
   border-radius: vars.$border-radius-sm;
 }
@@ -183,7 +183,7 @@ function stripProtocol(url: string): string {
 
 @media (max-width: #{vars.$breakpoint-mobile}) {
   .result-card {
-    grid-template-columns: 3.5rem 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
       "logo header"
       "logo distance"
@@ -199,7 +199,8 @@ function stripProtocol(url: string): string {
   .address { margin-top: 0.5rem; }
 
   .shop-logo {
-    align-self: start;
+    width: 3.5rem;
+    align-self: center;
   }
 }
 </style>
