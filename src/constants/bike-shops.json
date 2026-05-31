@@ -46,5 +46,37 @@
     "bikeTypes": ["regular-bike"],
     "notes": "",
     "logo": "/bike-shops/ciclo-urbano-logo.webp"
+  },
+  {
+    "name": "Wheelie Good Bikes",
+    "address": " 6981 N. Sheridan Rd",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60626",
+    "lat": 42.009082,
+    "lng": -87.661851,
+    "phone": "773-739-9119",
+    "website": "https://www.wheeliegoodbikeschicago.com/",
+    "description": "Wheelie Good Bikes is your Rogers Park home for new and used bikes, quality repairs, and the kind of knowledgeable, friendly service that gets more people riding.",
+    "startPrice": 350,
+    "bikeTypes": ["regular-bike", "commuter-ebike"],
+    "notes": "",
+    "logo": "/bike-shops/wheelie-good-logo.webp"
+  },
+  {
+    "name": "J.C. Lind",
+    "address": "1311 N. Wells St",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60610",
+    "lat": 41.906093,
+    "lng": -87.634361,
+    "phone": "312-643-1670",
+    "website": "https://www.jclindbikes.com",
+    "description": "J.C. Lind Bike Co. promotes cycling as a means of transportation and a way of life by selling practical, high-quality city bikes.",
+    "startPrice": 1075,
+    "bikeTypes": ["regular-bike", "commuter-ebike", "cargo-ebike", "longtail-ebike"],
+    "notes": "",
+    "logo": "/bike-shops/jclind-logo.webp"
   }
 ]
