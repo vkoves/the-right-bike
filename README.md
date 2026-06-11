@@ -155,3 +155,7 @@ public/
     stories/        # Interview photos from chiwho.bike
     icons/          # SVG icons
 ```
+
+## Licensing Notes
+
+Images of bikes are typically from their manufacturer, and are being used under fair use. If for any reason you would like an image removed, please [open an issue](https://github.com/vkoves/the-right-bike/issues/new).
