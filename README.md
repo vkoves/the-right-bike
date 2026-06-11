@@ -159,3 +159,5 @@ public/
 ## Licensing Notes
 
 Images of bikes are typically from their manufacturer, and are being used under fair use. If for any reason you would like an image removed, please [open an issue](https://github.com/vkoves/the-right-bike/issues/new).
+
+Other images (like of Chicagoans Who Bike, or our maintenance or storage hero images) are copyright [Viktor Köves](https://viktorkoves.com) and provided under [Creative Commons CC BY-NC 4.0 license](https://creativecommons.org/licenses/by-nc/4.0/), allowing for non-commerical use with attribution.
